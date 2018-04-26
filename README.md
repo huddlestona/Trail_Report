@@ -1,5 +1,5 @@
 # Trail_Report
-## Using Machine Learning to predict hiking trail conditions and features to increase trail accessability and safety in off-seasons   
+## Using Machine Learning to predict hiking trail conditions and features to increase trail accessibility and safety in off-seasons   
 
 ### Business Understanding:
 
@@ -7,7 +7,7 @@ Often when looking for a hike in winter and spring, it is hard to get a sense of
 
 ### Data Understanding:
 
-I plan to use WTA trip reports(using python NLP modules), WTA trail information (elevation, log/lat, length, etc.), past eather paterns, and current/future weather patterns to predict future key words that would be written in trail reports. I will use the past two years trail reports as training data (may increase in size due to some trails not having trip reports for a few years back). 
+I plan to use WTA trip reports(using python NLP modules), WTA trail information (elevation, log/lat, length, etc.), past weather patterns, and current/future weather patterns to predict future key words that would be written in trail reports. I will use the past two years trail reports as training data (may increase in size due to some trials not having trip reports for a few years back). 
 
 ### Data Gathering:
 
@@ -32,7 +32,7 @@ I plan to use WTA trip reports(using python NLP modules), WTA trail information 
 
 **Current Weather**:
 
-- Take current days weather and the past month-3 months weather average into datebase
+- Take current days weather and the past month-3 months weather average into database
 - Also account for future weather predictions
 
 ### Modeling:
@@ -43,14 +43,14 @@ Trail conditions: Starting focus will be snow/ice amount. Could add flower bloom
 
 **Model Type**:
 
-I plan to use Supervised learning, testing all basic model types. Could potentially use some unsupervised learning to gain insight into how to catagorize trails across different seasons. Potential use of a neaural network- need more research.
+I plan to use Supervised learning, testing all basic model types. Could potentially use some unsupervised learning to gain insight into how to categorize trails across different seasons. Potential use of a neural network- need more research.
 
 Training group will be all data collected up to a certain date (plan on cutoff being Jan 2016). All trip reports after that will be used to test. See if keywords in new trip reports match predicted key words and snow levels found by the model. Also will go hike places and see if the conditions are as predicted/ have other people report back when they go hiking.
 
 **Potential issues**: 
 
-Some trip reports have very little reports to base off. More reports during the summer and spring may add skew. May not be able to accuratly use predicitve weather. 
+Some trip reports have very little reports to base off. More reports during the summer and spring may add skew. May not be able to accurately use predictive weather. 
 
 ### Deployment
 
-Website for consumers to search for trip reports on  
+Website for consumers to search for a trail report. Users will type in the hike and the day they would like to go, and receive back a list of possible conditions/trail features with likelihoods attached.  
