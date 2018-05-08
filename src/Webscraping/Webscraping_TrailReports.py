@@ -9,11 +9,6 @@ import pandas as pd
 from multiprocessing.dummy import Pool
 from multiprocessing import cpu_count
 
-mc = pymongo.MongoClient()
-db = mc['reports']
-trail_reports = db['trail_reports']
-raw_html = db['html']
-
 def select_text(parent_element, css_selector):
     element = parent_element.select_one(css_selector)
     return get_text_if_not_none(element)
@@ -70,10 +65,12 @@ def get_trail_report(title, hikeurl, params=None):
     for trip_report_div in soup.select('div#trip-reports div.item'):
         trip_report = parse_trip_report(title,trip_report_div)
         trail_reports.insert_one(trip_report)
+    return None
 
 def save_raw_html(r):
     raw_insert = {"raw_html": r}
     raw_html.insert_one(raw_insert)
+    return None
 
 def iterate_all_reports(title, hikeurl):
     """Determines the number of times to call getTripReports function based on
@@ -92,6 +89,7 @@ def iterate_all_reports(title, hikeurl):
     numit = math.ceil(float(soup.find('div', {'id': 'count-data'}).text)/5)
     for i in range(int(numit)):
         get_trail_report(title, hikeurl, params={'b_start:int': str(i*5)})
+    return None
 
 def TripReportBuilder(df):
     """Iterates through the rows of loaded pandas dataframe and calls
@@ -109,6 +107,7 @@ def TripReportBuilder(df):
             iterateTripReports(df['hike_name'][row], df['url'][row])
         else:
             continue
+    return None
 
 if __name__ == '__main__':
     mc = pymongo.MongoClient()
@@ -118,4 +117,3 @@ if __name__ == '__main__':
     trail_reports.drop()
     raw_html.drop()
     iterate_all_reports('mt_ellinor',"https://www.wta.org/go-hiking/hikes/mount-ellinor")
-    
