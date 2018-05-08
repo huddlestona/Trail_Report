@@ -91,9 +91,16 @@ def iterate_all_reports(title, hikeurl):
         get_trail_report(title, hikeurl, params={'b_start:int': str(i*5)})
     return None
 
+def save_trail_html(title,url):
+    r = requests.get(url).text
+    raw_insert = {'trail': title,
+                  "raw_html": r}
+    trail_page_raw_html.insert_one(raw_insert)
+    return None
+
 def TripReportBuilder(df):
     """Iterates through the rows of loaded pandas dataframe and calls
-    iterateTripReports for each hike/row.
+    iterateTripReports and save_trail_html for each hike/row
     **Input parameters**
     ------------------------------------------------------------------------------
     title: pandas dataframe. Dataframe must contain columns entitled 'numReports'
@@ -104,16 +111,22 @@ def TripReportBuilder(df):
     """
     for row in range(len(df)):
         if df['numReports'][row]:
-            iterateTripReports(df['hike_name'][row], df['url'][row])
+            title = df['hike_name'][row]
+            url = df['url'][row]
+            iterate_all_reports(title, url)
+            save_trail_html(title, url)
         else:
             continue
     return None
 
-if __name__ == '__main__':
-    mc = pymongo.MongoClient()
-    db = mc['wta']
-    trail_reports = db['trail_reports']
-    raw_html = db['html']
-    trail_reports.drop()
-    raw_html.drop()
-    iterate_all_reports('mt_ellinor',"https://www.wta.org/go-hiking/hikes/mount-ellinor")
+# if __name__ == '__main__':
+#     mc = pymongo.MongoClient()
+#     db = mc['wta']
+#     trail_reports = db['trail_reports']
+#     raw_html = db['html']
+#     trail_page_raw_html = db['trail_html']
+#     trail_reports.drop()
+#     raw_html.drop()
+#     trail_page_raw_html.drop()
+#     hike_urls = pd.read_csv('../../data/olympics_trail_data.csv')
+#     TripReportBuilder(hike_urls)
