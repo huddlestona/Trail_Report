@@ -140,8 +140,8 @@ def build_csv(urls, csv_title):
             writer.writerow(trail_data)
     return None
 
-if __name __ == '__main__':
-    starturl= 'test'
-    title = 'test'
-    urls = iterate_all_reports(starturl)
-    build_csv(urls, title)
+# if __name __ == '__main__':
+#     starturl= 'test'
+#     title = 'test'
+#     urls = iterate_all_reports(starturl)
+#     build_csv(urls, title)
