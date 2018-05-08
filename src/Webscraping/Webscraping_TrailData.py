@@ -1,3 +1,4 @@
+"""This file, when called in the terminal will collect all WTA hike urls from given start url, save all the pernient data for that hike as a csv, and save the hikes webpage in a MongoDB"""
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
@@ -111,40 +112,36 @@ def trail_data_parser(url):
     return row_data
 
 
-with open('olympics_trail_data.csv', 'w', newline='') as csvfile:
-    fieldnames = ['Coast',
- 'Dogs not allowed',
- 'Established campsites',
- 'Fall foilage',
- 'Good for kids',
- 'Lakes',
- 'Mountain views',
- 'Old growth',
- 'Ridges/passes',
- 'Rivers',
- 'Summits',
- 'Waterfalls',
- 'Wildflowers/Meadows',
- 'Wildlife',
- 'distance',
- 'elevation_gain',
- 'highest_point',
- 'hike_name',
- 'lat',
- 'long',
- 'numReports',
- 'number_votes',
- 'rating',
- 'region',
- 'url',
- 'which_pass']
-    writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
-    writer.writeheader()
-    for lnk in olympics_urls:
-        trail_data = trail_data_parser(lnk)
-        writer.writerow(trail_data)
+def build_csv(urls, csv_title):
+    """Accepts a list of all hike urls, calls trail_data_parser to get trail
+        data, and saves trail data as a new line in a csv titled csv_title.
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    urls: List of strings. Hike urls.
+    csv_title: string. Title of csv to save to without .csv on end
+    **Output**
+    ------------------------------------------------------------------------------
+    None. Saves all trail data for each url in urls as a new line in a csv file
+    """
+    fieldnames = ['Coast','Dogs not allowed',
+                      'Established campsites','Fall foilage',
+                      'Good for kids','Lakes','Mountain views',
+                      'Old growth','Ridges/passes','Rivers','Summits',
+                      'Waterfalls','Wildflowers/Meadows','Wildlife',
+                      'distance','elevation_gain','highest_point',
+                      'hike_name','lat','long','numReports',
+                      'number_votes','rating','region',
+                      'url','which_pass']
+    with open(csv_title +'.csv', 'w', newline='') as csvfile:
+        writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
+        writer.writeheader()
+        for lnk in urls:
+            trail_data = trail_data_parser(lnk)
+            writer.writerow(trail_data)
+    return None
 
 if __name __ == '__main__':
+    starturl= 'test'
+    title = 'test'
     urls = iterate_all_reports(starturl)
-
-    
+    build_csv(urls, title)
