@@ -135,13 +135,17 @@ def build_csv(urls, csv_title):
     with open(csv_title +'.csv', 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
+        counter = 0
         for lnk in urls:
             trail_data = trail_data_parser(lnk)
             writer.writerow(trail_data)
+            counter += 1
+            print (f"{counter} trails written to CSV")
     return None
 
 if __name__ == '__main__':
-    starturl= 'https://www.wta.org/go-outside/hikes/hike_search?title=&region=922e688d784aa95dfb80047d2d79dcf6&subregion=all&rating=0&show_incomplete=on&mileage%3Alist%3Afloat=0.0&mileage%3Alist%3Afloat=25&elevationgain%3Alist%3Aint=0&elevationgain%3Alist%3Aint=5000&highpoint=&searchabletext=&sort=&filter=Search'
-    title = 'Olympic_trails_clean'
+    starturl= 'https://www.wta.org/go-outside/hikes?'
+    #currently only works with this start url- can't switch pages on a search result page
+    title = 'WTA_all_trail_data'
     urls = iterate_all_reports(starturl)
     build_csv(urls, title)
