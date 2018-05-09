@@ -63,20 +63,19 @@ def trail_data_parser(url):
     try:
         row_data['hike_name'] = soup.select_one('h1.documentFirstHeading').text
     except:
-        row_data['hike_name'] = None
+        row_data['hike_name'] = 'NaN'
     try:
         stats = soup.select('div.hike-stat div')
         all_stat = [s.text.strip('\n').strip(' ') for s in stats]
         row_data['region'] = all_stat[0]
         row_data['distance'] = all_stat[1]
-        row_data['elevation_gain'] = all_stat[3]
-        # int(re.findall('\d+', all_stat[3])[0])
+        row_data['elevation_gain'] = int(re.findall('\d+', all_stat[3])[0])
         row_data['highest_point'] = int(re.findall('\d+',all_stat[4])[0])
         row_data['rating'] = all_stat[9]
-        row_data['number_votes'] = all_stat[11]
+        row_data['number_votes'] = int(re.findall('\d+',all_stat[11])[0])
     except:
         row_data['region'] = 'NaN'
-        row_data['distance'] = None
+        row_data['distance'] = 'NaN'
         row_data['elevation_gain'] = None
         row_data['highest_point'] = None
         row_data['rating'] = 'NaN'
@@ -141,8 +140,8 @@ def build_csv(urls, csv_title):
             writer.writerow(trail_data)
     return None
 
-# if __name __ == '__main__':
-#     starturl= 'test'
-#     title = 'test'
-#     urls = iterate_all_reports(starturl)
-#     build_csv(urls, title)
+if __name__ == '__main__':
+    starturl= 'https://www.wta.org/go-outside/hikes/hike_search?title=&region=922e688d784aa95dfb80047d2d79dcf6&subregion=all&rating=0&show_incomplete=on&mileage%3Alist%3Afloat=0.0&mileage%3Alist%3Afloat=25&elevationgain%3Alist%3Aint=0&elevationgain%3Alist%3Aint=5000&highpoint=&searchabletext=&sort=&filter=Search'
+    title = 'Olympic_trails_clean'
+    urls = iterate_all_reports(starturl)
+    build_csv(urls, title)
