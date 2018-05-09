@@ -4,13 +4,6 @@ import math
 import pandas as pd
 import numpy as np
 
-mc = pymongo.MongoClient()
-db = mc['wta']
-trail_reports = db['trail_reports']
-raw_html = db['html']
-trail_page_raw_html = db['trail_html']
-
-
 def split_conditions(string):
     conditions = string.split('\n')[2].split(',')
     con_clean = [con.strip(' ') for con in conditions]
