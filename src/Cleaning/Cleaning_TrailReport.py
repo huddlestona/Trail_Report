@@ -17,7 +17,8 @@ def condition_dummies(df):
 def clean_trailreport(df):
     df['Creator'] = df ['Creator'].apply(lambda x: x.strip('\n'))
     df['Date_type'] = pd.to_datetime(df['Date'])
-    df['conditions_split'] = df[df['Trail_condtions'].notna()]['Trail_condtions'].apply(lambda x: split_conditions(x))
+    full_conditions = df[df['Trail_condtions'].notna()]['Trail_condtions']
+    df['conditions_split'] = full_conditions.apply(lambda x: split_conditions(x))
     condition_dummies(df)
     trail_dummies = pd.get_dummies(df['Trail'])
     df_all = pd.concat([df,trail_dummies], axis=1)
