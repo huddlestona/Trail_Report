@@ -38,6 +38,7 @@ def region_to_subregion(db):
     #turns string 'nan' to float 'NaN'
     db['subregion'] = db[db['super_region'] == 'nan']['super_region']= 'NaN'
 
+
 def clean_traildata(hike_df):
     hike_df['super_region'] = hike_df[~hike_df['region'].isna()]['region'].apply(lambda x: str(x).split('--')[0])
     hike_df['sub_region'] = hike_df[~hike_df['region'].isna()]['region'].apply(lambda x: str(x).split('--')[1])
