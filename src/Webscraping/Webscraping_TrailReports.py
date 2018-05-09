@@ -131,5 +131,5 @@ if __name__ == '__main__':
     trail_reports.drop()
     raw_html.drop()
     trail_page_raw_html.drop()
-    hike_urls = pd.read_csv('Olympic_trails_clean.csv')
+    hike_urls = pd.read_csv('../../data/Olympics_189hike_data.csv')
     TripReportBuilder(hike_urls)
