@@ -44,10 +44,11 @@ def clean_traildata(hike_df):
     hike_df['total_distance'] = hike_df[~hike_df['distance'].isna()]['distance'].apply(lambda x: total_dst(x))
     hike_df['stars'] = hike_df[~hike_df['rating'].isna()]['rating'].apply(lambda x: stars(x))
     hike_df['number_votes'] = hike_df['number_votes'].apply(lambda x: float(x))
+    hike_df['super_region'] = hike_df['super_region'].apply(lambda x: str(x).strip(' '))
     clean_hikes_df = hike_df.drop(['distance','rating','region'],axis=1)
     return clean_hikes_df
 
 if __name__ == '__main__':
     hike_df = pd.read_csv('../../data/WTA_all_trail_data.csv')
     clean_hikes_df = clean_traildata(hike_df)
-    clean_hikes_df.to_csv('WTA_all_trail_data_clean.csv')
+    clean_hikes_df.to_csv('../../data/WTA_all_trail_data_clean.csv')
