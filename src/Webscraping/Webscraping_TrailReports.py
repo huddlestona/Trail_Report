@@ -109,24 +109,27 @@ def TripReportBuilder(df):
     ------------------------------------------------------------------------------
     None. Calls following functions for input of data into MongoDB using Pymongo
     """
+    count = 0
     for row in range(len(df)):
         if df['numReports'][row]:
             title = df['hike_name'][row]
             url = df['url'][row]
             iterate_all_reports(title, url)
             save_trail_html(title, url)
+            count += 1
+            print (f'Unique Trails {count}')
         else:
             continue
     return None
 
-# if __name__ == '__main__':
-#     mc = pymongo.MongoClient()
-#     db = mc['wta']
-#     trail_reports = db['trail_reports']
-#     raw_html = db['html']
-#     trail_page_raw_html = db['trail_html']
-#     trail_reports.drop()
-#     raw_html.drop()
-#     trail_page_raw_html.drop()
-#     hike_urls = pd.read_csv('../../data/olympics_trail_data.csv')
-#     TripReportBuilder(hike_urls)
+if __name__ == '__main__':
+    mc = pymongo.MongoClient()
+    db = mc['wta']
+    trail_reports = db['trail_reports']
+    raw_html = db['html']
+    trail_page_raw_html = db['trail_html']
+    trail_reports.drop()
+    raw_html.drop()
+    trail_page_raw_html.drop()
+    hike_urls = pd.read_csv('Olympic_trails_clean.csv')
+    TripReportBuilder(hike_urls)
