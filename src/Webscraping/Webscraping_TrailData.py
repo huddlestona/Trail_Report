@@ -70,16 +70,17 @@ def trail_data_parser(url):
         row_data['region'] = all_stat[0]
         row_data['distance'] = all_stat[1]
         row_data['elevation_gain'] = all_stat[3]
-        row_data['highest_point'] = all_stat[4]
+        # int(re.findall('\d+', all_stat[3])[0])
+        row_data['highest_point'] = int(re.findall('\d+',all_stat[4])[0])
         row_data['rating'] = all_stat[9]
         row_data['number_votes'] = all_stat[11]
     except:
-        row_data['region'] = None
+        row_data['region'] = 'NaN'
         row_data['distance'] = None
         row_data['elevation_gain'] = None
         row_data['highest_point'] = None
-        row_data['rating'] = None
-        row_data['number_votes'] = None
+        row_data['rating'] = 'NaN'
+        row_data['number_votes'] = 'NaN'
     try:
         trail_features = []
         for div in soup.select('div#hike-features div'):
@@ -94,7 +95,7 @@ def trail_data_parser(url):
     try:
         row_data['which_pass'] = soup.select_one('div.alert a').text
     except:
-        row_data['which_pass'] = None
+        row_data['which_pass'] = 'NaN'
     try:
         lat_long = soup.select('div.latlong span')
         full_lat_long = [float(l.text) for l in lat_long]
