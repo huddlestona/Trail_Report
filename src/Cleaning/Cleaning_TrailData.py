@@ -40,8 +40,7 @@ def region_to_subregion(db):
 
 
 def clean_traildata(hike_df):
-    hike_df['super_region'] = hike_df[~hike_df['region'].isna()]['region'].apply(lambda x: str(x).split('--')[0])
-    hike_df['sub_region'] = hike_df[~hike_df['region'].isna()]['region'].apply(lambda x: str(x).split('--')[1])
+    region_to_subregion(hike_df)
     hike_df['total_distance'] = hike_df[~hike_df['distance'].isna()]['distance'].apply(lambda x: total_dst(x))
     hike_df['stars'] = hike_df[~hike_df['rating'].isna()]['rating'].apply(lambda x: stars(x))
     hike_df['number_votes'] = hike_df['number_votes'].apply(lambda x: float(x))
