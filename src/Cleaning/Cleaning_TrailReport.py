@@ -30,5 +30,4 @@ if __name__ == '__main__':
     trail_reports = db['trail_reports']
     df = pd.DataFrame(list(trail_reports.find()))
     clean__reports_df = clean_trailreport(df)
-    clean__reports_df.to_csv('../../data/WTA_olympics_trailreports_clean.csv')
-    
+    clean__reports_df.to_csv('../../data/WTA_olympics_trailreports_clean.csv', sep = '|')
