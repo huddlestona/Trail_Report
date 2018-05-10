@@ -22,7 +22,7 @@ def clean_trailreport(df):
     condition_dummies(df)
     trail_dummies = pd.get_dummies(df['Trail'])
     df_all = pd.concat([df,trail_dummies], axis=1)
-    return df_all.drop(['conditions_split','Date','Trail_condtions','Trail'], axis=1)
+    return df_all.drop(['conditions_split','Date','Trail_condtions'], axis=1)
 
 if __name__ == '__main__':
     mc = pymongo.MongoClient()
