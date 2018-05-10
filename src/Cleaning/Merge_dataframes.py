@@ -1,6 +1,20 @@
 import pandas as pd
 import numpy as np
 from math import sin, cos, sqrt, atan2, radians
+from io import BytesIO
+import boto3
+
+keys = ['Global_sum_FIPS:53031 FIPS:53009.csv','Global_sum_FIPS:53045 FIPS:53027.csv']
+
+def get_weather_as_df(keys):
+    files = b''
+    for key in keys:
+        response = s3.get_object(Bucket= bucket_name, Key= key)
+        body = response['Body']
+        csv = body.read()
+        files+= csv
+    f = BytesIO(files)
+    return pd.read_csv(f)
 
 def get_hike_distance(df1lat, df1long,df2lat, df2long):
     # approximate radius of earth in km
