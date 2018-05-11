@@ -49,7 +49,7 @@ def get_closest_station(df_hike,df_weather):
             distances.append(distance)
         shortest_idx = np.argmax(distances)
         distance = max(distances)
-        station = df_weather.loc[int(shortest_idx),'NAME']
+        station = df_weather.loc[int(shortest_idx),'name']
         closest_station.append(station)
         station_distance.append(distance)
     df_hike['closet_station'] = closest_station
@@ -92,10 +92,9 @@ if __name__ == '__main__':
     keys = ['Global_sum_FIPS:53031 FIPS:53009.csv','Global_sum_FIPS:53045 FIPS:53027.csv']
     df_all_weather = get_weather_as_df(keys)
     df_weather_clean = clean_weather_df(df_all_weather)
-    df_hike = merged_df
-    df_weather_distances = df_weather_clean[['LATITUDE','LONGITUDE','NAME']].drop_duplicates().reset_index()
+    df_all = add_to_merged_df(merged_df)
+    df_hike = df_all
+    df_weather_distances = df_weather_clean[['LATITUDE','LONGITUDE','name']].drop_duplicates().reset_index()
     get_closest_station(df_hike,df_weather_distances)
     df_hikeweather = merge_weather_trails(df_weather_clean,df_hike)
     df_hikeweather.to_csv('../../data/WTA_olympics_merged_yearlyweather', sep = '|')
-
- 
