@@ -82,6 +82,20 @@ def merge_weather_trails(df_weather,df_hike):
     df_all_clean = df_trail_year.drop(['Date_type','DATE','name'], axis =1)
     return df_all_clean
 
+def pred_x(all_x):
+    all_x.drop(['Creator','Trail','_id', 'hike_name','url','super_region'], axis = 1)
+    x['month'] = x['Datetime'].apply( lambda x: x.month + x.year)
+    x['year'] = x['Datetime'].apply( lambda x: x.year)
+    x['monthyear'] = x['Datetime'].apply( lambda x: str(x.month)+'-'+str(x.year))
+    month_dum = pd.get_dummies(x['month'])
+    year_dum = pd.get_dummies(x['year'])
+    monthyear_dummies = pd.get_dummies(x['monthyear'])
+    pass_dummies = pd.get_dummies(x['which_pass'])
+    subregion_dummies = pd.get_dummies(x['sub_region'])
+    all_x = pd.concat([x,monthyear_dummies,subregion_dummies], axis = 1)
+    final_x = all_x.drop(['Unnamed: 0','Date_type','month','year','monthyear','sub_region','which_pass','Datetime','last_year','closet_station'], axis=1)
+    X = final_x.fillna(0)
+    return X
 
 if __name__ == '__main__':
     df_trail = pd.read_csv('../../data/Olympics_189hike_data.csv')
