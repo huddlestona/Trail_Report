@@ -126,9 +126,9 @@ def merge_trail_files(df_trail,df_report):
     Merged: Pandas df of reports with added trail information
     """
 
-    df_reports = df_report.drop('Unnamed: 0',axis =1)
-    df_trails = df_trail.drop(['Unnamed: 0', 'Unnamed: 0.1'], axis=1)
-    merged = pd.merge(df_reports, df_trails, left_on='Trail', right_on='hike_name', how='left', sort=False)
+    # df_reports = df_report.drop('Unnamed: 0',axis =1)
+    # df_trails = df_trail.drop(['Unnamed: 0', 'Unnamed: 0.1'], axis=1)
+    merged = pd.merge(df_report, df_trail, left_on='Trail', right_on='hike_name', how='left', sort=False)
     return merged
 
 #to use wheneber reopened as a csv
@@ -146,12 +146,12 @@ def merge_weather_trails(df_weather,df_hike):
 
 if __name__ == '__main__':
     #import and merge trail info and trail reports
-    df_trail = pd.read_csv('../../data/Olympics_189hike_data.csv')
+    df_trail = pd.read_csv('../../data/Hood_canal_clean.csv')
     df_report = pd.read_csv('../../data/WTA_olympics_trailreports_clean.csv', sep = '|', lineterminator='\n')
     merged_df = merge_trail_files(df_trail,df_report)
     df_hike = change_datetime(merged_df)
     #saves merged without weather
-    # merged_df.to_csv('../../data/WTA_olympics_allmerged.csv', sep = '|')
+    # merged_df.to_csv('../../data/hood_canal_merged.csv', sep = '|')
     #keys for getting weather to add
     keys = ['Global_sum_FIPS:53031 FIPS:53009.csv','Global_sum_FIPS:53045 FIPS:53027.csv']
     #imports weather and cleans
@@ -161,4 +161,4 @@ if __name__ == '__main__':
     get_closest_station(df_hike,df_weather_distances)
     #merge and save full df
     df_hikeweather = merge_weather_trails(df_weather_clean,df_hike)
-    df_hikeweather.to_csv('../../data/WTA_olympics_merged_yearlyweather', sep = '|')
+    df_hikeweather.to_csv('../../data/Hood_canal_all.csv', sep = '|')
