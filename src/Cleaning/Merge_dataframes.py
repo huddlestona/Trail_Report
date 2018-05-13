@@ -1,11 +1,21 @@
+""" this file when called in the terminal will merge the trail, report,
+and weather dataframes. It also cleans the weathr data"""
 import pandas as pd
 import numpy as np
 from math import sin, cos, sqrt, atan2, radians
 from io import BytesIO
 import boto3
 
-
+#get weather and prep for merge
 def get_weather_as_df(keys):
+    """Uses keys to import all weather csvs, downloaded from national weather association
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    keys: list. All links for weather saved in s3
+    **Output**
+    ------------------------------------------------------------------------------
+    csv: pandas df. All opened csvs as a df
+    """
     s3 = boto3.client('s3')
     bucket_name = 'trailreportdata'
     files = b''
@@ -15,9 +25,22 @@ def get_weather_as_df(keys):
         csv = body.read()
         files+= csv
     f = BytesIO(files)
-    return pd.read_csv(f)
+    csv = pd.read_csv(f)
+    return csv
 
 def get_hike_distance(df1lat, df1long,df2lat, df2long):
+    """
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    df1lat: int.
+    df1long: int.
+    df2lat: int.
+    df2long: int.
+    all inputs are pulled from lat and long in the df
+    **Output**
+    ------------------------------------------------------------------------------
+    distance: int. distance between two points in km
+    """
     # approximate radius of earth in km
     R = 6373.0
 
@@ -36,6 +59,18 @@ def get_hike_distance(df1lat, df1long,df2lat, df2long):
     return distance
 
 def get_closest_station(df_hike,df_weather):
+    """
+    Calls get_hike_distance on each hike for each weather station.
+    Adds columns to df_hike
+
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    df_hike: pandas df
+    df_weather: pandas df
+    **Output**
+    ------------------------------------------------------------------------------
+    None. Adds columns to df_hike: closest station and station_distance
+    """
     closest_station = []
     station_distance = []
     for hike_idx in df_hike.index:
@@ -55,14 +90,19 @@ def get_closest_station(df_hike,df_weather):
     df_hike['closet_station'] = closest_station
     df_hike['station_distance'] = station_distance
 
-def merge_trail_files(df_trail,df_report):
-    """ This function left joins trails and reports, adding trail data to the report you built"""
-    df_reports = df_report.drop('Unnamed: 0',axis =1)
-    df_trails = df_trail.drop(['Unnamed: 0', 'Unnamed: 0.1'], axis=1)
-    merged = pd.merge(df_reports, df_trails, left_on='Trail', right_on='hike_name', how='left', sort=False)
-    return merged
 
 def clean_weather_df(weather_df):
+    """
+    Takes the weather_df and returns a dataframe with the station name
+    and numeric weather
+
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    weather_df: pandas df
+    **Output**
+    ------------------------------------------------------------------------------
+    all_weatherdf: pandas df
+    """
     col = weather_df.columns
     drop_col = list(col[7::2])
     clean_num = weather_df.drop(319, axis=0)
@@ -72,43 +112,53 @@ def clean_weather_df(weather_df):
     all_weatherdf['name']= num_weather['NAME']
     return all_weatherdf
 
-def add_to_merged_df(df_all):
+#merge all trails together
+
+def merge_trail_files(df_trail,df_report):
+    """
+    This function left joins trails and reports, adding trail data to the report you built
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    df_trail: pandas df
+    df_report: pandas df
+    **Output**
+    ------------------------------------------------------------------------------
+    Merged: Pandas df of reports with added trail information
+    """
+
+    df_reports = df_report.drop('Unnamed: 0',axis =1)
+    df_trails = df_trail.drop(['Unnamed: 0', 'Unnamed: 0.1'], axis=1)
+    merged = pd.merge(df_reports, df_trails, left_on='Trail', right_on='hike_name', how='left', sort=False)
+    return merged
+
+#to use wheneber reopened as a csv
+def change_datetime(df_all):
+    """ take the dateframe and turns the Datetime catagory into datetime form"""
     df_all['Datetime'] = df_all['Date_type'].apply(lambda x: pd.to_datetime(x))
-    df_all['last_year']= df_all['Datetime'].apply( lambda x: x.year-1)
     return df_all
 
 def merge_weather_trails(df_weather,df_hike):
+    """ Adds weather info to df_hike"""
     df_trail_year = pd.merge(df_hike, df_weather, how='left', left_on=['closet_station','last_year'], right_on= ['name','DATE'])
     df_all_clean = df_trail_year.drop(['Date_type','DATE','name'], axis =1)
     return df_all_clean
 
-def pred_x(all_x):
-    all_x.drop(['Creator','Trail','_id', 'hike_name','url','super_region'], axis = 1)
-    x['month'] = x['Datetime'].apply( lambda x: x.month + x.year)
-    x['year'] = x['Datetime'].apply( lambda x: x.year)
-    x['monthyear'] = x['Datetime'].apply( lambda x: str(x.month)+'-'+str(x.year))
-    month_dum = pd.get_dummies(x['month'])
-    year_dum = pd.get_dummies(x['year'])
-    monthyear_dummies = pd.get_dummies(x['monthyear'])
-    pass_dummies = pd.get_dummies(x['which_pass'])
-    subregion_dummies = pd.get_dummies(x['sub_region'])
-    all_x = pd.concat([x,monthyear_dummies,subregion_dummies], axis = 1)
-    final_x = all_x.drop(['Unnamed: 0','Date_type','month','year','monthyear','sub_region','which_pass','Datetime','last_year','closet_station'], axis=1)
-    X = final_x.fillna(0)
-    return X
 
 if __name__ == '__main__':
+    #import and merge trail info and trail reports
     df_trail = pd.read_csv('../../data/Olympics_189hike_data.csv')
     df_report = pd.read_csv('../../data/WTA_olympics_trailreports_clean.csv', sep = '|', lineterminator='\n')
     merged_df = merge_trail_files(df_trail,df_report)
+    df_hike = change_datetime(merged_df)
+    #saves merged without weather
     # merged_df.to_csv('../../data/WTA_olympics_allmerged.csv', sep = '|')
-    ###
+    #keys for getting weather to add
     keys = ['Global_sum_FIPS:53031 FIPS:53009.csv','Global_sum_FIPS:53045 FIPS:53027.csv']
+    #imports weather and cleans
     df_all_weather = get_weather_as_df(keys)
     df_weather_clean = clean_weather_df(df_all_weather)
-    df_all = add_to_merged_df(merged_df)
-    df_hike = df_all
     df_weather_distances = df_weather_clean[['LATITUDE','LONGITUDE','name']].drop_duplicates().reset_index()
     get_closest_station(df_hike,df_weather_distances)
+    #merge and save full df
     df_hikeweather = merge_weather_trails(df_weather_clean,df_hike)
     df_hikeweather.to_csv('../../data/WTA_olympics_merged_yearlyweather', sep = '|')
