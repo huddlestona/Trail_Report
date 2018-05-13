@@ -1,5 +1,7 @@
 import numpy as np
 import pandas as pd
+import math
+pd.options.mode.chained_assignment = None  # default='warn'
 
 def stars(string):
     '''Extracts number of stars'''
@@ -39,6 +41,37 @@ def region_to_subregion(db):
     # #turns string 'nan' to float 'NaN'
     # db['subregion'] = db[db['super_region'] == 'nan']['super_region']= 'NaN'
 
+# Haversine formula example in Python
+# Author: Wayne Dyck
+
+def distance(origin, destination):
+    lat1, lon1 = origin
+    lat2, lon2 = destination
+    radius = 6371 # km
+
+    dlat = math.radians(lat2-lat1)
+    dlon = math.radians(lon2-lon1)
+    a = math.sin(dlat/2) * math.sin(dlat/2) + math.cos(math.radians(lat1)) \
+        * math.cos(math.radians(lat2)) * math.sin(dlon/2) * math.sin(dlon/2)
+    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
+    d = radius * c
+
+    return d
+
+def distance_from_median(df):
+    ''' Calculated distance from median point. Median is just for hood canal'''
+    lat2 = 47.7748
+    lon2 = -123.1038
+    destination = lat2,lon2
+    all_hikes = list(df['hike_name'].unique())
+    distances = []
+    for hike in all_hikes:
+        lat1 = df.loc[df['hike_name']== hike]['lat']
+        lon1 = df.loc[df['hike_name']== hike]['long']
+        origin = float(lat1),float(lon1)
+        distances.append(distance(origin,destination))
+    return distances
+
 
 def clean_traildata(hike_df):
     """ Takes in the dataframe, cleans columns, and returns a clean df """
@@ -53,4 +86,6 @@ def clean_traildata(hike_df):
 if __name__ == '__main__':
     hike_df = pd.read_csv('../../data/WTA_all_trail_data.csv')
     clean_hikes_df = clean_traildata(hike_df)
-    clean_hikes_df.to_csv('../../data/WTA_all_trail_data_clean.csv')
+    hood_df = clean_hikes_df.loc[clean_hikes_df['sub_region'] == ' Hood Canal']
+    hood_df['distance_from_median']= distance_from_median(hood_df)
+    hood_df.to_csv('../../data/Hood_canal_clean.csv')
