@@ -23,6 +23,7 @@ def total_dst(string):
         return miles[0]
 
 def region_to_subregion(db):
+    """ Adds region and subregion to database"""
     split = db['region'].apply(lambda x: str(x).split('--'))
     super_region = []
     sub_region = []
@@ -40,6 +41,7 @@ def region_to_subregion(db):
 
 
 def clean_traildata(hike_df):
+    """ Takes in the dataframe, cleans columns, and returns a clean df """
     region_to_subregion(hike_df)
     hike_df['total_distance'] = hike_df[~hike_df['distance'].isna()]['distance'].apply(lambda x: total_dst(x))
     hike_df['stars'] = hike_df[~hike_df['rating'].isna()]['rating'].apply(lambda x: stars(x))
