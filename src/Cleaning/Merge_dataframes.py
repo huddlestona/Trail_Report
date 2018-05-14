@@ -149,16 +149,16 @@ if __name__ == '__main__':
     df_trail = pd.read_csv('../../data/Hood_canal_clean.csv')
     df_report = pd.read_csv('../../data/WTA_olympics_trailreports_clean.csv', sep = '|', lineterminator='\n')
     merged_df = merge_trail_files(df_trail,df_report)
-    df_hike = change_datetime(merged_df)
-    #saves merged without weather
-    # merged_df.to_csv('../../data/hood_canal_merged.csv', sep = '|')
+    # df_hike = change_datetime(merged_df)
+    # saves merged without weather
+    merged_df.to_csv('../../data/new_hood_canal_merged.csv', sep = '|')
     #keys for getting weather to add
-    keys = ['Global_sum_FIPS:53031 FIPS:53009.csv','Global_sum_FIPS:53045 FIPS:53027.csv']
-    #imports weather and cleans
-    df_all_weather = get_weather_as_df(keys)
-    df_weather_clean = clean_weather_df(df_all_weather)
-    df_weather_distances = df_weather_clean[['LATITUDE','LONGITUDE','name']].drop_duplicates().reset_index()
-    get_closest_station(df_hike,df_weather_distances)
-    #merge and save full df
-    df_hikeweather = merge_weather_trails(df_weather_clean,df_hike)
-    df_hikeweather.to_csv('../../data/Hood_canal_all.csv', sep = '|')
+    # keys = ['Global_sum_FIPS:53031 FIPS:53009.csv','Global_sum_FIPS:53045 FIPS:53027.csv']
+    # #imports weather and cleans
+    # df_all_weather = get_weather_as_df(keys)
+    # df_weather_clean = clean_weather_df(df_all_weather)
+    # df_weather_distances = df_weather_clean[['LATITUDE','LONGITUDE','name']].drop_duplicates().reset_index()
+    # get_closest_station(df_hike,df_weather_distances)
+    # #merge and save full df
+    # df_hikeweather = merge_weather_trails(df_weather_clean,df_hike)
+    # df_hikeweather.to_csv('../../data/Hood_canal_all.csv', sep = '|')
