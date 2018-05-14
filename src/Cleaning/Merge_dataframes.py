@@ -134,13 +134,13 @@ def merge_trail_files(df_trail,df_report):
 #to use wheneber reopened as a csv
 def change_datetime(df_all):
     """ take the dateframe and turns the Datetime catagory into datetime form"""
-    df_all['Datetime'] = df_all['Date_type'].apply(lambda x: pd.to_datetime(x))
+    df_all['Datetime'] = df_all['Date'].apply(lambda x: pd.to_datetime(x))
     return df_all
 
 def merge_weather_trails(df_weather,df_hike):
     """ Adds weather info to df_hike"""
     df_trail_year = pd.merge(df_hike, df_weather, how='left', left_on=['closet_station','last_year'], right_on= ['name','DATE'])
-    df_all_clean = df_trail_year.drop(['Date_type','DATE','name'], axis =1)
+    df_all_clean = df_trail_year.drop(['Date','DATE','name'], axis =1)
     return df_all_clean
 
 
