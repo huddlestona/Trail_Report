@@ -80,7 +80,10 @@ def clean_traildata(hike_df):
     hike_df['stars'] = hike_df[~hike_df['rating'].isna()]['rating'].apply(lambda x: stars(x))
     hike_df['number_votes'] = hike_df['number_votes'].apply(lambda x: float(x))
     hike_df['super_region'] = hike_df['super_region'].apply(lambda x: str(x).strip(' '))
-    clean_hikes_df = hike_df.drop(['distance','rating','region'],axis=1)
+    pass_dummies = pd.get_dummies(hike_df['which_pass'])
+    subregion_dummies = pd.get_dummies(hike_df['sub_region'])
+    merge_dummies = pd.concat([hike_df,pass_dummies,subregion_dummies],axis=1)
+    clean_hikes_df = merge_dummies.drop(['distance','rating','region'],axis=1)
     return clean_hikes_df
 
 if __name__ == '__main__':
