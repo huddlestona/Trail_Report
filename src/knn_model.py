@@ -10,6 +10,7 @@ from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, roc_curve, auc, classification_report
 
+conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
 
 def prep_for_knn(df):
     df_new = df.drop(['Unnamed: 0','Unnamed: 0_x','Creator','Trail','Report',
@@ -26,10 +27,10 @@ def train_test_split(df,year):
     train = df[df['year'] < year]
     return test,train
 
-def get_neighbors(df):
+def get_neighbors(df,condition):
     neigh = KNeighborsClassifier(n_neighbors=20)
     X = df[['highest_point','distance_from_median','month']]
-    y = df['condition|snow']
+    y = df[condition]
     y = y.astype(bool)
     X_s = normalize(scale(X))
     neigh.fit(X_s,y)
@@ -37,22 +38,24 @@ def get_neighbors(df):
     averages = []
     for idx_neighbors in all_n[1]:
         neighbors = df.iloc[idx_neighbors]
-        averages.append(neighbors['condition|snow'].mean())
-    df['neighbors_average'] = averages
+        averages.append(neighbors[condition].mean())
+    df[f'neighbors_average {condition}'] = averages
 
-def add_cols(test,train, df_weather_dist):
-    get_neighbors(test)
-    get_neighbors(train)
+def add_cols(test,train, df_weather_dist,condition):
+    get_neighbors(test,condition)
+    get_neighbors(train, condition)
     get_closest_station(train,df_weather_dist)
     get_closest_station(test,df_weather_dist)
 
-def get_knn_inputs(test,train):
-    test_y = test['condition|snow']
-    test_X = test.drop(['condition|snow', 'condition|trail','condition|bugs',
-    'condition|road','last_year','year','station_distance','closet_station'], axis = 1)
-    train_y = train['condition|snow']
-    train_X = train.drop(['condition|snow', 'condition|trail','condition|bugs',
-    'condition|road','last_year','year','station_distance','closet_station'], axis = 1)
+def get_knn_inputs(test,train,condition):
+    conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
+    test_y = test[condition]
+    conditions.remove(condition)
+    drop_list = conditions+['last_year','year',
+    'station_distance','closet_station']
+    test_X = test.drop(drop_list, axis = 1)
+    train_y = train[condition]
+    train_X = train.drop(drop_list, axis = 1)
     test_X = test_X.fillna(0)
     train_X = train_X.fillna(0)
     return train_X,train_y,test_X,test_y
