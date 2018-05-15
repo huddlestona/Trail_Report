@@ -40,10 +40,10 @@ def clean_trailreport(df):
     df['monthyear'] = df['Date'].apply( lambda x: str(x.month)+'-'+str(x.year))
     condition_dummies(df)
     trail_dummies= pd.get_dummies(df['Trail'])
-    month_dum = pd.get_dummies(df['month'])
-    year_dum = pd.get_dummies(df['year'])
-    monthyear_dummies = pd.get_dummies(df['monthyear'])
-    df_all = pd.concat([df,trail_dummies,monthyear_dummies], axis=1)
+    # month_dum = pd.get_dummies(df['month'])
+    # year_dum = pd.get_dummies(df['year'])
+    # monthyear_dummies = pd.get_dummies(df['monthyear'])
+    df_all = pd.concat([df,trail_dummies], axis=1)
     return df_all.drop(['conditions_split','Trail_condtions'], axis=1)
 
 if __name__ == '__main__':
