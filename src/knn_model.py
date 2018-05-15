@@ -49,10 +49,12 @@ def add_cols(test,train, df_weather_dist):
 def get_knn_inputs(test,train):
     test_y = test['condition|snow']
     test_X = test.drop(['condition|snow', 'condition|trail','condition|bugs',
-    'condition|road','Date','last_year','year','station_distance','closet_station'], axis = 1)
+    'condition|road','last_year','year','station_distance','closet_station'], axis = 1)
     train_y = train['condition|snow']
     train_X = train.drop(['condition|snow', 'condition|trail','condition|bugs',
-    'condition|road','Date','last_year','year','station_distance','closet_station'], axis = 1)
+    'condition|road','last_year','year','station_distance','closet_station'], axis = 1)
+    test_X = test_X.fillna(0)
+    train_X = train_X.fillna(0)
     return train_X,train_y,test_X,test_y
 
 def make_forest(X_train,y_train,X_test,y_test):
