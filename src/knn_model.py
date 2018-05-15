@@ -1,4 +1,4 @@
-from Cleaning.Merge_Weather import *
+from Cleaning.Merge_Weather import import_weather, merge_weather_trails
 
 def prep_for_knn(df):
     df_new = df.drop(['Unnamed: 0','Unnamed: 0_x','Creator','Trail','Report',
@@ -28,11 +28,6 @@ def get_neighbors(df):
         neighbors = df_d.iloc[idx_neighbors]
         averages.append(neighbors['condition|snow'].mean())
     df['neighbors_average'] = averages
-
-def import_weather(keys):
-    #imports weather and cleans
-    df_all_weather = get_weather_as_df(keys)
-    return clean_weather_df(df_all_weather)
 
 def add_cols(test,train, df_weather_dist):
     get_neighbors(test)
