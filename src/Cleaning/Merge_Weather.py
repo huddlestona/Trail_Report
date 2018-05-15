@@ -113,7 +113,7 @@ def clean_weather_df(weather_df):
 def merge_weather_trails(df_weather,df_hike):
     """ Adds weather info to df_hike"""
     df_trail_year = pd.merge(df_hike, df_weather, how='left', left_on=['closet_station','last_year'], right_on= ['name','DATE'])
-    df_all_clean = df_trail_year.drop(['Date','DATE','name'], axis =1)
+    df_all_clean = df_trail_year.drop(['DATE','name'], axis =1)
     return df_all_clean
 
 def import_weather(keys):
