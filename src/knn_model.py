@@ -50,7 +50,6 @@ def add_cols(test,train, df_weather_dist,condition):
 def get_knn_inputs(test,train,condition):
     conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
     test_y = test[condition]
-    conditions.remove(condition)
     drop_list = conditions+['last_year','year',
     'station_distance','closet_station']
     test_X = test.drop(drop_list, axis = 1)
