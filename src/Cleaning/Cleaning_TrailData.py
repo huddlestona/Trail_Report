@@ -1,6 +1,6 @@
 import numpy as np
 import pandas as pd
-import math
+from math import sin, cos, sqrt, atan2, radians
 pd.options.mode.chained_assignment = None  # default='warn'
 
 def stars(string):
@@ -102,7 +102,8 @@ def clean_traildata(hike_df):
     subregion_dummies = pd.get_dummies(hike_df['sub_region'])
     merge_dummies = pd.concat([hike_df,pass_dummies,subregion_dummies],axis=1)
     clean_hikes_df = merge_dummies.drop(['distance','rating','region'],axis=1)
-    return clean_hikes_df
+    dropped = clean_hikes_df.sort_values('numReports').drop_duplicates(subset='hike_name', keep= 'last')
+    return dropped
 
 if __name__ == '__main__':
     hike_df = pd.read_csv('../../data/WTA_all_trail_data.csv')
