@@ -116,6 +116,11 @@ def merge_weather_trails(df_weather,df_hike):
     df_all_clean = df_trail_year.drop(['Date','DATE','name'], axis =1)
     return df_all_clean
 
+def import_weather(keys):
+    #imports weather and cleans
+    df_all_weather = get_weather_as_df(keys)
+    return clean_weather_df(df_all_weather)
+
 
 if __name__ == '__main__':
     df_hike = pd.read_csv('../../data/new_olympics_merged.csv', sep = '|')
