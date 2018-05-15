@@ -44,32 +44,50 @@ def region_to_subregion(db):
 # Haversine formula example in Python
 # Author: Wayne Dyck
 
-def distance(origin, destination):
+def distance_corr(origin,destination):
+    """distance between two lat/long in km"""
     lat1, lon1 = origin
     lat2, lon2 = destination
-    radius = 6371 # km
+    # approximate radius of earth in km
+    R = 6373.0
 
-    dlat = math.radians(lat2-lat1)
-    dlon = math.radians(lon2-lon1)
-    a = math.sin(dlat/2) * math.sin(dlat/2) + math.cos(math.radians(lat1)) \
-        * math.cos(math.radians(lat2)) * math.sin(dlon/2) * math.sin(dlon/2)
-    c = 2 * math.atan2(math.sqrt(a), math.sqrt(1-a))
-    d = radius * c
+    lat1 = radians(52.2296756)
+    lon1 = radians(21.0122287)
+    lat2 = radians(52.406374)
+    lon2 = radians(16.9251681)
 
-    return d
+    dlon = lon2 - lon1
+    dlat = lat2 - lat1
+
+    a = sin(dlat / 2)**2 + cos(lat1) * cos(lat2) * sin(dlon / 2)**2
+    c = 2 * atan2(sqrt(a), sqrt(1 - a))
+
+    distance = R * c
+    return distance
+
+def get_medians(df):
+    """ calculates median point for each sub_region"""
+    medians = {}
+    sub_regions = df['sub_region'].unique()
+    for region in sub_regions:
+        lat = df[df['sub_region'] == region]['lat'].mean()
+        lon = df[df['sub_region'] == region]['lat'].mean()
+        medians[region] = (lat,lon)
+    return medians
 
 def distance_from_median(df):
-    ''' Calculated distance from median point. Median is just for hood canal'''
-    lat2 = 47.7748
-    lon2 = -123.1038
-    destination = lat2,lon2
-    all_hikes = list(df['hike_name'].unique())
+    ''' Calculated distance from median point.'''
     distances = []
+    medians = get_medians(df)
+    all_hikes = list(df['hike_name'])
     for hike in all_hikes:
-        lat1 = df.loc[df['hike_name']== hike]['lat']
-        lon1 = df.loc[df['hike_name']== hike]['long']
+        one_hike = df.loc[df['hike_name']== hike]
+        lat1 = one_hike['lat']
+        lon1 = one_hike['long']
         origin = float(lat1),float(lon1)
-        distances.append(distance(origin,destination))
+        sub_region = one_hike['sub_region'].values[0]
+        destination = medians[sub_region]
+        distances.append(distance_corr(origin,destination))
     return distances
 
 
@@ -89,6 +107,6 @@ def clean_traildata(hike_df):
 if __name__ == '__main__':
     hike_df = pd.read_csv('../../data/WTA_all_trail_data.csv')
     clean_hikes_df = clean_traildata(hike_df)
-    hood_df = clean_hikes_df.loc[clean_hikes_df['sub_region'] == ' Hood Canal']
-    hood_df['distance_from_median']= distance_from_median(hood_df)
-    hood_df.to_csv('../../data/Hood_canal_clean.csv')
+    # hood_df = clean_hikes_df.loc[clean_hikes_df['sub_region'] == ' Hood Canal']
+    clean_hikes_df['distance_from_median']= distance_from_median(clean_hikes_df)
+    clean_hikes_df.to_csv('../../data/WTA_trails_clean_w_medians.csv')
