@@ -121,6 +121,12 @@ def import_weather(keys):
     df_all_weather = get_weather_as_df(keys)
     return clean_weather_df(df_all_weather)
 
+def get_weather_data():
+    keys = ['Global_sum_FIPS:53031 FIPS:53009.csv','Global_sum_FIPS:53045 FIPS:53027.csv']
+    df_weather = import_weather(keys)
+    df_weather_dist = df_weather[['LATITUDE','LONGITUDE','name']].drop_duplicates().reset_index()
+    return df_weather,df_weather_dist
+
 
 if __name__ == '__main__':
     df_hike = pd.read_csv('../../data/new_olympics_merged.csv', sep = '|')
