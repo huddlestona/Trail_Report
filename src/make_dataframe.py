@@ -7,11 +7,15 @@ import pandas as pd
 
 def split_x_y(df,condition):
     conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
+    df_full = df.fillna(0)
     train_y = df[condition]
     drop_list = conditions+['year','closet_station']
     train_X = df.drop(drop_list, axis = 1)
-    train_X = train_X.fillna(0)
     return train_X,train_y
+
+def clean_X(df):
+    df_clean = df.drop(['Date','last_year','month'], axis=1)
+    return df_clean
 
 if __name__ == '__main__':
     condition = 'condition|snow'
@@ -22,7 +26,8 @@ if __name__ == '__main__':
     get_neighbors(neigh,df_clean,condition)
     get_closest_station(df_clean,df_weather_dist)
     #merge and save full df
-    df_final = merge_weather_trails(df_weather,df_clean)
-    train_X,train_y = split_x_y(df_clean,condition)
+    df_merge = merge_weather_trails(df_weather,df_clean)
+    df_final = clean_X(df_merge)
+    train_X,train_y = split_x_y(df_final,condition)
     train_X.to_csv('../data/olympics_final_X', sep = '|')
     train_y.to_csv('../data/olympics_final_y', sep = '|')
