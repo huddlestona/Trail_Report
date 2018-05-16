@@ -134,8 +134,8 @@ def clean_for_model(hike,date,df):
 #     test_X = df_test.drop(drop_list, axis = 1)
 #     test_X = test_X.fillna(0)
 #     return test_X
-def make_prediction(X_train,y_train,X_test):
-    model, pred = make_forest(X_train,y_train,X_test)
+def make_prediction(X_train,y_train,X_test,model):
+    model, pred = model(X_train,y_train,X_test)
     return model,pred
 
 
@@ -148,8 +148,8 @@ if __name__ == '__main__':
     df_weather,df_weather_dist = get_weather_data()
     # hike = input("Where would you like to hike? ")
     # hike_date = input("When do you want to go? ")
-    hike = 'Anderson Lake State Park'
-    hike_date = '02/10/18'
+    hike = 'Mount Ellinor'
+    hike_date = '03/12/18'
     condition = 'condition|snow'
     date = pd.to_datetime(hike_date)
     neighbor_average = get_new_neighbors(df,hike,date,condition)
@@ -162,5 +162,5 @@ if __name__ == '__main__':
     hike_all_df = merge_weather_trails(df_weather,hike_df)
     X_test = clean_for_model(hike,date,hike_all_df)
     # X_test.to_csv('../data/olympics_X_test', sep = '|',index_label=False)
-    model,pred = make_prediction(X_train,y_train,X_test)
+    model,pred = make_prediction(X_train,y_train,X_test,make_logistic)
     print (f"There is a {float(pred[:,1])} likelihood of having {condition} at {hike} on {hike_date}")
