@@ -1,20 +1,15 @@
 from Cleaning.Merge_Weather import get_weather_data, merge_weather_trails, get_closest_station
+from knn_model import prep_for_knn,prep_neighbors,get_neighbors
 import pandas as pd
-import numpy as np
-from sklearn.neighbors import KNeighborsClassifier
-import math
-from sklearn.preprocessing import scale
-from sklearn.preprocessing import normalize
-from sklearn.ensemble import RandomForestClassifier
-from sklearn.model_selection import train_test_split
-import matplotlib.pyplot as plt
-from sklearn.metrics import confusion_matrix, roc_curve, auc, classification_report
+
+
+
 
 def split_x_y(df,condition):
     conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
-    train_y = test[condition]
+    train_y = df[condition]
     drop_list = conditions+['year','closet_station']
-    train_X = test.drop(drop_list, axis = 1)
+    train_X = df.drop(drop_list, axis = 1)
     train_X = train_X.fillna(0)
     return train_X,train_y
 
@@ -29,5 +24,5 @@ if __name__ == '__main__':
     #merge and save full df
     df_final = merge_weather_trails(df_weather,df_clean)
     train_X,train_y = split_x_y(df_clean,condition)
-    train_X.to_csv('../../data/olympics_final_X, sep = '|')
-    train_y.to_csv('../../data/olympics_final_y, sep = '|')
+    train_X.to_csv('../data/olympics_final_X', sep = '|')
+    train_y.to_csv('../data/olympics_final_y', sep = '|')
