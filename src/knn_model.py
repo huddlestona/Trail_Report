@@ -63,7 +63,7 @@ def get_knn_inputs(test,train,condition):
     train_X = train_X.fillna(0)
     return train_X,train_y,test_X,test_y
 
-def make_forest(X_train,y_train,X_test,y_test):
+def make_forest(X_train,y_train,X_test):
     model = RandomForestClassifier(n_estimators=500)
     fit = model.fit(X_train,y_train)
     pred = model.predict_proba(X_test)
