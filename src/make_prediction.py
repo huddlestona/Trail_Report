@@ -134,9 +134,13 @@ def clean_for_model(hike,date,df):
 #     test_X = df_test.drop(drop_list, axis = 1)
 #     test_X = test_X.fillna(0)
 #     return test_X
-def make_prediction(X_train,y_train,X_test,model):
-    model, pred = model(X_train,y_train,X_test)
-    return pred
+def Make_Prediction(hike,hike_date,condition):
+    X_train = pd.read_csv('../data/olympics_final_X',sep = '|',lineterminator='\n')
+    y_all = pd.read_csv('../data/olympics_final_y',sep = '|',lineterminator='\n',header=None)
+    y_train = y_all[1]
+    X_test = get_X_test(hike,hike_date,condition)
+    model, pred = make_logistic(X_train,y_train,X_test)
+    return f"There is a {float(pred[:,1])} likelihood of having {condition} at {hike} on {hike_date}"
 
 def get_X_test(hike,hike_date,condition):
     df = pd.read_csv('../data/new_olympics_merged.csv', sep = '|',lineterminator='\n')
@@ -155,12 +159,8 @@ def get_X_test(hike,hike_date,condition):
     return X_test
 
 if __name__ == '__main__':
-    X_train = pd.read_csv('../data/olympics_final_X',sep = '|',lineterminator='\n')
-    y_train = pd.read_csv('../data/olympics_final_y',sep = '|',lineterminator='\n',header=None)
-    y_train = y_train.drop([0], axis=1)
-    hike = 'Mount Ellinor'
+    hike = 'Mount Townsend'
     hike_date = '03/12/18'
     condition = 'condition|snow'
-    X_test = get_X_test(hike,hike_date,condition)
-    pred = make_prediction(X_train,y_train,X_test,make_logistic)
-    print (f"There is a {float(pred[:,1])} likelihood of having {condition} at {hike} on {hike_date}")
+    pred = Make_Prediction(hike,hike_date,condition)
+    print(pred)
