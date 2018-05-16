@@ -99,10 +99,10 @@ def add_hike_dummy(hike,df):
        "Westport State Park - Westport Light Trail", "Wolf Creek",
        "Wynoochee Lake", "Wynoochee Pass to Sundown Lake"]
     for one_hike in hikes:
-    if one_hike == hike:
-        df[one_hike] = 1
-    else:
-        df[column] = 0
+        if one_hike == hike:
+            df[one_hike] = 1
+        else:
+            df[one_hike] = 0
 
 def add_dummy_dates(date,df):
     years = [year for year in range(1997,2019)]
@@ -119,10 +119,10 @@ def add_dummy_dates(date,df):
             df[month] = 0
 
 def clean_for_model(hike,date,df):
-    df_clean = df.drop(['Unnamed: 0','url','which_pass','super_region',
-    'sub_region','closet_station'], axis=1)
     add_hike_dummy(hike,df)
     add_dummy_dates(date,df)
+    df_clean = df.drop(['Unnamed: 0','url','which_pass','super_region',
+    'sub_region','closet_station','hike_name','last_year','month','year'], axis=1)
     df_full = df_clean.fillna(0)
     return df_full
 
@@ -134,17 +134,27 @@ def clean_for_model(hike,date,df):
 #     test_X = df_test.drop(drop_list, axis = 1)
 #     test_X = test_X.fillna(0)
 #     return test_X
+def make_prediction(X_train,y_train,X_test):
+    model, pred = make_forest(X_train,y_train,X_test)
+    return pred
+
 
 if __name__ == '__main__':
     df = pd.read_csv('../data/new_olympics_merged.csv', sep = '|',lineterminator='\n')
-    trail_df = pd.read_csv('../data/WTA_trails_clean_w_medians.csv',lineterminator='\n')
+    df_trail = pd.read_csv('../data/WTA_trails_clean_w_medians.csv',lineterminator='\n')
+    X_train = pd.read_csv('../data/olympics_final_X',sep = '|',lineterminator='\n')
+    X_train = X_train.drop(['Unnamed: 0'], axis=1)
+    y_train = pd.read_csv('../data/olympics_final_y',sep = '|',lineterminator='\n')
+    y_train = y_train.drop(['0'], axis=1)
     df_weather,df_weather_dist = get_weather_data()
-    hike = input("Where would you like to hike? ")
-    hike_date = input("When do you want to go? ")
+    # hike = input("Where would you like to hike? ")
+    # hike_date = input("When do you want to go? ")
+    hike = 'Buckhorn Mountain'
+    hike_date = '02/10/18'
     condition = 'condition|snow'
     date = pd.to_datetime(hike_date)
     neighbor_average = get_new_neighbors(df,hike,date,condition)
-    hike_df = get_hike_info(hike,df)
+    hike_df = get_hike_info(hike,df_trail)
     hike_df[f'neighbors_average {condition}'] = neighbor_average
     hike_df['month'] = date.month
     hike_df['year'] = date.year
@@ -152,4 +162,5 @@ if __name__ == '__main__':
     get_closest_station(hike_df,df_weather_dist)
     hike_all_df = merge_weather_trails(df_weather,hike_df)
     X_test = clean_for_model(hike,date,hike_all_df)
-    print (f"There is a perc. chance of snow on {hike_date} at {hike}")
+    pred = make_prediction(X_train,y_train,X_test)
+    print (f"There is a {pred} of having {condition} at {hike} on {hike_date}")
