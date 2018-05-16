@@ -136,20 +136,19 @@ def clean_for_model(hike,date,df):
 #     return test_X
 def make_prediction(X_train,y_train,X_test):
     model, pred = make_forest(X_train,y_train,X_test)
-    return pred
+    return model,pred
 
 
 if __name__ == '__main__':
     df = pd.read_csv('../data/new_olympics_merged.csv', sep = '|',lineterminator='\n')
     df_trail = pd.read_csv('../data/WTA_trails_clean_w_medians.csv',lineterminator='\n')
     X_train = pd.read_csv('../data/olympics_final_X',sep = '|',lineterminator='\n')
-    X_train = X_train.drop(['Unnamed: 0'], axis=1)
-    y_train = pd.read_csv('../data/olympics_final_y',sep = '|',lineterminator='\n')
-    y_train = y_train.drop(['0'], axis=1)
+    y_train = pd.read_csv('../data/olympics_final_y',sep = '|',lineterminator='\n',header=None)
+    y_train = y_train.drop([0], axis=1)
     df_weather,df_weather_dist = get_weather_data()
     # hike = input("Where would you like to hike? ")
     # hike_date = input("When do you want to go? ")
-    hike = 'Buckhorn Mountain'
+    hike = 'Anderson Lake State Park'
     hike_date = '02/10/18'
     condition = 'condition|snow'
     date = pd.to_datetime(hike_date)
@@ -162,5 +161,6 @@ if __name__ == '__main__':
     get_closest_station(hike_df,df_weather_dist)
     hike_all_df = merge_weather_trails(df_weather,hike_df)
     X_test = clean_for_model(hike,date,hike_all_df)
-    pred = make_prediction(X_train,y_train,X_test)
-    print (f"There is a {pred} of having {condition} at {hike} on {hike_date}")
+    # X_test.to_csv('../data/olympics_X_test', sep = '|',index_label=False)
+    model,pred = make_prediction(X_train,y_train,X_test)
+    print (f"There is a {float(pred[:,1])} likelihood of having {condition} at {hike} on {hike_date}")
