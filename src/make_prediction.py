@@ -104,6 +104,20 @@ def add_hike_dummy(hike,df):
     else:
         df[column] = 0
 
+def add_dummy_dates(date,df):
+    years = [year for year in range(1997,2019)]
+    months = [month for month in range(1,13)]
+    for year in years:
+        if year == 2015:
+            df[year] = 1
+        else:
+            df[year] = 0
+    for month in months:
+        if year == 5:
+            df[month] = 1
+        else:
+            df[month] = 0
+
 def clean_for_model(hike,df):
     df_clean = df.drop(['Unnamed: 0','url','which_pass','super_region',
     'sub_region','closet_station'], axis=1)
@@ -132,6 +146,7 @@ if __name__ == '__main__':
     hike_df = get_hike_info(hike,df)
     hike_df[f'neighbors_average {condition}'] = neighbor_average
     hike_df['month'] = date.month
+    hike_df['year'] = date.year
     get_closest_station(hike_df,df_weather_dist)
     hike_all_df = merge_weather_trails(df_weather,hike_df)
     X_test = clean_for_model(hike,hike_all_df)
