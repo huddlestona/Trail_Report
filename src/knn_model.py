@@ -6,6 +6,7 @@ import math
 from sklearn.preprocessing import scale
 from sklearn.preprocessing import normalize
 from sklearn.ensemble import RandomForestClassifier
+from sklearn.linear_model import LogisticRegression
 from sklearn.model_selection import train_test_split
 import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, roc_curve, auc, classification_report
@@ -67,9 +68,13 @@ def make_forest(X_train,y_train,X_test):
     model = RandomForestClassifier(n_estimators=500)
     fit = model.fit(X_train,y_train)
     pred = model.predict_proba(X_test)
-    #later X_test will be the actual input
     return model, pred
 
+def make_logistic(X_train,y_train,X_test):
+    model = LogisticRegression()
+    model.fit(X_train, y_train)
+    pred = model.predict_proba(X_test)
+    return model,pred
 if __name__ == '__main__':
     df = pd.read_csv('../data/new_olympics_merged.csv', sep = '|',lineterminator='\n')
     df_clean = prep_for_knn(df)
