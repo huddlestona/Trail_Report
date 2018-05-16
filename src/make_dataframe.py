@@ -8,9 +8,9 @@ import pandas as pd
 def split_x_y(df,condition):
     conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
     df_full = df.fillna(0)
-    train_y = df[condition]
+    train_y = df_full[condition]
     drop_list = conditions+['year','closet_station']
-    train_X = df.drop(drop_list, axis = 1)
+    train_X = df_full.drop(drop_list, axis = 1)
     return train_X,train_y
 
 def clean_X(df):
@@ -28,7 +28,6 @@ if __name__ == '__main__':
     #merge and save full df
     df_merge = merge_weather_trails(df_weather,df_clean)
     df_final = clean_X(df_merge)
-    df_final.to_csv('../data/olympics_all_final.csv', sep = '|')
     train_X,train_y = split_x_y(df_final,condition)
-    train_X.to_csv('../data/olympics_final_X', sep = '|')
-    train_y.to_csv('../data/olympics_final_y', sep = '|')
+    train_X.to_csv('../data/olympics_final_X', sep = '|',index_label=False)
+    train_y.to_csv('../data/olympics_final_y', sep = '|', index_label=False)
