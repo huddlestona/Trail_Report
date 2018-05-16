@@ -28,6 +28,7 @@ if __name__ == '__main__':
     #merge and save full df
     df_merge = merge_weather_trails(df_weather,df_clean)
     df_final = clean_X(df_merge)
+    df_final.to_csv('../data/olympics_all_final.csv', sep = '|')
     train_X,train_y = split_x_y(df_final,condition)
     train_X.to_csv('../data/olympics_final_X', sep = '|')
     train_y.to_csv('../data/olympics_final_y', sep = '|')
