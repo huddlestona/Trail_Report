@@ -27,7 +27,7 @@ if __name__ == '__main__':
     get_closest_station(df_clean,df_weather_dist)
     #merge and save full df
     df_merge = merge_weather_trails(df_weather,df_clean)
-    df_final = clean_X(df_merge)
-    train_X,train_y = split_x_y(df_final,condition)
-    train_X.to_csv('../data/olympics_final_X', sep = '|',index_label=False)
-    train_y.to_csv('../data/olympics_final_y', sep = '|', index_label=False)
+    # df_final = clean_X(df_merge)
+    train_X,train_y = split_x_y(df_merge,condition)
+    train_X.to_csv('../data/olympics_final_X_date', sep = '|',index_label=False)
+    train_y.to_csv('../data/olympics_final_y_date', sep = '|', index_label=False)
