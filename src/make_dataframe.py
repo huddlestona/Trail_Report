@@ -19,7 +19,7 @@ def clean_X(df):
 
 if __name__ == '__main__':
     condition = 'condition|snow'
-    df = pd.read_csv('../data/olympics_merged_TEST.csv', sep = '|',lineterminator='\n')
+    df = pd.read_csv('../data/new_olympics_merged.csv', sep = '|',lineterminator='\n')
     df_clean = prep_for_knn(df)
     df_weather,df_weather_dist = get_weather_data()
     neigh = prep_neighbors(df_clean, condition)
@@ -27,7 +27,7 @@ if __name__ == '__main__':
     get_closest_station(df_clean,df_weather_dist)
     #merge and save full df
     df_merge = merge_weather_trails(df_weather,df_clean)
-    # df_final = clean_X(df_merge)
+    df_final = clean_X(df_merge)
     train_X,train_y = split_x_y(df_merge,condition)
     train_X.to_csv('../data/olympics_final_X_date', sep = '|',index_label=False)
     train_y.to_csv('../data/olympics_final_y_date', sep = '|', index_label=False)
