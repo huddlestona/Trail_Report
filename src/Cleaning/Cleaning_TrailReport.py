@@ -39,11 +39,11 @@ def clean_trailreport(df):
     year_dummies = pd.get_dummies(df['year'])
     month_dummies = pd.get_dummies(df['month'])
     condition_dummies(df)
-    trail_dummies= pd.get_dummies(df['Trail'])
+    # trail_dummies= pd.get_dummies(df['Trail'])
     # month_dum = pd.get_dummies(df['month'])
     # year_dum = pd.get_dummies(df['year'])
     # monthyear_dummies = pd.get_dummies(df['monthyear'])
-    df_all = pd.concat([df,trail_dummies,year_dummies,month_dummies], axis=1)
+    df_all = pd.concat([df,year_dummies,month_dummies], axis=1)
     return df_all.drop(['conditions_split','Trail_condtions'], axis=1)
 
 if __name__ == '__main__':
@@ -52,4 +52,4 @@ if __name__ == '__main__':
     trail_reports = db['trail_reports']
     df = pd.DataFrame(list(trail_reports.find()))
     clean__reports_df = clean_trailreport(df)
-    clean__reports_df.to_csv('../../data/WTA_olympics_trailreports_clean.csv', sep = '|')
+    clean__reports_df.to_csv('../../data/WTA_olympics_trailreports_TEST.csv', sep = '|')
