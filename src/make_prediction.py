@@ -109,14 +109,14 @@ def add_dummy_dates(date,df):
     months = [month for month in range(1,13)]
     for year in years:
         if year == date.year:
-            df[year] = 1
+            df[str(year)] = 1
         else:
-            df[year] = 0
+            df[str(year)] = 0
     for month in months:
         if month == date.month:
-            df[month] = 1
+            df[str(month)] = 1
         else:
-            df[month] = 0
+            df[str(month)] = 0
 
 def clean_for_model(hike,date,df):
     add_hike_dummy(hike,df)
@@ -138,9 +138,21 @@ def Make_Prediction(hike,hike_date,condition):
     X_train = pd.read_csv('../data/olympics_final_X',sep = '|',lineterminator='\n')
     y_all = pd.read_csv('../data/olympics_final_y',sep = '|',lineterminator='\n',header=None)
     y_train = y_all[1]
+    actual_cols = X_train.columns.tolist()
+    #need different ys for each conditions
     X_test = get_X_test(hike,hike_date,condition)
+    X_test_ordered = X_test[actual_cols] 
     model, pred = make_logistic(X_train,y_train,X_test)
-    return f"There is a {float(pred[:,1])} likelihood of having {condition} at {hike} on {hike_date}"
+    return f"There is a {pred[:,1]} likelihood of having {condition} at {hike} on {hike_date}"
+
+def Make_Prediction_test(X_test):
+    X_train = pd.read_csv('../data/olympics_final_X',sep = '|',lineterminator='\n')
+    y_all = pd.read_csv('../data/olympics_final_y',sep = '|',lineterminator='\n',header=None)
+    y_train = y_all[1]
+    #need different ys for each conditions
+    # X_test = get_X_test(hike,hike_date,condition)
+    model, pred = make_logistic(X_train,y_train,X_test)
+    return pred
 
 def get_X_test(hike,hike_date,condition):
     df = pd.read_csv('../data/new_olympics_merged.csv', sep = '|',lineterminator='\n')
@@ -156,6 +168,7 @@ def get_X_test(hike,hike_date,condition):
     get_closest_station(hike_df,df_weather_dist)
     hike_all_df = merge_weather_trails(df_weather,hike_df)
     X_test = clean_for_model(hike,date,hike_all_df)
+    # X_test.to_csv('../data/X_test_testit.csv', sep = '|',index_label=False)
     return X_test
 
 def all_predictions(hike,hike_date):
