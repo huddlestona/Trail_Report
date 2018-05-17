@@ -32,9 +32,9 @@ def change_datetime(df_all):
 
 if __name__ == '__main__':
     #import and merge trail info and trail reports
-    df_trail = pd.read_csv('../../data/WTA_trails_clean_w_medians.csv')
-    df_report = pd.read_csv('../../data/WTA_olympics_trailreports_clean.csv', sep = '|', lineterminator='\n')
+    df_trail = pd.read_csv('../../data/WTA_trails_clean_TEST.csv')
+    df_report = pd.read_csv('../../data/WTA_olympics_trailreports_TEST.csv', sep = '|', lineterminator='\n')
     merged_df = merge_trail_files(df_trail,df_report)
     # df_hike = change_datetime(merged_df)
     # saves merged without weather
-    merged_df.to_csv('../../data/new_olympics_merged.csv', sep = '|')
+    merged_df.to_csv('../../data/olympics_merged_TEST.csv', sep = '|')
