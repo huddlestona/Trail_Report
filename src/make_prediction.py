@@ -158,9 +158,17 @@ def get_X_test(hike,hike_date,condition):
     X_test = clean_for_model(hike,date,hike_all_df)
     return X_test
 
+def all_predictions(hike,hike_date):
+    conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
+    predictions = []
+    for condition in conditions:
+        pred = Make_Prediction(hike,hike_date,condition)
+        predictions.append(pred)
+    return predictions
+
+
 if __name__ == '__main__':
-    hike = 'Mount Townsend'
-    hike_date = '03/12/18'
-    condition = 'condition|snow'
-    pred = Make_Prediction(hike,hike_date,condition)
-    print(pred)
+    hike = 'Mount Rose'
+    hike_date = '05/06/18'
+    predictions = all_predictions(hike,hike_date)
+    [print(pred) for pred in predictions]
