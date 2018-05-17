@@ -141,9 +141,9 @@ def Make_Prediction(hike,hike_date,condition):
     actual_cols = X_train.columns.tolist()
     #need different ys for each conditions
     X_test = get_X_test(hike,hike_date,condition)
-    X_test_ordered = X_test[actual_cols] 
-    model, pred = make_logistic(X_train,y_train,X_test)
-    return f"There is a {pred[:,1]} likelihood of having {condition} at {hike} on {hike_date}"
+    X_test_ordered = X_test[actual_cols]
+    model, pred = make_logistic(X_train,y_train,X_test_ordered)
+    return f"There is a {float(pred[:,1])} likelihood of having {condition} at {hike} on {hike_date}"
 
 def Make_Prediction_test(X_test):
     X_train = pd.read_csv('../data/olympics_final_X',sep = '|',lineterminator='\n')
@@ -183,5 +183,8 @@ def all_predictions(hike,hike_date):
 if __name__ == '__main__':
     hike = 'Mount Rose'
     hike_date = '05/06/18'
-    predictions = all_predictions(hike,hike_date)
-    [print(pred) for pred in predictions]
+    condition = 'condition|snow'
+    pred = Make_Prediction(hike,hike_date,condition)
+    print(pred)
+    # predictions = all_predictions(hike,hike_date)
+    # [print(pred) for pred in predictions]
