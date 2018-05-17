@@ -98,10 +98,10 @@ def clean_traildata(hike_df):
     hike_df['stars'] = hike_df[~hike_df['rating'].isna()]['rating'].apply(lambda x: stars(x))
     hike_df['number_votes'] = hike_df['number_votes'].apply(lambda x: float(x))
     hike_df['super_region'] = hike_df['super_region'].apply(lambda x: str(x).strip(' '))
-    # pass_dummies = pd.get_dummies(hike_df['which_pass'])
-    # subregion_dummies = pd.get_dummies(hike_df['sub_region'])
-    # merge_dummies = pd.concat([hike_df,pass_dummies,subregion_dummies],axis=1)
-    # clean_hikes_df = merge_dummies.drop(['distance','rating','region'],axis=1)
+    pass_dummies = pd.get_dummies(hike_df['which_pass'])
+    subregion_dummies = pd.get_dummies(hike_df['sub_region'])
+    merge_dummies = pd.concat([hike_df,pass_dummies,subregion_dummies],axis=1)
+    clean_hikes_df = merge_dummies.drop(['distance','rating','region'],axis=1)
     clean_hikes_df_test = hike_df.drop(['distance','rating','region'],axis=1)
     dropped = clean_hikes_df_test.sort_values('numReports').drop_duplicates(subset='hike_name', keep= 'last')
     return dropped
@@ -111,4 +111,4 @@ if __name__ == '__main__':
     clean_hikes_df = clean_traildata(hike_df)
     # hood_df = clean_hikes_df.loc[clean_hikes_df['sub_region'] == ' Hood Canal']
     clean_hikes_df['distance_from_median']= distance_from_median(clean_hikes_df)
-    clean_hikes_df.to_csv('../../data/WTA_trails_clean_TEST.csv')
+    clean_hikes_df.to_csv('../../data/WTA_trails_clean.csv')
