@@ -11,7 +11,48 @@ def get_new_neighbors(df,hike,date,condition):
     indx_list = list(indx[1][0])
     neighbors = df.iloc[indx_list]
     average = neighbors[condition].mean()
-    return average
+    hike_text = single_neigh(df,indx_list)
+    top_sentences = get_all_tops(hike_text)
+    return average,top_sentences
+
+def neigh_text(neigh,df):
+    '''works on full datatframe'''
+    all_n = neigh.kneighbors(n_neighbors=2)
+    n_text = {}
+    for i,idx_neighbors in enumerate(all_n[1]):
+        reps= []
+        neighbors = df.iloc[idx_neighbors]['Report']
+        for one in neighbors:
+            reps.append(str(one))
+        one_set = ''.join(reps)
+        n_text[i] = one_set
+    return n_text
+
+def single_neigh(df,indx_list):
+    n_text = []
+    neighbors = df.iloc[indx_list[0:3]]['Report']
+    for one in neighbors:
+        n_text.append(str(one))
+    return "".join(set(n_text))
+
+def get_all_tops(n_text):
+    top_sentences = []
+    # for i,one in enumerate(n_text):
+    sentences = n_text.split('.')
+    top_sentences.append(get_top_sentences(sentences))
+    return top_sentences
+
+def get_top_sentences(sentences):
+    important = []
+    for sentence in sentences:
+        key_words = ['bring','snow','need','bugs','mud','washout','safe','danger','crampons','axe','ice','recommend','conditions']
+        for word in key_words:
+            if word in sentence:
+                important.append(sentence)
+    if len(important) < 1:
+        important.append('No relevent reports to show at this time!')
+    return set(important)
+
 
 def get_hike_info(hike,df):
     condition = 'condition|snow'
@@ -122,7 +163,7 @@ def clean_for_model(hike,date,df):
     add_hike_dummy(hike,df)
     add_dummy_dates(date,df)
     df_clean = df.drop(['Unnamed: 0','url','which_pass','super_region',
-    'sub_region','closet_station','hike_name','last_year','month','year'], axis=1)
+    'sub_region','closet_station','hike_name','last_year','month','year','date'], axis=1)
     df_full = df_clean.fillna(0)
     return df_full
 
@@ -140,37 +181,42 @@ def Make_Prediction(hike,hike_date,condition):
     y_train = y_all[1]
     actual_cols = X_train.columns.tolist()
     #need different ys for each conditions
-    X_test = get_X_test(hike,hike_date,condition)
+    X_test,top_text = get_X_test(hike,hike_date,condition)
     X_test_ordered = X_test[actual_cols]
     model, pred = make_logistic(X_train,y_train,X_test_ordered)
-    return f"There is a {float(pred[:,1])} likelihood of having {condition} at {hike} on {hike_date}"
+    # probability = f"There is a {float(pred[:,1])} likelihood of having {condition} at {hike} on {hike_date}.'
+    # hike_info = f'Previous reports for similar hike/weather combinations say'
+    # text = [print(text) for text in top_text]
+    return pred,top_text
 
-def Make_Prediction_test(X_test):
-    X_train = pd.read_csv('../data/olympics_final_X',sep = '|',lineterminator='\n')
-    y_all = pd.read_csv('../data/olympics_final_y',sep = '|',lineterminator='\n',header=None)
-    y_train = y_all[1]
-    #need different ys for each conditions
-    # X_test = get_X_test(hike,hike_date,condition)
-    model, pred = make_logistic(X_train,y_train,X_test)
-    return pred
+# def Make_Prediction_test(X_test):
+#     X_train = pd.read_csv('../data/olympics_final_X',sep = '|',lineterminator='\n')
+#     y_all = pd.read_csv('../data/olympics_final_y',sep = '|',lineterminator='\n',header=None)
+#     y_train = y_all[1]
+#     #need different ys for each conditions
+#     # X_test = get_X_test(hike,hike_date,condition)
+#     model, pred = make_logistic(X_train,y_train,X_test)
+#     return pred
 
 def get_X_test(hike,hike_date,condition):
     df = pd.read_csv('../data/new_olympics_merged.csv', sep = '|',lineterminator='\n')
     df_trail = pd.read_csv('../data/WTA_trails_clean_w_medians.csv',lineterminator='\n')
     df_weather,df_weather_dist = get_weather_data()
     date = pd.to_datetime(hike_date)
-    neighbor_average = get_new_neighbors(df,hike,date,condition)
+    neighbor_average,top_text = get_new_neighbors(df,hike,date,condition)
     hike_df = get_hike_info(hike,df_trail)
     hike_df[f'neighbors_average {condition}'] = neighbor_average
+    hike_df['date'] = date
+    # hike_df['top_sentences'] = len(top_text)
     hike_df['month'] = date.month
     hike_df['year'] = date.year
     hike_df['last_year']= date.year -1
-    hike_df['date_sin'],hike_df['date_cos'] = dates_in_circle(date)
+    hike_df['date_sin'],hike_df['date_cos'] = dates_in_circle(hike_df['date'])
     get_closest_station(hike_df,df_weather_dist)
     hike_all_df = merge_weather_trails(df_weather,hike_df)
     X_test = clean_for_model(hike,date,hike_all_df)
     # X_test.to_csv('../data/X_test_testit.csv', sep = '|',index_label=False)
-    return X_test
+    return X_test,top_text
 
 def all_predictions(hike,hike_date):
     conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
