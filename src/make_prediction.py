@@ -165,6 +165,7 @@ def get_X_test(hike,hike_date,condition):
     hike_df['month'] = date.month
     hike_df['year'] = date.year
     hike_df['last_year']= date.year -1
+    hike_df['date_sin'],hike_df['date_cos'] = dates_in_circle(date)
     get_closest_station(hike_df,df_weather_dist)
     hike_all_df = merge_weather_trails(df_weather,hike_df)
     X_test = clean_for_model(hike,date,hike_all_df)

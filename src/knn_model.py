@@ -20,8 +20,15 @@ def prep_for_knn(df):
     'super_region','sub_region','which_pass'], axis=1)
     df_new['Date'] = pd.to_datetime(df_new['Date'])
     df_new['month'] = df_new['Date'].apply(lambda x: x.month)
+    df_new['date_sin'],df_new['date_cos'] = dates_in_circle(df_new['Date'])
     df_full = df_new.fillna(0)
     return df_full
+
+def dates_in_circle(dates):
+    dates_ordered = dates.apply(lambda x: x.month*30 + x.day *(2*math.pi))
+    dates_sin = dates_ordered.apply(lambda x: math.sin(x))
+    dates_cos = dates_ordered.apply(lambda x: math.cos(x))
+    return dates_sin, dates_cos
 
 def train_test_split(df,year):
     test = df[df['year'] >= year]
@@ -86,5 +93,5 @@ if __name__ == '__main__':
     df_train = merge_weather_trails(df_weather,train)
     train_X,train_y,test_X,test_y = get_knn_inputs(df_test,df_train)
 
-    model,pred = make_forest(train_X,train_y,test_X,test_y)
+    model,pred = make_forest(train_X,train_y,test_X)
     print (f'final predictions {pred}')
