@@ -19,8 +19,9 @@ def solve():
 
 def _get_prediction(hike, hike_date):
     condition = 'condition|snow'
-    pred = Make_Prediction(hike,hike_date,condition)
-    return pred
+    prob,top_text  = Make_Prediction(hike,hike_date,condition)
+    probability = prob[:,1]
+    return f"There is a likelihood of {probability} having {condition} at {hike} on {hike_date}. <p> Previous reports for similar hike/weather combinations say: <p> {top_text}"
 
 
 if __name__ == '__main__':
