@@ -8,11 +8,13 @@ import matplotlib.pyplot as plt
 from sklearn.metrics import confusion_matrix, roc_curve, auc, classification_report
 
 def train_test_split(df,year):
+    """Splits data by year input."""
     test = df[df['year'] >= year]
     train = df[df['year'] < year]
     return test,train
 
 def add_cols(test,train, df_weather_dist,condition):
+    """adds KNN column and closest station column to train and test df."""
     neigh_train = prep_neighbors(train, condition)
     neigh_test = prep_neighbors(train, condition)
     get_neighbors(neigh_test,test,condition)
@@ -21,6 +23,7 @@ def add_cols(test,train, df_weather_dist,condition):
     get_closest_station(test,df_weather_dist)
 
 def get_knn_inputs(test,train,condition):
+    """Preps train and test by dropping columns and filling nas."""
     conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
     test_y = test[condition]
     drop_list = conditions+['year','closet_station']
@@ -32,6 +35,7 @@ def get_knn_inputs(test,train,condition):
     return train_X,train_y,test_X,test_y
 
 def merge_weather(test,train):
+    """Get's weather, get's new columns, and merges weather in."""
     df_weather,df_weather_dist = get_weather_data()
     add_cols(test,train, df_weather_dist)
     df_test = merge_weather_trails(df_weather,test)
