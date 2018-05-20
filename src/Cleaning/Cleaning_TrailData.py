@@ -1,3 +1,9 @@
+"""
+This file, when called in the terminal will open the chosen trail data,
+make new features, dummies, and clean columns. It will ssave the cleaned df
+as a csvfile.
+"""
+
 import numpy as np
 import pandas as pd
 from math import sin, cos, sqrt, atan2, radians
