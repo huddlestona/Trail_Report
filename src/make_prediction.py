@@ -1,5 +1,5 @@
-from knn_model import *
-from Cleaning.Merge_Weather import *
+from knn_model import make_logistic,prep_neighbors,dates_in_circle
+from Cleaning.Merge_Weather import get_weather_data(),get_closest_station,merge_weather_trails
 
 def get_new_neighbors(df,hike,date,condition):
     neigh = prep_neighbors(df,condition)
@@ -167,14 +167,6 @@ def clean_for_model(hike,date,df):
     df_full = df_clean.fillna(0)
     return df_full
 
-# def prep_input_data(df_test):
-#     condition = 'condition|snow'
-#     conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
-#     drop_list = conditions+['last_year','year',
-#     'station_distance','closet_station']
-#     test_X = df_test.drop(drop_list, axis = 1)
-#     test_X = test_X.fillna(0)
-#     return test_X
 def Make_Prediction(hike,hike_date,condition):
     X_train = pd.read_csv('../data/olympics_final_X',sep = '|',lineterminator='\n')
     y_all = pd.read_csv('../data/olympics_final_y',sep = '|',lineterminator='\n',header=None)
@@ -189,14 +181,6 @@ def Make_Prediction(hike,hike_date,condition):
     # text = [print(text) for text in top_text]
     return pred,top_text
 
-# def Make_Prediction_test(X_test):
-#     X_train = pd.read_csv('../data/olympics_final_X',sep = '|',lineterminator='\n')
-#     y_all = pd.read_csv('../data/olympics_final_y',sep = '|',lineterminator='\n',header=None)
-#     y_train = y_all[1]
-#     #need different ys for each conditions
-#     # X_test = get_X_test(hike,hike_date,condition)
-#     model, pred = make_logistic(X_train,y_train,X_test)
-#     return pred
 
 def get_X_test(hike,hike_date,condition):
     df = pd.read_csv('../data/new_olympics_merged.csv', sep = '|',lineterminator='\n')
