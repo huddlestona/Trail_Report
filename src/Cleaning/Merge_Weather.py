@@ -1,3 +1,4 @@
+""" This file holds functions to import and merge in weather data."""
 import pandas as pd
 import numpy as np
 from math import sin, cos, sqrt, atan2, radians
@@ -6,7 +7,8 @@ import boto3
 
 #get weather and prep for merge
 def get_weather_as_df(keys):
-    """Uses keys to import all weather csvs, downloaded from national weather association
+    """
+    Uses keys to import all weather csvs, downloaded from national weather association
     **Input parameters**
     ------------------------------------------------------------------------------
     keys: list. All links for weather saved in s3
@@ -28,6 +30,7 @@ def get_weather_as_df(keys):
 
 def get_hike_distance(df1lat, df1long,df2lat, df2long):
     """
+    Get's distance of two points from eachother.
     **Input parameters**
     ------------------------------------------------------------------------------
     df1lat: int.
@@ -60,7 +63,6 @@ def get_closest_station(df_hike,df_weather):
     """
     Calls get_hike_distance on each hike for each weather station.
     Adds columns to df_hike
-
     **Input parameters**
     ------------------------------------------------------------------------------
     df_hike: pandas df
@@ -93,7 +95,6 @@ def clean_weather_df(weather_df):
     """
     Takes the weather_df and returns a dataframe with the station name
     and numeric weather
-
     **Input parameters**
     ------------------------------------------------------------------------------
     weather_df: pandas df
@@ -117,26 +118,23 @@ def merge_weather_trails(df_weather,df_hike):
     return df_all_clean
 
 def import_weather(keys):
+    """Get's weather for mentioned keys."""
     #imports weather and cleans
     df_all_weather = get_weather_as_df(keys)
     return clean_weather_df(df_all_weather)
 
 def get_weather_data():
+    """
+    Retrieved weather for written keys,prep two dataframes.
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    None. Retreives data internally.
+    **Output**
+    ------------------------------------------------------------------------------
+    df_weather: Pandas dataframe. All goverment weather.
+    df_weather_dist: Pandas dataframe. Lat/Long for every weather station.
+    """
     keys = ['Global_sum_FIPS:53031 FIPS:53009.csv','Global_sum_FIPS:53045 FIPS:53027.csv']
     df_weather = import_weather(keys)
     df_weather_dist = df_weather[['LATITUDE','LONGITUDE','name']].drop_duplicates().reset_index()
     return df_weather,df_weather_dist
-
-
-if __name__ == '__main__':
-    df_hike = pd.read_csv('../../data/new_olympics_merged.csv', sep = '|')
-    # keys for getting weather to add
-    keys = ['Global_sum_FIPS:53031 FIPS:53009.csv','Global_sum_FIPS:53045 FIPS:53027.csv']
-    #imports weather and cleans
-    df_all_weather = get_weather_as_df(keys)
-    df_weather_clean = clean_weather_df(df_all_weather)
-    df_weather_distances = df_weather_clean[['LATITUDE','LONGITUDE','name']].drop_duplicates().reset_index()
-    get_closest_station(df_hike,df_weather_distances)
-    #merge and save full df
-    df_hikeweather = merge_weather_trails(df_weather_clean,df_hike)
-    df_hikeweather.to_csv('../../data/Hood_canal_all.csv', sep = '|')
