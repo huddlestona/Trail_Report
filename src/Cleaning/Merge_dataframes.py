@@ -25,4 +25,4 @@ if __name__ == '__main__':
     df_trail = pd.read_csv('../../data/WTA_trails_clean.csv', sep = '|', lineterminator='\n'))
     df_report = pd.read_csv('../../data/WTA_olympics_trailreports.csv', sep = '|', lineterminator='\n')
     merged_df = merge_trail_files(df_trail,df_report)
-    merged_df.to_csv('../../data/olympics_merged.csv', sep = '|')
+    merged_df.to_csv('../../data/olympics_merged.csv', sep = '|',index_label=False)
