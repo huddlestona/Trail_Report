@@ -1,0 +1,1020 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Trail Report- Making trail access easier. </title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Custom fonts for this template -->
+    <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+    <!-- Custom styles for this template -->
+    <link href="/static/css/agency.min.css" rel="stylesheet">
+
+  </head>
+
+  <body id="page-top">
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+      <div class="container">
+        <a class="navbar-brand js-scroll-trigger" href="#page-top">Trail Report</a>
+        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarResponsive">
+          <ul class="navbar-nav text-uppercase ml-auto">
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#services">Trail Status</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#portfolio">Hikes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#about">About</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#team">Team</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Header -->
+    <header class="masthead">
+      <div class="container">
+        <div class="intro-text">
+          <div class="intro-lead-in">Hey, Adventurer</div>
+          <div class="intro-heading text-uppercase">Where will you go next? </div>
+          <head>
+    <!-- Search Button style  -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+    .dropbtn {
+        background-color: #4CAF50;
+        color: white;
+        padding: 16px;
+        font-size: 16px;
+        border: none;
+        cursor: pointer;
+    }
+
+    .dropbtn:hover, .dropbtn:focus {
+        background-color: #3e8e41;
+    }
+
+    #myInput {
+        border-box: box-sizing;
+        background-image: url('searchicon.png');
+        background-position: 14px 12px;
+        background-repeat: no-repeat;
+        font-size: 16px;
+        padding: 14px 20px 12px 45px;
+        border: none;
+        border-bottom: 1px solid #ddd;
+    }
+
+    #myInput:focus {outline: 3px solid #ddd;}
+
+    .dropdown {
+        position: relative;
+        display: inline-block;
+    }
+
+    .dropdown-content {
+        display: none;
+        position: absolute;
+        background-color: #f6f6f6;
+        min-width: 230px;
+        overflow: auto;
+        border: 1px solid #ddd;
+        z-index: 1;
+    }
+
+    .dropdown-content a {
+        color: black;
+        padding: 12px 16px;
+        text-decoration: none;
+        display: block;
+    }
+
+    .dropdown a:hover {background-color: #ddd}
+
+    .show {display:block;}
+    </style>
+    </head>
+    <!-- hike search button -->
+<div class="form-group row">
+<div class="dropdown">
+<button onclick="myFunction()" class="dropbtn">Choose a Hike</button>
+  <div id="myDropdown" class="dropdown-content">
+    <input type="text" placeholder="Search.." id="myInput" onkeyup="filterFunction()">
+		<a href='#Anderson Lake State Park'>Anderson Lake State Park</a>
+        <a href='#Anderson Point'>Anderson Point</a>
+        <a href='#Appleton Pass'>Appleton Pass</a>
+        <a href='#Aurora Creek'>Aurora Creek</a>
+        <a href='#Baldy'>Baldy</a>
+        <a href='#Banner Forest'>Banner Forest</a>
+        <a href='#Barnes Creek'>Barnes Creek</a>
+        <a href='#Big Cedar Tree - Quinault'>Big Cedar Tree - Quinault</a>
+        <a href='#Big Creek'>Big Creek</a>
+        <a href='#Big Tree Trail'>Big Tree Trail</a>
+        <a href='#Blue Mountain - Deer Park Snowshoe'>Blue Mountain - Deer Park Snowshoe</a>
+        <a href='#Bogachiel Peak'>Bogachiel Peak</a>
+        <a href='#Bogachiel River'>Bogachiel River</a>
+        <a href='#Boulder Lake (Olympics)'>Boulder Lake (Olympics)</a>
+        <a href='#Buckhorn Mountain'>Buckhorn Mountain</a>
+        <a href='#Burfoot Park'>Burfoot Park</a>
+        <a href='#Cape Alava'>Cape Alava</a>
+        <a href='#Cape Alava Loop (Ozette Triangle)'>Cape Alava Loop (Ozette Triangle)</a>
+        <a href='#Cape Flattery'>Cape Flattery</a>
+        <a href='#Capitol State Forest - Capitol Peak'>Capitol State Forest - Capitol Peak</a>
+        <a href='#Capitol State Forest - McLane Creek'>Capitol State Forest - McLane Creek</a>
+        <a href='#Capitol State Forest - Mount Molly'>Capitol State Forest - Mount Molly</a>
+        <a href='#Capitol State Forest - Rock Candy Mountain'>Capitol State Forest - Rock Candy Mountain</a>
+        <a href='#Capitol State Forest - Sherman Creek Loop'>Capitol State Forest - Sherman Creek Loop</a>
+        <a href='#Cascade Rock'>Cascade Rock</a>
+        <a href='#Church Creek'>Church Creek</a>
+        <a href='#Clear Creek Trail'>Clear Creek Trail</a>
+        <a href='#Colonel Bob Trail - Colonel Bob Peak'>Colonel Bob Trail - Colonel Bob Peak</a>
+        <a href='#Constance Pass'>Constance Pass</a>
+        <a href='#Copper Creek'>Copper Creek</a>
+        <a href='#Cub Peak'>Cub Peak</a>
+        <a href='#Deadfall'>Deadfall</a>
+        <a href='#Deer Park to Maiden Peak'>Deer Park to Maiden Peak</a>
+        <a href='#Deer Ridge'>Deer Ridge</a>
+        <a href='#Dirty Face Ridge'>Dirty Face Ridge</a>
+        <a href='#Dodger Point'>Dodger Point</a>
+        <a href='#Dosewallips River Road'>Dosewallips River Road</a>
+        <a href='#Dosewallips State Park - Steam Donkey Trail'>Dosewallips State Park - Steam Donkey Trail</a>
+        <a href='#Dry Creek'>Dry Creek</a>
+        <a href='#Duckabush River'>Duckabush River</a>
+        <a href='#Dungeness Spit'>Dungeness Spit</a>
+        <a href='#Eagle Point Snowshoe'>Eagle Point Snowshoe</a>
+        <a href='#Elbo Creek'>Elbo Creek</a>
+        <a href='#Elk Lakes'>Elk Lakes</a>
+        <a href='#Elk Mountain to Maiden Peak'>Elk Mountain to Maiden Peak</a>
+        <a href='#Elwha River and Geyser Valley'>Elwha River and Geyser Valley</a>
+        <a href='#Elwha River and Lillian River'>Elwha River and Lillian River</a>
+        <a href='#Elwha To Hurricane Hill'>Elwha To Hurricane Hill</a>
+        <a href='#Fallsview Canyon (Falls View)'>Fallsview Canyon (Falls View)</a>
+        <a href='#Fletcher Canyon'>Fletcher Canyon</a>
+        <a href='#Fort Flagler State Park'>Fort Flagler State Park</a>
+        <a href='#Foulweather Bluff Preserve Trail'>Foulweather Bluff Preserve Trail</a>
+        <a href='#Gibbs Lake'>Gibbs Lake</a>
+        <a href='#Gladys Divide'>Gladys Divide</a>
+        <a href='#Glines Canyon Overlook Trail'>Glines Canyon Overlook Trail</a>
+        <a href='#Gold Mountain'>Gold Mountain</a>
+        <a href='#Grand Ridge'>Grand Ridge</a>
+        <a href='#Grand Valley'>Grand Valley</a>
+        <a href='#Grand Valley via Grand Pass Trail'>Grand Valley via Grand Pass Trail</a>
+        <a href='#Graves Creek'>Graves Creek</a>
+        <a href='#Green Mountain - Gold Creek Trail'>Green Mountain - Gold Creek Trail</a>
+        <a href='#Green Mountain - Wildcat Trail'>Green Mountain - Wildcat Trail</a>
+        <a href='#Griff Creek'>Griff Creek</a>
+        <a href='#Guillemot Cove'>Guillemot Cove</a>
+        <a href='#Hall of Mosses'>Hall of Mosses</a>
+        <a href='#Hansville Greenway'>Hansville Greenway</a>
+        <a href='#Happy Lake Ridge'>Happy Lake Ridge</a>
+        <a href='#Harstine Island State Park'>Harstine Island State Park</a>
+        <a href='#Heart O' the Forest'>Heart O' the Forest</a>
+        <a href='#Heather Creek Trail via Upper Dungeness River'>Heather Creek Trail via Upper Dungeness River</a>
+        <a href='#Heather Park'>Heather Park</a>
+        <a href='#High Divide - Seven Lakes Basin Loop'>High Divide - Seven Lakes Basin Loop</a>
+        <a href='#Hoh River Trail to Blue Glacier'>Hoh River Trail to Blue Glacier</a>
+        <a href='#Hoh River Trail to Five Mile Island'>Hoh River Trail to Five Mile Island</a>
+        <a href='#Home Lake'>Home Lake</a>
+        <a href='#Hurricane Hill'>Hurricane Hill</a>
+        <a href='#Hurricane Ridge Snowshoe'>Hurricane Ridge Snowshoe</a>
+        <a href='#Illahee Forest Preserve'>Illahee Forest Preserve</a>
+        <a href='#Indian Island County Park'>Indian Island County Park</a>
+        <a href='#Jefferson Ridge'>Jefferson Ridge</a>
+        <a href='#Kalaloch - Browns Point'>Kalaloch - Browns Point</a>
+        <a href='#Kalaloch Creek Nature Trail'>Kalaloch Creek Nature Trail</a>
+        <a href='#Kestner Homestead'>Kestner Homestead</a>
+        <a href='#Klahhane Ridge'>Klahhane Ridge</a>
+        <a href='#Klahhane Ridge Snowshoe'>Klahhane Ridge Snowshoe</a>
+        <a href='#Kloshe Nanitch'>Kloshe Nanitch</a>
+        <a href='#Kopachuck State Park Trail'>Kopachuck State Park Trail</a>
+        <a href='#Lake Angeles'>Lake Angeles</a>
+        <a href='#Lake Constance'>Lake Constance</a>
+        <a href='#Lake of the Angels'>Lake of the Angels</a>
+        <a href='#Lena Lake'>Lena Lake</a>
+        <a href='#Lena Lake - Valley of Silent Men Snowshoe'>Lena Lake - Valley of Silent Men Snowshoe</a>
+        <a href='#Lightning Peak'>Lightning Peak</a>
+        <a href='#Lillian Ridge'>Lillian Ridge</a>
+        <a href='#Lillian River'>Lillian River</a>
+        <a href='#Little Quilcene River'>Little Quilcene River</a>
+        <a href='#Lower Big Quilcene River'>Lower Big Quilcene River</a>
+        <a href='#Lower Dungeness River'>Lower Dungeness River</a>
+        <a href='#Lower Gray Wolf River'>Lower Gray Wolf River</a>
+        <a href='#Lower Pete's Creek'>Lower Pete's Creek</a>
+        <a href='#Lower South Fork Skokomish River'>Lower South Fork Skokomish River</a>
+        <a href='#Marmot Pass - Upper Big Quilcene'>Marmot Pass - Upper Big Quilcene</a>
+        <a href='#Marmot Pass via Upper Dungeness River Trail'>Marmot Pass via Upper Dungeness River Trail</a>
+        <a href='#Mary E. Theler Wetlands Nature Preserve'>Mary E. Theler Wetlands Nature Preserve</a>
+        <a href='#Marymere Falls'>Marymere Falls</a>
+        <a href='#McCormick Forest Park'>McCormick Forest Park</a>
+        <a href='#Mildred Lakes'>Mildred Lakes</a>
+        <a href='#Miller Peninsula-Thompson Spit'>Miller Peninsula-Thompson Spit</a>
+        <a href='#Millersylvania State Park'>Millersylvania State Park</a>
+        <a href='#Mima Mounds'>Mima Mounds</a>
+        <a href='#Mink Lake'>Mink Lake</a>
+        <a href='#Mink Lake to Little Divide'>Mink Lake to Little Divide</a>
+        <a href='#Mount Angeles'>Mount Angeles</a>
+        <a href='#Mount Angeles Snowshoe'>Mount Angeles Snowshoe</a>
+        <a href='#Mount Ellinor'>Mount Ellinor</a>
+        <a href='#Mount Jupiter'>Mount Jupiter</a>
+        <a href='#Mount Muller'>Mount Muller</a>
+        <a href='#Mount Rose'>Mount Rose</a>
+        <a href='#Mount Storm King'>Mount Storm King</a>
+        <a href='#Mount Townsend'>Mount Townsend</a>
+        <a href='#Mount Townsend - Silver Lakes Traverse'>Mount Townsend - Silver Lakes Traverse</a>
+        <a href='#Mount Townsend Snowshoe'>Mount Townsend Snowshoe</a>
+        <a href='#Mount Walker'>Mount Walker</a>
+        <a href='#Mount Zion'>Mount Zion</a>
+        <a href='#Murhut Falls'>Murhut Falls</a>
+        <a href='#Ned Hill'>Ned Hill</a>
+        <a href='#Newberry Hill Heritage Park'>Newberry Hill Heritage Park</a>
+        <a href='#North Coast Route'>North Coast Route</a>
+        <a href='#North Fork Quinault River and Halfway House'>North Fork Quinault River and Halfway House</a>
+        <a href='#North Fork Skokomish River'>North Fork Skokomish River</a>
+        <a href='#North Fork Skokomish River and Flapjack Lakes'>North Fork Skokomish River and Flapjack Lakes</a>
+        <a href='#North Fork Sol Duc River'>North Fork Sol Duc River</a>
+        <a href='#Notch Pass'>Notch Pass</a>
+        <a href='#Olympic Hot Springs'>Olympic Hot Springs</a>
+        <a href='#PJ Lake'>PJ Lake</a>
+        <a href='#Peabody Creek Trail'>Peabody Creek Trail</a>
+        <a href='#Penrose Point State Park'>Penrose Point State Park</a>
+        <a href='#Pete's Creek - Colonel Bob Peak'>Pete's Creek - Colonel Bob Peak</a>
+        <a href='#Priest Point Park'>Priest Point Park</a>
+        <a href='#Pyramid Mountain / Pyramid Peak'>Pyramid Mountain / Pyramid Peak</a>
+        <a href='#Queets Campground Loop'>Queets Campground Loop</a>
+        <a href='#Queets River'>Queets River</a>
+        <a href='#Quillayute River Slough'>Quillayute River Slough</a>
+        <a href='#Quinault National Recreation Trails'>Quinault National Recreation Trails</a>
+        <a href='#Quinault River-Pony Bridge-Enchanted Valley'>Quinault River-Pony Bridge-Enchanted Valley</a>
+        <a href='#Rain Shadow Loop'>Rain Shadow Loop</a>
+        <a href='#Ranger Hole - Interrorem Nature Trail'>Ranger Hole - Interrorem Nature Trail</a>
+        <a href='#Royal Basin - Royal Lake'>Royal Basin - Royal Lake</a>
+        <a href='#Ruby Beach'>Ruby Beach</a>
+        <a href='#Second Beach'>Second Beach</a>
+        <a href='#Shi Shi Beach and Point of the Arches'>Shi Shi Beach and Point of the Arches</a>
+        <a href='#Silver Lakes'>Silver Lakes</a>
+        <a href='#Six Ridge'>Six Ridge</a>
+        <a href='#Slab Camp Creek and Gray Wolf River'>Slab Camp Creek and Gray Wolf River</a>
+        <a href='#Smokey Bottom (West Lake Mills)'>Smokey Bottom (West Lake Mills)</a>
+        <a href='#Snider-Jackson Traverse'>Snider-Jackson Traverse</a>
+        <a href='#Sol Duc Falls'>Sol Duc Falls</a>
+        <a href='#South Coast Wilderness Trail - Toleak Point'>South Coast Wilderness Trail - Toleak Point</a>
+        <a href='#South Fork Hoh River - Big Flat'>South Fork Hoh River - Big Flat</a>
+        <a href='#Spider Lake'>Spider Lake</a>
+        <a href='#Spoon Creek Falls'>Spoon Creek Falls</a>
+        <a href='#Spruce Railroad Trail'>Spruce Railroad Trail</a>
+        <a href='#Staircase Rapids'>Staircase Rapids</a>
+        <a href='#Striped Peak'>Striped Peak</a>
+        <a href='#Sunnybrook Meadows'>Sunnybrook Meadows</a>
+        <a href='#Switchback'>Switchback</a>
+        <a href='#The Brothers'>The Brothers</a>
+        <a href='#Third Beach'>Third Beach</a>
+        <a href='#Three Lakes'>Three Lakes</a>
+        <a href='#Tubal Cain Mine'>Tubal Cain Mine</a>
+        <a href='#Tubal Cain Mine to Buckhorn Lake'>Tubal Cain Mine to Buckhorn Lake</a>
+        <a href='#Tumwater Falls Park'>Tumwater Falls Park</a>
+        <a href='#Tunnel Creek'>Tunnel Creek</a>
+        <a href='#Tunnel Creek - Dosewallips Trailhead'>Tunnel Creek - Dosewallips Trailhead</a>
+        <a href='#Twanoh State Park'>Twanoh State Park</a>
+        <a href='#Upper Dungeness River'>Upper Dungeness River</a>
+        <a href='#Upper Lena Lake'>Upper Lena Lake</a>
+        <a href='#Upper South Fork Skokomish River'>Upper South Fork Skokomish River</a>
+        <a href='#Valhalla Peak'>Valhalla Peak</a>
+        <a href='#Wagonwheel Lake'>Wagonwheel Lake</a>
+        <a href='#Watershed Park'>Watershed Park</a>
+        <a href='#Welch Peaks'>Welch Peaks</a>
+        <a href='#West Elwha'>West Elwha</a>
+        <a href='#West Fork Dosewallips River'>West Fork Dosewallips River</a>
+        <a href='#West Fork Humptulips River'>West Fork Humptulips River</a>
+        <a href='#Westport State Park - Westport Light Trail'>Westport State Park - Westport Light Trail</a>
+        <a href='#Wolf Creek'>Wolf Creek</a>
+        <a href='#Wynoochee Lake'>Wynoochee Lake</a>
+        <a href='#Wynoochee Pass to Sundown Lake'>Wynoochee Pass to Sundown Lake</a>
+  </div>
+</div>
+
+          <div>
+            <head>
+            <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
+            <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+            <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
+
+              <script>
+              $(document).ready(function() {
+                $("#datepicker").datepicker();
+              });
+              </script>
+            </head>
+            <body>
+            <form>
+                <input id="datepicker" />
+            </form>
+            </body>
+          </div>
+
+          <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" href="#services">Check the trail</a>
+        </div>
+      </div>
+    </div>
+    </header>
+
+    <!-- Services -->
+
+    <section id="services">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+
+            <div>
+
+        <script type="text/javascript">
+        let get_input_coefficients = function() {
+            let hike_input = $("select#hike")
+            let hike_date_input = $("input#datepicker")
+            let hike = hike_input.val()
+            let hike_date = hike_date_input.val()
+            return {'hike': hike,
+                    'hike_date': hike_date}
+        };
+        let send_coefficient_json = function(coefficients) {
+            $.ajax({
+                url: '/solve',
+                contentType: "application/json; charset=utf-8",
+                type: 'POST',
+                success: function (data) {
+                    display_solutions(data);
+                },
+                data: JSON.stringify(coefficients)
+            });
+        };
+        let display_solutions = function(solutions) {
+            $("section-subheading text-muted#textsolution").html(solutions.root_1)
+            $("span#snowsolution").html(solutions.root_2)
+        };
+        $(document).ready(function() {
+            $("btn btn-primary btn-xl text-uppercase js-scroll-trigger#services").click(function() {
+                let coefficients = get_input_coefficients();
+                send_coefficient_json(coefficients);
+            })
+        })
+        </script>
+        </div>
+
+            <h2 class="section-heading text-uppercase">Trail Status</h2>
+            <h3 class="section-subheading text-muted"><span id="textsolution"></span></h3>
+            <!-- The span has an id so that later we can fill in the solution
+                 using js. -->
+
+          </div>
+        </div>
+        <link rel="stylesheet" href="/static/css/circle.css">
+        <div class="row text-center">
+          <div class="col-md-4">
+            <span class="fa-stack fa-4x">
+              <!-- <i class="fa fa-circle fa-stack-2x text-primary"></i>
+              <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i> -->
+              <!-- green -->
+              <div class="clearfix">
+
+                  <div class="c100 p25 dark green">
+                      <span>25%</span>
+                      <div class="slice">
+                          <div class="bar"></div>
+                          <div class="fill"></div>
+                      </div>
+                  </div>
+
+              </div>
+              <!-- /green -->
+            </span>
+            <h4 class="service-heading">Snow</h4>
+            <p class="text-muted"><span id="snowsolution"></span></p>
+          </div>
+          <div class="col-md-4">
+            <span class="fa-stack fa-4x">
+              <!-- <i class="fa fa-circle fa-stack-2x text-primary"></i>
+              <i class="fa fa-laptop fa-stack-1x fa-inverse"></i> -->
+              <!-- green -->
+              <div class="clearfix">
+
+                  <div class="c100 p25 dark green">
+                      <span>25%</span>
+                      <div class="slice">
+                          <div class="bar"></div>
+                          <div class="fill"></div>
+                      </div>
+                  </div>
+
+              </div>
+              <!-- /green -->
+            </span>
+            <h4 class="service-heading">Road</h4>
+            <p class="text-muted">root_3</p>
+          </div>
+          <div class="col-md-4">
+            <span class="fa-stack fa-4x">
+              <!-- <i class="fa fa-circle fa-stack-2x text-primary"></i>
+              <i class="fa fa-lock fa-stack-1x fa-inverse"></i> -->
+              <!-- green -->
+              <div class="clearfix">
+
+                  <div class="c100 p25 dark green">
+                      <span>25%</span>
+                      <div class="slice">
+                          <div class="bar"></div>
+                          <div class="fill"></div>
+                      </div>
+                  </div>
+
+              </div>
+              <!-- /green -->
+            </span>
+            <h4 class="service-heading">Bugs</h4>
+            <p class="text-muted">root_4</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Portfolio Grid -->
+    <section class="bg-light" id="portfolio">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">Washingto Trails</h2>
+            <h3 class="section-subheading text-muted">Want to check out a new trail? Here are some ideas</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal1">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="/static/img/portfolio/mount_ellinor.jpeg" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Olympic National Park</h4>
+              <p class="text-muted">Mt. Ellinor</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal2">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="/static/img/portfolio/02-thumbnail.jpg" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Explore</h4>
+              <p class="text-muted">Graphic Design</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal3">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="/static/img/portfolio/03-thumbnail.jpg" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Finish</h4>
+              <p class="text-muted">Identity</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal4">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="/static/img/portfolio/04-thumbnail.jpg" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Lines</h4>
+              <p class="text-muted">Branding</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal5">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="/static/img/portfolio/05-thumbnail.jpg" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Southwest</h4>
+              <p class="text-muted">Website Design</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal6">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="/static/img/portfolio/06-thumbnail.jpg" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Window</h4>
+              <p class="text-muted">Photography</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">About</h2>
+            <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="timeline">
+              <li>
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="/static/img/about/1.jpg" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>2009-2011</h4>
+                    <h4 class="subheading">Our Humble Beginnings</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                  </div>
+                </div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="/static/img/about/2.jpg" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>March 2011</h4>
+                    <h4 class="subheading">An Agency is Born</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="/static/img/about/3.jpg" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>December 2012</h4>
+                    <h4 class="subheading">Transition to Full Service</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                  </div>
+                </div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="/static/img/about/4.jpg" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>July 2014</h4>
+                    <h4 class="subheading">Phase Two Expansion</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                  </div>
+                </div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image">
+                  <h4>Be Part
+                    <br>Of Our
+                    <br>Story!</h4>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Team -->
+    <section class="bg-light" id="team">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">Women Behind the project</h2>
+            <h3 class="section-subheading text-muted">and websites top user</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-sm-4">
+            <div class="team-member">
+              <img class="mx-auto rounded-circle" src="/static/img/team/ashley_profile.JPG" alt="">
+              <h4>Ashley Huddleston</h4>
+              <p class="text-muted">Data Scientist</p>
+              <ul class="list-inline social-buttons">
+                <li class="list-inline-item">
+                  <a href="#">
+                    <i class="fa fa-twitter"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#">
+                    <i class="fa fa-facebook"></i>
+                  </a>
+                </li>
+                <li class="list-inline-item">
+                  <a href="#">
+                    <i class="fa fa-linkedin"></i>
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </div>
+        <div class="row">
+          <div class="col-lg-8 mx-auto text-center">
+            <p class="large text-muted">Trail Reporter created with the tools below. Ckeck out the github for further information</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Clients -->
+    <section class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 col-sm-6">
+            <a href="#">
+              <img class="img-fluid d-block mx-auto" src="/static/img/logos/envato.jpg" alt="">
+            </a>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <a href="#">
+              <img class="img-fluid d-block mx-auto" src="/static/img/logos/designmodo.jpg" alt="">
+            </a>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <a href="#">
+              <img class="img-fluid d-block mx-auto" src="/static/img/logos/themeforest.jpg" alt="">
+            </a>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <a href="#">
+              <img class="img-fluid d-block mx-auto" src="/static/img/logos/creative-market.jpg" alt="">
+            </a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">Contact Us</h2>
+            <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <form id="contactForm" name="sentMessage" novalidate="novalidate">
+              <div class="row">
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <input class="form-control" id="name" type="text" placeholder="Your Name *" required="required" data-validation-required-message="Please enter your name.">
+                    <p class="help-block text-danger"></p>
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" id="email" type="email" placeholder="Your Email *" required="required" data-validation-required-message="Please enter your email address.">
+                    <p class="help-block text-danger"></p>
+                  </div>
+                  <div class="form-group">
+                    <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" required="required" data-validation-required-message="Please enter your phone number.">
+                    <p class="help-block text-danger"></p>
+                  </div>
+                </div>
+                <div class="col-md-6">
+                  <div class="form-group">
+                    <textarea class="form-control" id="message" placeholder="Your Message *" required="required" data-validation-required-message="Please enter a message."></textarea>
+                    <p class="help-block text-danger"></p>
+                  </div>
+                </div>
+                <div class="clearfix"></div>
+                <div class="col-lg-12 text-center">
+                  <div id="success"></div>
+                  <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Send Message</button>
+                </div>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4">
+            <span class="copyright">Copyright &copy; Your Website 2018</span>
+          </div>
+          <div class="col-md-4">
+            <ul class="list-inline social-buttons">
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fa fa-twitter"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fa fa-facebook"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fa fa-linkedin"></i>
+                </a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4">
+            <ul class="list-inline quicklinks">
+              <li class="list-inline-item">
+                <a href="#">Privacy Policy</a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">Terms of Use</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Portfolio Modals -->
+
+    <!-- Modal 1 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <h2 class="text-uppercase">Project Name</h2>
+                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                  <img class="img-fluid d-block mx-auto" src="static/img/portfolio/01-full.jpg" alt="">
+                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                  <ul class="list-inline">
+                    <li>Date: January 2017</li>
+                    <li>Client: Threads</li>
+                    <li>Category: Illustration</li>
+                  </ul>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 2 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <h2 class="text-uppercase">Project Name</h2>
+                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                  <img class="img-fluid d-block mx-auto" src="statc/img/portfolio/02-full.jpg" alt="">
+                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                  <ul class="list-inline">
+                    <li>Date: January 2017</li>
+                    <li>Client: Explore</li>
+                    <li>Category: Graphic Design</li>
+                  </ul>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 3 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <h2 class="text-uppercase">Project Name</h2>
+                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                  <img class="img-fluid d-block mx-auto" src="/static/img/portfolio/03-full.jpg" alt="">
+                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                  <ul class="list-inline">
+                    <li>Date: January 2017</li>
+                    <li>Client: Finish</li>
+                    <li>Category: Identity</li>
+                  </ul>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 4 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <h2 class="text-uppercase">Project Name</h2>
+                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                  <img class="img-fluid d-block mx-auto" src="/static/img/portfolio/04-full.jpg" alt="">
+                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                  <ul class="list-inline">
+                    <li>Date: January 2017</li>
+                    <li>Client: Lines</li>
+                    <li>Category: Branding</li>
+                  </ul>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 5 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <h2 class="text-uppercase">Project Name</h2>
+                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                  <img class="img-fluid d-block mx-auto" src="/static/img/portfolio/05-full.jpg" alt="">
+                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                  <ul class="list-inline">
+                    <li>Date: January 2017</li>
+                    <li>Client: Southwest</li>
+                    <li>Category: Website Design</li>
+                  </ul>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Modal 6 -->
+    <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+                  <h2 class="text-uppercase">Project Name</h2>
+                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                  <img class="img-fluid d-block mx-auto" src="/static/img/portfolio/06-full.jpg" alt="">
+                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                  <ul class="list-inline">
+                    <li>Date: January 2017</li>
+                    <li>Client: Window</li>
+                    <li>Category: Photography</li>
+                  </ul>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript -->
+    <script src="static/vendor/jquery/jquery.min.js"></script>
+    <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Plugin JavaScript -->
+    <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+    <!-- Contact form JavaScript -->
+    <script src="static/js/jqBootstrapValidation.js"></script>
+    <script src="static/js/contact_me.js"></script>
+
+    <!-- Custom scripts for this template -->
+    <script src="static/js/agency.min.js"></script>
+
+  </body>
+
+</html>
