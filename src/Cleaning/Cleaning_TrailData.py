@@ -76,7 +76,13 @@ def distance_corr(origin,destination):
 def get_medians(df):
     """
     Calculates median point for each sub_region.
-    Returns a dictionary with sub_regions as keys and lat,long tuples as values.
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    df: pandas dataframe with trail report info
+    **Output**
+    ------------------------------------------------------------------------------
+    clean_reports_df: pandas dataframe with clean features with extra text,
+    add time features, and dummy variables
     """
     medians = {}
     sub_regions = df['sub_region'].unique()
@@ -106,7 +112,16 @@ def distance_from_median(df):
 
 
 def clean_traildata(hike_df):
-    """ Cleans columns, adds dummies, drops unused columns, and returns a clean df """
+    """
+    Cleans columns, adds dummies, drops unused columns, and returns a clean df.
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    hike_df: pandas dataframe with trail data
+    **Output**
+    ------------------------------------------------------------------------------
+    dropped: pandas dataframe with clean features, dropped unneccicary columns,
+    new features, and dummy variables.
+    """
     region_to_subregion(hike_df)
     hike_df['total_distance'] = hike_df[~hike_df['distance'].isna()]['distance'].apply(lambda x: total_dst(x))
     hike_df['stars'] = hike_df[~hike_df['rating'].isna()]['rating'].apply(lambda x: stars(x))
@@ -123,4 +138,4 @@ if __name__ == '__main__':
     hikes_df = pd.read_csv('../../data/WTA_all_trail_data.csv')
     clean_hikes_df = clean_traildata(hikes_df)
     clean_hikes_df['distance_from_median']= distance_from_median(clean_hikes_df)
-    clean_hikes_df.to_csv('../../data/WTA_trails_clean.csv')
+    clean_hikes_df.to_csv('../../data/WTA_trails_clean.csv',sep = '|',index_label=False)
