@@ -10,10 +10,21 @@ from multiprocessing.dummy import Pool
 from multiprocessing import cpu_count
 
 def select_text(parent_element, css_selector):
+    """
+    Selects Trail Report text string if text was written.
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    parent_element: Main HTML code div.
+    css_selector: Part of HTML code text is in.
+    **Output**
+    ------------------------------------------------------------------------------
+    Text: String. Text at the css_selector in the parent_element.
+    """
     element = parent_element.select_one(css_selector)
     return get_text_if_not_none(element)
 
 def get_text_if_not_none(element):
+    """Retrieves text if field is not empty."""
     if element is None:
         text = None
     else:
@@ -21,23 +32,43 @@ def get_text_if_not_none(element):
     return text
 
 def select_date(parent_element, css_selector):
+    """
+    Selects Trail Report date string if date was written.
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    parent_element: Main HTML code div.
+    css_selector: Part of HTML code text is in.
+    **Output**
+    ------------------------------------------------------------------------------
+    Text: String. Text at the css_selector in the parent_element.
+    """
     element = parent_element.select_one(css_selector)
     return get_date_if_not_none(element)
 
 def get_date_if_not_none(element):
+    """Retrieves date if field is not empty."""
     if element is None:
         text = None
     else:
         text = element.attrs.get('title')
     return text
 
-def parse_trip_report(title,trip_report_div):
-    """Return a dictionary representing a single trip report."""
-    creator = select_text(trip_report_div, 'div.CreatorInfo span a')
-    date = select_date(trip_report_div, 'span.elapsed-time')
-    report = select_text(trip_report_div,'div.show-with-full')
-    trail_conditions = select_text(trip_report_div,'div.trail-issues')
-    votes = select_text(trip_report_div,'span.UpvoteCount')
+def parse_trip_report(title,parent_element):
+    """
+    Return a dictionary representing a single trip report.
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    title: Name of hike.
+    parent_element: Main HTML code div.
+    **Output**
+    ------------------------------------------------------------------------------
+    Dictionary. Repreresents a single trip report.
+    """
+    creator = select_text(parent_element, 'div.CreatorInfo span a')
+    date = select_date(parent_element, 'span.elapsed-time')
+    report = select_text(parent_element,'div.show-with-full')
+    trail_conditions = select_text(parent_element,'div.trail-issues')
+    votes = select_text(parent_element,'span.UpvoteCount')
     return {
         "Trail": title,
         "Creator": creator,
@@ -48,8 +79,8 @@ def parse_trip_report(title,trip_report_div):
     }
 
 def get_trail_report(title, hikeurl, params=None):
-    """Accepts a url of the hike, saves all raw html of that hike, then finds all of the subsequent trip reports for that hike,
-    scrapes them and inserts them into a MongoDB
+    """
+    Saves raw html of hike and scrapes hikes trip reports into a MongoDB
     **Input parameters**
     ------------------------------------------------------------------------------
     title: string.  Hike name.
@@ -62,18 +93,20 @@ def get_trail_report(title, hikeurl, params=None):
     r = requests.get(hikeurl + '/@@related_tripreport_listing', params).text
     soup = BeautifulSoup(r, 'lxml')
     save_raw_html(r)
-    for trip_report_div in soup.select('div#trip-reports div.item'):
-        trip_report = parse_trip_report(title,trip_report_div)
+    for parent_element in soup.select('div#trip-reports div.item'):
+        trip_report = parse_trip_report(title,parent_element)
         trail_reports.insert_one(trip_report)
     return None
 
 def save_raw_html(r):
+    """Saves raw html from the request."""
     raw_insert = {"raw_html": r}
     raw_html.insert_one(raw_insert)
     return None
 
 def iterate_all_reports(title, hikeurl):
-    """Determines the number of times to call getTripReports function based on
+    """
+    Determines the number of times to call getTripReports function based on
     the number of trip reports listed on the hike homepage.
     **Input parameters**
     ------------------------------------------------------------------------------
@@ -92,6 +125,7 @@ def iterate_all_reports(title, hikeurl):
     return None
 
 def save_trail_html(title,url):
+    """Saves raw html from the request."""
     r = requests.get(url).text
     raw_insert = {'trail': title,
                   "raw_html": r}
@@ -99,11 +133,12 @@ def save_trail_html(title,url):
     return None
 
 def TripReportBuilder(df):
-    """Iterates through the rows of loaded pandas dataframe and calls
-    iterateTripReports and save_trail_html for each hike/row
+    """
+    Iterates through the rows of the loaded dataframe and calls
+    iterateTripReports and save_trail_html for each hike/row.
     **Input parameters**
     ------------------------------------------------------------------------------
-    title: pandas dataframe. Dataframe must contain columns entitled 'numReports'
+    df: pandas dataframe. Dataframe must contain columns entitled 'numReports'
             and 'hike_name'.
     **Output**
     ------------------------------------------------------------------------------
@@ -124,12 +159,13 @@ def TripReportBuilder(df):
 
 if __name__ == '__main__':
     mc = pymongo.MongoClient()
-    db = mc['wta']
+    db = mc['wta_all']
     trail_reports = db['trail_reports']
     raw_html = db['html']
     trail_page_raw_html = db['trail_html']
     trail_reports.drop()
     raw_html.drop()
     trail_page_raw_html.drop()
-    hike_urls = pd.read_csv('../../data/Olympics_189hike_data.csv')
+    #hike_urls = pd.read_csv('../../data/Olympics_189hike_data.csv')
+    hike_urls = pd.read_csv('../../data/WTA_all_trail_data.csv')
     TripReportBuilder(hike_urls)
