@@ -42,6 +42,15 @@ def merge_weather(test,train):
     df_train = merge_weather_trails(df_weather,train)
     return df_test,df_train
 
+def get_auc(pred,test_y):
+    y_true = test_y
+    y_pred = pred[:,1]
+    fpr, tpr, threshold = roc_curve(y_true, y_pred)
+    area_under_curve = auc(fpr, tpr)
+    return area_under_curve
+
+
+
 if __name__ == '__main__':
     df = pd.read_csv('../data/new_olympics_merged.csv', sep = '|',lineterminator='\n')
     df_clean = prep_for_knn(df)
@@ -50,4 +59,5 @@ if __name__ == '__main__':
     #merge and save full df
     train_X,train_y,test_X,test_y = get_knn_inputs(df_test,df_train)
     model,pred = make_forest(train_X,train_y,test_X)
-    print (f'final predictions {pred}')
+    AUC = get_auc(pred,test_y)
+    print (f'Current Model AUC is {AUC}')
