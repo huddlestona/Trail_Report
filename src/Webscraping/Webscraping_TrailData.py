@@ -1,4 +1,8 @@
-"""This file, when called in the terminal will collect all WTA hike urls from given start url, save all the pernient data for that hike as a csv, and save the hikes webpage in a MongoDB"""
+"""
+This file, when called in the terminal will collect all WTA hike urls
+from given start url, save all the pernient data for that hike as a csv,
+and save the hikes webpage in a MongoDB.
+"""
 from bs4 import BeautifulSoup
 import requests
 import pandas as pd
@@ -10,7 +14,8 @@ import math
 import csv
 
 def iterate_all_reports(starturl):
-    """Determines the number of hikes listed on the WTA trails page and get said number of report urls
+    """
+    Determines the number of hikes listed on the WTA trails page and get said number of report urls
     **Input parameters**
     ------------------------------------------------------------------------------
     starturl: string. Base URL for the request.
@@ -37,11 +42,16 @@ def iterate_all_reports(starturl):
     return hike_urls
 
 def trail_data_parser(url):
-    """Parses URL into hiking dataset.
-    Parser collects html soup and populates
-    washington_hikes table with relevant data. Data cleaning is completed in a
-    seperate python script."""
-
+    """
+    Parses URL with html soup and populates washington_hikes table with relevant data.
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    url: string. Single hikes url.
+    **Output**
+    ------------------------------------------------------------------------------
+    row_data: array. single row for a pandas df.
+    Data cleaning is completed in a seperate python script.
+    """
     all_features = ['Mountain views',
             'Wildlife',
             'Old growth',
