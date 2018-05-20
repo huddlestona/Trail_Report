@@ -4,13 +4,16 @@ from math import sin, cos, sqrt, atan2, radians
 pd.options.mode.chained_assignment = None  # default='warn'
 
 def stars(string):
-    '''Extracts number of stars'''
+    """Extracts number of stars and returns start number as a single float."""
     lst = string.split()
     return float(lst[0])
 
 def total_dst(string):
-    """Extracts mileage from string and calculates total mileage depending on if
-    description says one-way or roundtrip."""
+    """
+    Extracts mileage from string and calculates total mileage
+    depending on if the description says one-way or roundtrip.
+    Returns a float.
+    """
     miles = []
     try:
         for s in string.split():
@@ -25,7 +28,7 @@ def total_dst(string):
         return miles[0]
 
 def region_to_subregion(db):
-    """ Adds region and subregion to database"""
+    """ Adds region and subregion to database."""
     split = db['region'].apply(lambda x: str(x).split('--'))
     super_region = []
     sub_region = []
@@ -38,23 +41,22 @@ def region_to_subregion(db):
             sub_region.append(trail[1])
     db['super_region'] = super_region
     db['sub_region'] = sub_region
-    # #turns string 'nan' to float 'NaN'
-    # db['subregion'] = db[db['super_region'] == 'nan']['super_region']= 'NaN'
+
 
 # Haversine formula example in Python
 # Author: Wayne Dyck
 
 def distance_corr(origin,destination):
-    """distance between two lat/long in km"""
+    """Calculates distance between two lat/long and returns a float in km."""
     lat1, lon1 = origin
     lat2, lon2 = destination
     # approximate radius of earth in km
     R = 6373.0
 
-    lat1 = radians(52.2296756)
-    lon1 = radians(21.0122287)
-    lat2 = radians(52.406374)
-    lon2 = radians(16.9251681)
+    lat1 = radians(lat1)
+    lon1 = radians(lon1)
+    lat2 = radians(lat2)
+    lon2 = radians(lon2)
 
     dlon = lon2 - lon1
     dlat = lat2 - lat1
@@ -66,7 +68,10 @@ def distance_corr(origin,destination):
     return distance
 
 def get_medians(df):
-    """ calculates median point for each sub_region"""
+    """
+    Calculates median point for each sub_region.
+    Returns a dictionary with sub_regions as keys and lat,long tuples as values.
+    """
     medians = {}
     sub_regions = df['sub_region'].unique()
     for region in sub_regions:
@@ -76,7 +81,10 @@ def get_medians(df):
     return medians
 
 def distance_from_median(df):
-    ''' Calculated distance from median point.'''
+    """
+    Calculated distance from median point for all hikes.
+    Returns a list of distances.
+    """
     distances = []
     medians = get_medians(df)
     all_hikes = list(df['hike_name'])
@@ -92,7 +100,7 @@ def distance_from_median(df):
 
 
 def clean_traildata(hike_df):
-    """ Takes in the dataframe, cleans columns, and returns a clean df """
+    """ Cleans columns, adds dummies, drops unused columns, and returns a clean df """
     region_to_subregion(hike_df)
     hike_df['total_distance'] = hike_df[~hike_df['distance'].isna()]['distance'].apply(lambda x: total_dst(x))
     hike_df['stars'] = hike_df[~hike_df['rating'].isna()]['rating'].apply(lambda x: stars(x))
@@ -102,13 +110,11 @@ def clean_traildata(hike_df):
     subregion_dummies = pd.get_dummies(hike_df['sub_region'])
     merge_dummies = pd.concat([hike_df,pass_dummies,subregion_dummies],axis=1)
     clean_hikes_df = merge_dummies.drop(['distance','rating','region'],axis=1)
-    clean_hikes_df_test = hike_df.drop(['distance','rating','region'],axis=1)
-    dropped = clean_hikes_df_test.sort_values('numReports').drop_duplicates(subset='hike_name', keep= 'last')
+    dropped = clean_hikes_df.sort_values('numReports').drop_duplicates(subset='hike_name', keep= 'last')
     return dropped
 
 if __name__ == '__main__':
-    hike_df = pd.read_csv('../../data/WTA_all_trail_data.csv')
-    clean_hikes_df = clean_traildata(hike_df)
-    # hood_df = clean_hikes_df.loc[clean_hikes_df['sub_region'] == ' Hood Canal']
+    hikes_df = pd.read_csv('../../data/WTA_all_trail_data.csv')
+    clean_hikes_df = clean_traildata(hikes_df)
     clean_hikes_df['distance_from_median']= distance_from_median(clean_hikes_df)
     clean_hikes_df.to_csv('../../data/WTA_trails_clean.csv')
