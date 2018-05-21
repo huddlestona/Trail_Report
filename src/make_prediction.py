@@ -1,7 +1,31 @@
+"""
+This file, when called in the terminal, will return a predicted probaability
+for the chosen condition, date, and hike.
+"""
 from knn_model import make_logistic,prep_neighbors,dates_in_circle
-from Cleaning.Merge_Weather import get_weather_data(),get_closest_station,merge_weather_trails
+from Cleaning.Merge_Weather import get_weather_data,get_closest_station,merge_weather_trails
+import pandas as pd
+import numpy as np
+import math
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import scale
+from sklearn.preprocessing import normalize
 
 def get_new_neighbors(df,hike,date,condition):
+    """
+    Get's mean condition results and top_sentces from knn.
+
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    df: pandas df. Dataframe prepped by prep_for_knn
+    hike: location to hike
+    date: date of hike
+    condition: condition to choose for y value.
+    **Output**
+    ------------------------------------------------------------------------------
+    neigh: Fit KNeighborsClassifier. Fit with highest_point,
+    distance_from_median, month of report, all to scale.
+    """
     neigh = prep_neighbors(df,condition)
     hike_df = df.loc[df['Trail'] == hike][['highest_point','distance_from_median']]
     hike_df['month'] = date.month
@@ -215,7 +239,7 @@ if __name__ == '__main__':
     hike = 'Mount Rose'
     hike_date = '05/06/18'
     condition = 'condition|snow'
-    pred = Make_Prediction(hike,hike_date,condition)
+    pred,top_text = Make_Prediction(hike,hike_date,condition)
     print(pred)
     # predictions = all_predictions(hike,hike_date)
     # [print(pred) for pred in predictions]

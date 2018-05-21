@@ -6,21 +6,21 @@ from Cleaning.Merge_Weather import get_weather_data, merge_weather_trails, get_c
 from knn_model import prep_for_knn,prep_neighbors,get_neighbors
 import pandas as pd
 
-def split_x_y(df,condition):
+def split_x_y(df):
     """Fills in nas and splits data with y being the inputed conditon column."""
     conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
     df_full = df.fillna(0)
-    train_y = df_full[condition]
+    train_y = df_full[conditions]
     drop_list = conditions+['year','closet_station']
     train_X = df_full.drop(drop_list, axis = 1)
     return train_X,train_y
 
 def clean_X(df):
     """Drops unneeded colums in df."""
-    df_clean = df.drop(['Date','last_year','month'], axis=1)
+    df_clean = df.drop(['Date','last_year','month','Unnamed: 0','Unnamed: 0_x','Unnamed: 0_y'], axis=1)
     return df_clean
 
-def add_knn(df,condition):
+def add_knn(df):
     """
     Preps data for knn, runs knn, and adds knn past report values as column in df.
     **Input parameters**
@@ -32,8 +32,10 @@ def add_knn(df,condition):
     df_clean: pandas dataframe. Clean results to be merged, with neighbors added.
     """
     df_clean = prep_for_knn(df)
-    neigh = prep_neighbors(df_clean, condition)
-    get_neighbors(neigh,df_clean,condition)
+    conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
+    for condition in conditions:
+        neigh = prep_neighbors(df_clean, condition)
+        get_neighbors(neigh,df_clean,condition)
     return df_clean
 
 def merge_all_files(df_clean):
@@ -44,11 +46,10 @@ def merge_all_files(df_clean):
     return df_merge
 
 if __name__ == '__main__':
-    condition = 'condition|snow'
     df = pd.read_csv('../data/olympics_merged.csv', sep = '|',lineterminator='\n')
-    df_clean = add_knn(df,conditon)
+    df_clean = add_knn(df)
     df_merge = merge_all_files(df_clean)
-    # df_final = clean_X(df_merge)
-    train_X,train_y = split_x_y(df_merge,condition)
-    train_X.to_csv('../data/olympics_final_X2.csv', sep = '|',index_label=False)
-    train_y.to_csv('../data/olympics_final_y2.csv', sep = '|', index_label=False)
+    df_final = clean_X(df_merge)
+    train_X,train_y = split_x_y(df_final)
+    train_X.to_csv('../data/olympics_Xall.csv', sep = '|',index_label=False)
+    train_y.to_csv('../data/olympics_yall.csv', sep = '|', index_label=False)
