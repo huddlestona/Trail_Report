@@ -21,6 +21,13 @@ def condition_dummies(df):
     for cond in conditions:
         df[f"condition|{cond}"] = df['conditions_split'].apply(lambda x: cond in str(x))
 
+def dates_in_circle(dates):
+    """Turns the date into a sin and cos to rep day out of the year."""
+    dates_ordered = dates.apply(lambda x: x.month*30 + x.day *(2*math.pi))
+    dates_sin = dates_ordered.apply(lambda x: math.sin(x))
+    dates_cos = dates_ordered.apply(lambda x: math.cos(x))
+    return dates_sin, dates_cos
+
 def clean_trailreport(df):
     """
     **Input parameters**
@@ -36,6 +43,7 @@ def clean_trailreport(df):
     df['last_year']= df['Date'].apply( lambda x: x.year-1)
     df['month'] = df['Date'].apply( lambda x: x.month)
     df['year'] = df['Date'].apply( lambda x: x.year)
+    df['date_sin'],df['date_cos'] = dates_in_circle(df['Date'])
     # year_dummies = pd.get_dummies(df['year'])
     # month_dummies = pd.get_dummies(df['month'])
     condition_dummies(df)
