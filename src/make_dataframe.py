@@ -17,7 +17,7 @@ def split_x_y(df):
 
 def clean_X(df):
     """Drops unneeded colums in df."""
-    df_clean = df.drop(['Date','last_year','month','Unnamed: 0','Unnamed: 0_x','Unnamed: 0_y'], axis=1)
+    df_clean = df.drop(['Date','last_year','month'], axis=1)
     return df_clean
 
 def add_knn(df):
