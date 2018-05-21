@@ -3,12 +3,15 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Quadratic Equation Solver</title>
+  <title>Trail-Report</title>
   <meta name="description" content="Trail Report">
   <meta name="Ashley Huddleston" content="Data Scientist">
-
-    <script type="text/javascript" src="{{ url_for('static', filename='jquery.js') }}">  </script>
-
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    $(document).ready(function() {
+      $('.datepicker').datepicker();
+    });
+  </script>
 </head>
 
 <body>
@@ -22,8 +25,35 @@
       document.write("<p>Don't know what hike to check out?  "+txt.link("https://www.WTA.org") + "</p>");
       </script>
       </p>
-
+      <div class="input-group datepicker" data-provide="datepicker">
+          <input type="text" class="form-control">
+          <div class="input-group-addon">
+              <span class="glyphicon glyphicon-th"></span>
+          </div>
+      </div>
+      <input data-provide="datepicker">
     <div>
+      <div class="container">
+        <div class="row">
+            <div class="col-sm-6">
+                <div class="form-group">
+                    <div class="input-group date" id="datetimepicker4" data-target-input="nearest">
+                        <input type="text" class="form-control datetimepicker-input" data-target="#datetimepicker4"/>
+                        <div class="input-group-append" data-target="#datetimepicker4" data-toggle="datetimepicker">
+                            <div class="input-group-text"><i class="fa fa-calendar"></i></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(function () {
+                    $('#datetimepicker4').datetimepicker({
+                        format: 'L'
+                    });
+                });
+            </script>
+        </div>
+    </div>
       <select id=hike>
         <option value='Anderson Lake State Park'>Anderson Lake State Park</option>
         <option value='Anderson Point'>Anderson Point</option>
@@ -222,22 +252,9 @@
         <option value="03/12/18">03/12/18</option>
         <option value="date2">date 2</option>
       </select> -->
-      <head>
-      <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/themes/smoothness/jquery-ui.css">
-      <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-      <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.11.4/jquery-ui.min.js"></script>
-
-        <script>
-        $(document).ready(function() {
-          $("#datepicker").datepicker();
-        });
-        </script>
-      </head>
-      <body>
       <form>
-          <input id="datepicker" />
+          <input class=".datepicker" />
       </form>
-      </body>
     </div>
 
     <div>
@@ -247,8 +264,8 @@
     <div>
         <!-- The span has an id so that later we can fill in the solution
              using js. -->
-        <p> <span id="solution"></span> </p>
-
+        <p> <span id="solution1"></span> </p>
+<p> <span id="solution2"></span> </p>
 
 <script type="text/javascript">
 let get_input_coefficients = function() {
@@ -271,7 +288,7 @@ let send_coefficient_json = function(coefficients) {
     });
 };
 let display_solutions = function(solutions) {
-    $("span#solution").html(solutions.root_1)
+    $("span#solution1").html(solutions.root_1),$("span#solution2").html(solutions.root_2),$("span#solution3").html(solutions.root_3),$("span#solution4").html(solutions.root_4)
 };
 $(document).ready(function() {
     $("button#solve").click(function() {
