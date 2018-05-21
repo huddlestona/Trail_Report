@@ -4,6 +4,12 @@ for the chosen condition, date, and hike.
 """
 from knn_model import make_logistic,prep_neighbors,dates_in_circle
 from Cleaning.Merge_Weather import get_weather_data,get_closest_station,merge_weather_trails
+import pandas as pd
+import numpy as np
+import math
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import scale
+from sklearn.preprocessing import normalize
 
 class New_Input(object):
     """A users input of desired trip.
@@ -24,23 +30,49 @@ class New_Input(object):
         self.date = pd.to_datetime(date)
         self.condition = condition
         self.weather,self.weather_dist = get_weather_data()
-        self.df = pd.read_csv('../data/new_olympics_merged.csv', sep = '|',lineterminator='\n')
+        self.df = pd.read_csv('../data/olympics_merged.csv', sep = '|',lineterminator='\n')
         self.df_trail = pd.read_csv('../data/WTA_trails_clean_w_medians.csv',lineterminator='\n')
 
     def get_new_neighbors(self):
         """Get's index of closest 20 neighbors in df."""
-        neigh = prep_neighbors(self.df,condition)
-        hike_df = self.df.loc[self.df['Trail'] == hike][['highest_point','distance_from_median']]
-        hike_df['month'] = date.month
-        hike_info = hike_df.iloc[0]
+        neigh = prep_neighbors(self.df,self.condition)
+        hike_knn_df = self.df.loc[self.df['Trail'] == self.hike][['highest_point','distance_from_median']]
+        hike_knn_df['month'] = self.date.month
+        hike_info = hike_knn_df.iloc[0]
         X = scale(hike_info)
         indx = neigh.kneighbors([X])
         self.indx_list = list(indx[1][0])
 
+    def text_neighbors_indx(self):
+        """
+        Takes the df and y condition and returns a fit KNeighborsClassifier.
+
+        **Input parameters**
+        ------------------------------------------------------------------------------
+        df: pandas df. Dataframe prepped by prep_for_knn
+        condition: condition to choose for y value.
+        **Output**
+        ------------------------------------------------------------------------------
+        neigh: Fit KNeighborsClassifier. Fit with highest_point,
+        distance_from_median, month of report, all to scale.
+        """
+        self.reports_df = self.df.loc[self.df['Trail']== self.hike][[self.condition,'Report','date_cos','date_sin','Votes']]
+        neigh = KNeighborsClassifier(n_neighbors=5)
+        X_all = self.reports_df[['date_cos','date_sin','Votes']]
+        X = X_all.fillna(0)
+        y = self.reports_df[self.condition]
+        y = y.astype(bool)
+        X_s = scale(X)
+        neigh.fit(X_s,y)
+        x_input = self.X_test[['date_cos','date_sin','Votes']]
+        neighbors = neigh.kneighbors(x_input)
+        self.text_indx = list(neighbors[1][0])
+
     def get_knn_text(self):
         #called single_neigh in original
+        self.text_neighbors_indx()
         n_text = []
-        neighbors = self.df.iloc[self.indx_list[0:3]]['Report']
+        neighbors = self.reports_df.iloc[self.text_indx]['Report']
         for one in neighbors:
             n_text.append(str(one))
         self.n_text = "".join(set(n_text))
@@ -51,11 +83,12 @@ class New_Input(object):
         return average
 
     def get_hike_info(self):
-        self.hike_df = self.df.loc[self.df['hike_name'] == self.hike]
+        self.hike_df = self.df_trail.loc[self.df_trail['hike_name'] == self.hike]
 
     def prep_data(self):
         self.get_new_neighbors()
-        self.hike_df[f'neighbors_average {self.condition}'] = get_new_neighbors()
+        self.get_hike_info()
+        self.hike_df[f'neighbors_average {self.condition}'] = self.get_new_neighbors()
         self.hike_df['date'] = self.date
         self.hike_df['month'] = self.date.month
         self.hike_df['year'] = self.date.year
@@ -160,16 +193,22 @@ class New_Input(object):
 
     def get_train_df(self):
         #add condition as input to call different columns in y_all. y_all should be all possible ys.
-        X_train = pd.read_csv('../data/olympics_final_X',sep = '|',lineterminator='\n')
-        y_all = pd.read_csv('../data/olympics_final_y',sep = '|',lineterminator='\n',header=None)
-        y_train = y_all[1]
-        self.actual_cols = X_train.columns.tolist()
+        new = ['neighbors_average condition|snow', 'neighbors_average condition|trail',
+        'neighbors_average condition|bugs', 'neighbors_average condition|road']
+        new.remove(f'neighbors_average {self.condition}')
+        X_all = pd.read_csv('../data/olympics_Xall.csv',sep = '|',lineterminator='\n')
+        self.X_train= X_all.drop(new,axis=1)
+        y_all = pd.read_csv('../data/olympics_yall.csv',sep = '|',lineterminator='\n')
+        self.y_train = y_all[self.condition]
+        self.actual_cols = self.X_train.columns.tolist()
 
-    def Make_Prediction(self):
+    def prep_input(self):
         self.prep_data()
         self.get_train_df()
+
+    def make_prediction(self):
         X_test_ordered = self.X_test[self.actual_cols]
-        model, pred = make_logistic(X_train,y_train,X_test_ordered)
+        model, pred = make_logistic(self.X_train,self.y_train,X_test_ordered)
         # probability = f"There is a {float(pred[:,1])} likelihood of having {condition} at {hike} on {hike_date}.'
         # hike_info = f'Previous reports for similar hike/weather combinations say'
         # text = [print(text) for text in top_text]
@@ -180,10 +219,10 @@ class New_Input(object):
         top_sentences = []
         # for i,one in enumerate(n_text):
         sentences = self.n_text.split('.')
-        top_sentences.append(get_top_sentences(sentences))
+        top_sentences.append(self.get_top_sentences(sentences))
         return top_sentences
 
-    def get_top_sentences(sentences):
+    def get_top_sentences(self,sentences):
         important = []
         for sentence in sentences:
             key_words = ['bring','snow','need','bugs','mud','washout','safe','danger','crampons','axe','ice','recommend','conditions']
@@ -193,3 +232,13 @@ class New_Input(object):
         if len(important) < 1:
             important.append('No relevent reports to show at this time!')
         return set(important)
+
+if __name__ == '__main__':
+    conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
+    hike = 'Mount Rose'
+    date = '05/06/18'
+    condition = 'condition|bugs'
+    snow =  New_Input(hike,date,condition)
+    snow_pred = snow.make_prediction()
+    top_text = snow.get_top_text()
+    print (snow_pred)
