@@ -30,11 +30,11 @@ class New_Input(object):
         self.date = pd.to_datetime(date)
         self.condition = condition
         self.weather,self.weather_dist = get_weather_data()
-        #df = pd.read_csv('../data/olympics_merged.csv', sep = '|',lineterminator='\n')
-        df = pd.read_csv('startbootstrap-agency/static/files/olympics_merged.csv', sep = '|',lineterminator='\n')
+        df = pd.read_csv('../data/olympics_merged.csv', sep = '|',lineterminator='\n')
+        #df = pd.read_csv('startbootstrap-agency/static/files/olympics_merged.csv', sep = '|',lineterminator='\n')
         self.df = df.fillna(0)
-        #self.df_trail = pd.read_csv('../data/WTA_trails_clean_w_medians.csv',lineterminator='\n')
-        self.df_trail = pd.read_csv('startbootstrap-agency/static/files/WTA_trails_clean_w_medians.csv',lineterminator='\n')
+        self.df_trail = pd.read_csv('../data/WTA_trails_clean_w_medians.csv',lineterminator='\n')
+        #self.df_trail = pd.read_csv('startbootstrap-agency/static/files/WTA_trails_clean_w_medians.csv',lineterminator='\n')
 
     def get_new_neighbors(self):
         """Get's index of closest 20 neighbors in df."""
@@ -106,7 +106,7 @@ class New_Input(object):
     def clean_for_model(self):
         #self.add_hike_dummy()
         df_clean = self.hike_all_df.drop(['url','which_pass','super_region',
-        'sub_region','closet_station','hike_name','last_year','month','year','date'], axis=1)
+        'sub_region','closet_station','hike_name','last_year','month','year','date','Unnamed: 0'], axis=1)
         df_full = df_clean.fillna(0)
         return df_full
 
@@ -115,11 +115,11 @@ class New_Input(object):
         new = ['neighbors_average condition|snow', 'neighbors_average condition|trail',
         'neighbors_average condition|bugs', 'neighbors_average condition|road']
         new.remove(f'neighbors_average {self.condition}')
-        #X_all = pd.read_csv('../data/olympics_Xall.csv',sep = '|',lineterminator='\n')
-        X_all = pd.read_csv('startbootstrap-agency/static/files/olympics_Xall.csv',sep = '|',lineterminator='\n')
+        X_all = pd.read_csv('../data/olympics_Xall.csv',sep = '|',lineterminator='\n')
+        #X_all = pd.read_csv('startbootstrap-agency/static/files/olympics_Xall.csv',sep = '|',lineterminator='\n')
         self.X_train= X_all.drop(new,axis=1)
-        #y_all = pd.read_csv('../data/olympics_yall.csv',sep = '|',lineterminator='\n')
-        y_all = pd.read_csv('startbootstrap-agency/static/files/olympics_yall.csv',sep = '|',lineterminator='\n')
+        y_all = pd.read_csv('../data/olympics_yall.csv',sep = '|',lineterminator='\n')
+        #y_all = pd.read_csv('startbootstrap-agency/static/files/olympics_yall.csv',sep = '|',lineterminator='\n')
         self.y_train = y_all[self.condition]
         self.actual_cols = self.X_train.columns.tolist()
 
@@ -161,6 +161,7 @@ if __name__ == '__main__':
     date = '05/06/18'
     condition = 'condition|bugs'
     snow =  New_Input(hike,date,condition)
+    snow.prep_input()
     snow_pred = snow.make_prediction()
     top_text = snow.get_top_text()
     print (snow_pred)
