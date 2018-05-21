@@ -57,7 +57,7 @@ def clean_trailreport(df):
 
 if __name__ == '__main__':
     mc = pymongo.MongoClient()
-    db = mc['wta_all']
+    db = mc['wta']
     trail_reports = db['trail_reports']
     df = pd.DataFrame(list(trail_reports.find()))
     clean__reports_df = clean_trailreport(df)
