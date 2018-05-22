@@ -90,6 +90,8 @@
     .dropdown a:hover {background-color: #ddd}
 
     .show {display:block;}
+
+    .classWithPad { margin:10px; padding:10px; }
     </style>
   </head>
 
@@ -135,12 +137,10 @@
           <div class="intro-heading text-uppercase">Where will you go next? </div>
         </div>
       </div>
-    </div>
-  <div class="row">
     <div class="col-md-12">
     <!-- hike search button -->
-<div class="form-group">
-    <select id="hike">
+      <div class="form-group">
+      <select id="hike">
       <option value='Anderson Lake State Park'>Anderson Lake State Park</option>
       <option value='Anderson Point'>Anderson Point</option>
       <option value='Appleton Pass'>Appleton Pass</option>
@@ -330,17 +330,23 @@
       <option value='Wolf Creek'>Wolf Creek</option>
       <option value='Wynoochee Lake'>Wynoochee Lake</option>
       <option value='Wynoochee Pass to Sundown Lake'>Wynoochee Pass to Sundown Lake</option>
-    </select>
-          <input id="datepicker" width="276" />
+      </select>
+      </div>
+    </div>
+    <div class="col-sm">
+      <div class="d-flex justify-content-center">
+      <input id="datepicker" width="150" />
           <script>
               $('#datepicker').datepicker({
                   uiLibrary: 'bootstrap4'
               });
           </script>
-
-          <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" id="results" href="#services">Check the trail</a>
-        </div>
       </div>
+    </div>
+    <div class="col-md-12 classWithPad">
+          <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" id="results" href="#services">Check the trail</a>
+      </div>
+    </div>
     </div>
   </div>
     </header>
@@ -390,7 +396,7 @@
         </div>
 
             <h2 class="section-heading text-uppercase">Trail Status</h2>
-            <h3 class="section-subheading text-muted"><span id="textsolution"></span></h3>
+            <h3 class="section-subheading text-muted"><span id="textsolution"> Probability of the following conditions when hiking Mt.Angeles on 05/27/2018. </span></h3>
             <!-- The span has an id so that later we can fill in the solution
                  using js. -->
 
@@ -405,8 +411,8 @@
               <!-- green -->
               <div class="clearfix">
 
-                  <div class="c100 p25 dark green">
-                      <span id="solution1"></span>
+                  <div class="c100 p45 dark green">
+                      <span id="solution1">45%</span>
                       <div class="slice">
                           <div class="bar"></div>
                           <div class="fill"></div>
@@ -426,8 +432,8 @@
               <!-- green -->
               <div class="clearfix">
 
-                  <div class="c100 p25 dark green">
-                      <span id="solution2"></span>
+                  <div class="c100 p20 dark green">
+                      <span id="road_prob">20%</span>
                       <div class="slice">
                           <div class="bar"></div>
                           <div class="fill"></div>
@@ -438,7 +444,7 @@
               <!-- /green -->
             </span>
             <h4 class="service-heading">Road</h4>
-            <p class="text-muted">root_3</p>
+            <p class="text-muted"></p>
           </div>
           <div class="col-md-4">
             <span class="fa-stack fa-4x">
@@ -447,8 +453,8 @@
               <!-- green -->
               <div class="clearfix">
 
-                  <div class="c100 p25 dark green">
-                      <span>25%</span>
+                  <div class="c100 p5 dark green">
+                      <span id="solution3">5%</span>
                       <div class="slice">
                           <div class="bar"></div>
                           <div class="fill"></div>
@@ -459,11 +465,8 @@
               <!-- /green -->
             </span>
             <h4 class="service-heading">Bugs</h4>
-            <p class="text-muted">root_4</p>
+            <p class="text-muted"></p>
           </div>
-        </div>
-      </div>
-    </section>
     <div class="col-md-4">
       <span class="fa-stack fa-4x">
         <!-- <i class="fa fa-circle fa-stack-2x text-primary"></i>
@@ -471,20 +474,20 @@
         <!-- green -->
         <div class="clearfix">
 
-            <div class="c100 p25 dark green">
-                <span>25%</span>
+            <div class="c100 p20 dark green">
+                <span>20%</span>
                 <div class="slice">
                     <div class="bar"></div>
                     <div class="fill"></div>
                 </div>
             </div>
-
-        </div>
+          </div>
         <!-- /green -->
       </span>
-      <h4 class="service-heading">Road</h4>
+      <h4 class="service-heading">Trail</h4>
       <p class="text-muted"><span id="snowsolution"></span></p>
     </div>
+    </section>
     <!-- Portfolio Grid -->
     <section class="bg-light" id="portfolio">
       <div class="container">
