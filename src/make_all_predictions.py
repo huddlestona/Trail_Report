@@ -1,4 +1,4 @@
-from knn_model import make_logistic,prep_neighbors,dates_in_circle,prep_for_knn
+from knn_model import make_logistic,prep_neighbors,dates_in_circle,prep_for_knn,make_forest
 from Cleaning.Merge_Weather import get_weather_data,get_closest_station,merge_weather_trails
 import pandas as pd
 import numpy as np
@@ -77,7 +77,7 @@ class TrailPred(object):
     def fit(self):
         for condition in self.conditions:
             y_train = self.prep_train(condition)
-            self.models[condition]= make_logistic(self.X_train,y_train)
+            self.models[condition]= make_forest(self.X_train,y_train)
 
     def predict(self,X_test):
         pred = {}
@@ -93,7 +93,7 @@ def main_dump():
 
 def main_pred():
     hike = 'Mount Rose'
-    date = '05/22/18'
+    date = '2018-05-06'
     X_test = get_data(hike,date)
     with open('tp.pkl','rb') as f:
         tp = pickle.load(f)
