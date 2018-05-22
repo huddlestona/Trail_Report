@@ -193,17 +193,19 @@ def clean_for_model(hike,date,df):
 
 def Make_Prediction(hike,hike_date,condition):
     X_train = pd.read_csv('../data/olympics_final_X',sep = '|',lineterminator='\n')
-    y_all = pd.read_csv('../data/olympics_final_y',sep = '|',lineterminator='\n',header=None)
+    y_all = pd.read_csv('../data/olympics_final_y',sep = '|',lineterminator='\n',header= None)
     y_train = y_all[1]
     actual_cols = X_train.columns.tolist()
     #need different ys for each conditions
     X_test,top_text = get_X_test(hike,hike_date,condition)
     X_test_ordered = X_test[actual_cols]
-    model, pred = make_logistic(X_train,y_train,X_test_ordered)
+    model= make_logistic(X_train,y_train)
+    pred = model.predict_proba(X_test_ordered)
+
     # probability = f"There is a {float(pred[:,1])} likelihood of having {condition} at {hike} on {hike_date}.'
     # hike_info = f'Previous reports for similar hike/weather combinations say'
     # text = [print(text) for text in top_text]
-    return pred,top_text
+    return pred
 
 
 def get_X_test(hike,hike_date,condition):
@@ -239,7 +241,7 @@ if __name__ == '__main__':
     hike = 'Mount Rose'
     hike_date = '05/06/18'
     condition = 'condition|snow'
-    pred,top_text = Make_Prediction(hike,hike_date,condition)
+    pred = Make_Prediction(hike,hike_date,condition)
     print(pred)
     # predictions = all_predictions(hike,hike_date)
     # [print(pred) for pred in predictions]
