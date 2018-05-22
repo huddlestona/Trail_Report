@@ -1,10 +1,11 @@
 from __future__ import division
-import sys
-sys.path.append("..") # Adds higher directory to python modules path.
 from math import sqrt
 from flask import Flask, render_template, request, jsonify
-from make_any_prediction import New_Input
+from Modules.make_all_predictions import *
 app = Flask(__name__)
+
+with open('Modules/tp.pkl','rb') as f:
+    tp = pickle.load(f)
 
 @app.route('/', methods=['GET'])
 def index():
@@ -20,28 +21,11 @@ def solve():
 
 
 def _get_prediction(hike, date):
-    conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
-    #snow
-    snow =  New_Input(hike,date,'condition|snow')
-    snow.prep_input()
-    snow_prob = snow.make_prediction()
-    snow_words = snow.get_top_text()
-    #trail
-    trail =  New_Input(hike,date,'condition|trail')
-    trail.prep_input()
-    trail_prob = trail.make_prediction()
-    trail_words = trail.get_top_text()
-    #Bugs
-    bugs =  New_Input(hike,date,'condition|bugs')
-    bugs.prep_input()
-    bugs_prob = bugs.make_prediction()
-    bugs_words = bugs.get_top_text()
-    #road
-    road =  New_Input(hike,date,'condition|road')
-    road.prep_input()
-    road_prob = road.make_prediction()
-    road_words = road.get_top_text()
-    return snow_prob,trail_prob,bugs_prob,road_prob
-
+    X_test = get_data(hike,date)
+    pred = tp.predict(X_test)
+    return (pred['condition|snow'][:,1][0],
+            pred['condition|trail'][:,1][0],
+            pred['condition|bugs'][:,1][0],
+            pred['condition|road'][:,1][0])
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True)
