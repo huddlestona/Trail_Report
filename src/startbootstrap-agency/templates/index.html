@@ -92,6 +92,9 @@
     .show {display:block;}
 
     .classWithPad { margin:10px; padding:10px; }
+    #hike{
+ width:300px;
+}
     </style>
   </head>
 
@@ -335,7 +338,7 @@
     </div>
     <div class="col-sm">
       <div class="d-flex justify-content-center">
-      <input id="datepicker" width="150" />
+      <input id="datepicker" width="250" />
           <script>
               $('#datepicker').datepicker({
                   uiLibrary: 'bootstrap4'
@@ -344,7 +347,7 @@
       </div>
     </div>
     <div class="col-md-12 classWithPad">
-          <a class="btn btn-primary btn-xl text-uppercase js-scroll-trigger" id="results" href="#services">Check the trail</a>
+          <a class="btn btn-primary btn-xl btn-block text-uppercase js-scroll-trigger" id="results" href="#services">Check the trail</a>
       </div>
     </div>
     </div>
@@ -403,9 +406,9 @@
           </div>
         </div>
         <link rel="stylesheet" href="/static/css/circle.css">
-        <div class="row text-center">
-          <div class="col-md-4">
-            <span class="fa-stack fa-4x">
+        <div class="container h-100">
+        <div class="row h-100 justify-content-center align-items-center">
+          <div class="d-flex flex-column justify-content-center">
               <!-- <i class="fa fa-circle fa-stack-2x text-primary"></i>
               <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i> -->
               <!-- green -->
@@ -424,9 +427,6 @@
             </span>
             <h4 class="service-heading">Snow</h4>
             <p class="text-muted"><span id="snowsolution"></span></p>
-          </div>
-          <div class="col-md-4">
-            <span class="fa-stack fa-4x">
               <!-- <i class="fa fa-circle fa-stack-2x text-primary"></i>
               <i class="fa fa-laptop fa-stack-1x fa-inverse"></i> -->
               <!-- green -->
@@ -445,8 +445,7 @@
             </span>
             <h4 class="service-heading">Road</h4>
             <p class="text-muted"></p>
-          </div>
-          <div class="col-md-4">
+
             <span class="fa-stack fa-4x">
               <!-- <i class="fa fa-circle fa-stack-2x text-primary"></i>
               <i class="fa fa-lock fa-stack-1x fa-inverse"></i> -->
@@ -466,8 +465,7 @@
             </span>
             <h4 class="service-heading">Bugs</h4>
             <p class="text-muted"></p>
-          </div>
-    <div class="col-md-4">
+
       <span class="fa-stack fa-4x">
         <!-- <i class="fa fa-circle fa-stack-2x text-primary"></i>
         <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i> -->
@@ -487,6 +485,9 @@
       <h4 class="service-heading">Trail</h4>
       <p class="text-muted"><span id="snowsolution"></span></p>
     </div>
+  </div>
+  </div>
+</div>
     </section>
     <!-- Portfolio Grid -->
     <section class="bg-light" id="portfolio">
