@@ -1,0 +1,1093 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+
+  <title>Trail Report- Making trail access easier. </title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="/static/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Custom fonts for this template -->
+  <link href="/static/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+  <link href='https://fonts.googleapis.com/css?family=Kaushan+Script' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Droid+Serif:400,700,400italic,700italic' rel='stylesheet' type='text/css'>
+  <link href='https://fonts.googleapis.com/css?family=Roboto+Slab:400,100,300,700' rel='stylesheet' type='text/css'>
+
+  <!-- Custom styles for this template -->
+  <link href="/static/css/agency.min.css" rel="stylesheet">
+  <script>
+    $(document).ready(function() {
+      $('.datepicker').datepicker();
+    });
+  </script>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bootstrap 4 DatePicker</title>
+  <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/gijgo.min.js" type="text/javascript"></script>
+  <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css" rel="stylesheet" type="text/css" />
+
+  <!-- Search Button style  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    .dropbtn {
+      background-color: #4CAF50;
+      color: white;
+      padding: 16px;
+      font-size: 16px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .dropbtn:hover,
+    .dropbtn:focus {
+      background-color: #3e8e41;
+    }
+
+    #myInput {
+      border-box: box-sizing;
+      background-image: url('searchicon.png');
+      background-position: 14px 12px;
+      background-repeat: no-repeat;
+      font-size: 16px;
+      padding: 14px 20px 12px 45px;
+      border: none;
+      border-bottom: 1px solid #ddd;
+    }
+
+    #myInput:focus {
+      outline: 3px solid #ddd;
+    }
+
+    .dropdown {
+      position: relative;
+      display: inline-block;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #f6f6f6;
+      min-width: 230px;
+      overflow: auto;
+      border: 1px solid #ddd;
+      z-index: 1;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 12px 16px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown a:hover {
+      background-color: #ddd
+    }
+
+    .show {
+      display: block;
+    }
+
+
+    .classWithPad {
+      margin: 10px;
+      padding: 10px;
+    }
+
+    #hike {
+      width: 300px;
+    }
+  </style>
+</head>
+
+<body id="page-top">
+
+  <!-- Navigation -->
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top" id="mainNav">
+    <div class="container">
+      <a class="navbar-brand js-scroll-trigger" href="#page-top">Trail Report</a>
+      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+          Menu
+          <i class="fa fa-bars"></i>
+        </button>
+      <div class="collapse navbar-collapse" id="navbarResponsive">
+        <ul class="navbar-nav text-uppercase ml-auto">
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#services">Trail Status</a>
+          </li>
+          <!-- <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#portfolio">Hikes</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link js-scroll-trigger" href="#about">About</a> -->
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#team">Team</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Header -->
+  <header class="masthead">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="intro-text">
+            <div class="intro-lead-in">Hey, Adventurer</div>
+            <div class="intro-heading text-uppercase">Where will you go next? </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-uppercase">Pick a trail:</div>
+        <div class="col-md-12">
+          <!-- hike search button -->
+          <div class="form-group">
+            <select id="hike">
+      <option value='Anderson Lake State Park'>Anderson Lake State Park</option>
+      <option value='Anderson Point'>Anderson Point</option>
+      <option value='Appleton Pass'>Appleton Pass</option>
+      <option value='Aurora Creek'>Aurora Creek</option>
+      <option value='Baldy'>Baldy</option>
+      <option value='Banner Forest'>Banner Forest</option>
+      <option value='Barnes Creek'>Barnes Creek</option>
+      <option value='Big Cedar Tree - Quinault'>Big Cedar Tree - Quinault</option>
+      <option value='Big Creek'>Big Creek</option>
+      <option value='Big Tree Trail'>Big Tree Trail</option>
+      <option value='Blue Mountain - Deer Park Snowshoe'>Blue Mountain - Deer Park Snowshoe</option>
+      <option value='Bogachiel Peak'>Bogachiel Peak</option>
+      <option value='Bogachiel River'>Bogachiel River</option>
+      <option value='Boulder Lake (Olympics)'>Boulder Lake (Olympics)</option>
+      <option value='Buckhorn Mountain'>Buckhorn Mountain</option>
+      <option value='Burfoot Park'>Burfoot Park</option>
+      <option value='Cape Alava'>Cape Alava</option>
+      <option value='Cape Alava Loop (Ozette Triangle)'>Cape Alava Loop (Ozette Triangle)</option>
+      <option value='Cape Flattery'>Cape Flattery</option>
+      <option value='Capitol State Forest - Capitol Peak'>Capitol State Forest - Capitol Peak</option>
+      <option value='Capitol State Forest - McLane Creek'>Capitol State Forest - McLane Creek</option>
+      <option value='Capitol State Forest - Mount Molly'>Capitol State Forest - Mount Molly</option>
+      <option value='Capitol State Forest - Rock Candy Mountain'>Capitol State Forest - Rock Candy Mountain</option>
+      <option value='Capitol State Forest - Sherman Creek Loop'>Capitol State Forest - Sherman Creek Loop</option>
+      <option value='Cascade Rock'>Cascade Rock</option>
+      <option value='Church Creek'>Church Creek</option>
+      <option value='Clear Creek Trail'>Clear Creek Trail</option>
+      <option value='Colonel Bob Trail - Colonel Bob Peak'>Colonel Bob Trail - Colonel Bob Peak</option>
+      <option value='Constance Pass'>Constance Pass</option>
+      <option value='Copper Creek'>Copper Creek</option>
+      <option value='Cub Peak'>Cub Peak</option>
+      <option value='Deadfall'>Deadfall</option>
+      <option value='Deer Park to Maiden Peak'>Deer Park to Maiden Peak</option>
+      <option value='Deer Ridge'>Deer Ridge</option>
+      <option value='Dirty Face Ridge'>Dirty Face Ridge</option>
+      <option value='Dodger Point'>Dodger Point</option>
+      <option value='Dosewallips River Road'>Dosewallips River Road</option>
+      <option value='Dosewallips State Park - Steam Donkey Trail'>Dosewallips State Park - Steam Donkey Trail</option>
+      <option value='Dry Creek'>Dry Creek</option>
+      <option value='Duckabush River'>Duckabush River</option>
+      <option value='Dungeness Spit'>Dungeness Spit</option>
+      <option value='Eagle Point Snowshoe'>Eagle Point Snowshoe</option>
+      <option value='Elbo Creek'>Elbo Creek</option>
+      <option value='Elk Lakes'>Elk Lakes</option>
+      <option value='Elk Mountain to Maiden Peak'>Elk Mountain to Maiden Peak</option>
+      <option value='Elwha River and Geyser Valley'>Elwha River and Geyser Valley</option>
+      <option value='Elwha River and Lillian River'>Elwha River and Lillian River</option>
+      <option value='Elwha To Hurricane Hill'>Elwha To Hurricane Hill</option>
+      <option value='Fallsview Canyon (Falls View)'>Fallsview Canyon (Falls View)</option>
+      <option value='Fletcher Canyon'>Fletcher Canyon</option>
+      <option value='Fort Flagler State Park'>Fort Flagler State Park</option>
+      <option value='Foulweather Bluff Preserve Trail'>Foulweather Bluff Preserve Trail</option>
+      <option value='Gibbs Lake'>Gibbs Lake</option>
+      <option value='Gladys Divide'>Gladys Divide</option>
+      <option value='Glines Canyon Overlook Trail'>Glines Canyon Overlook Trail</option>
+      <option value='Gold Mountain'>Gold Mountain</option>
+      <option value='Grand Ridge'>Grand Ridge</option>
+      <option value='Grand Valley'>Grand Valley</option>
+      <option value='Grand Valley via Grand Pass Trail'>Grand Valley via Grand Pass Trail</option>
+      <option value='Graves Creek'>Graves Creek</option>
+      <option value='Green Mountain - Gold Creek Trail'>Green Mountain - Gold Creek Trail</option>
+      <option value='Green Mountain - Wildcat Trail'>Green Mountain - Wildcat Trail</option>
+      <option value='Griff Creek'>Griff Creek</option>
+      <option value='Guillemot Cove'>Guillemot Cove</option>
+      <option value='Hall of Mosses'>Hall of Mosses</option>
+      <option value='Hansville Greenway'>Hansville Greenway</option>
+      <option value='Happy Lake Ridge'>Happy Lake Ridge</option>
+      <option value='Harstine Island State Park'>Harstine Island State Park</option>
+      <option value='Heart O' the Forest'>Heart O' the Forest</option>
+      <option value='Heather Creek Trail via Upper Dungeness River'>Heather Creek Trail via Upper Dungeness River</option>
+      <option value='Heather Park'>Heather Park</option>
+      <option value='High Divide - Seven Lakes Basin Loop'>High Divide - Seven Lakes Basin Loop</option>
+      <option value='Hoh River Trail to Blue Glacier'>Hoh River Trail to Blue Glacier</option>
+      <option value='Hoh River Trail to Five Mile Island'>Hoh River Trail to Five Mile Island</option>
+      <option value='Home Lake'>Home Lake</option>
+      <option value='Hurricane Hill'>Hurricane Hill</option>
+      <option value='Hurricane Ridge Snowshoe'>Hurricane Ridge Snowshoe</option>
+      <option value='Illahee Forest Preserve'>Illahee Forest Preserve</option>
+      <option value='Indian Island County Park'>Indian Island County Park</option>
+      <option value='Jefferson Ridge'>Jefferson Ridge</option>
+      <option value='Kalaloch - Browns Point'>Kalaloch - Browns Point</option>
+      <option value='Kalaloch Creek Nature Trail'>Kalaloch Creek Nature Trail</option>
+      <option value='Kestner Homestead'>Kestner Homestead</option>
+      <option value='Klahhane Ridge'>Klahhane Ridge</option>
+      <option value='Klahhane Ridge Snowshoe'>Klahhane Ridge Snowshoe</option>
+      <option value='Kloshe Nanitch'>Kloshe Nanitch</option>
+      <option value='Kopachuck State Park Trail'>Kopachuck State Park Trail</option>
+      <option value='Lake Angeles'>Lake Angeles</option>
+      <option value='Lake Constance'>Lake Constance</option>
+      <option value='Lake of the Angels'>Lake of the Angels</option>
+      <option value='Lena Lake'>Lena Lake</option>
+      <option value='Lena Lake - Valley of Silent Men Snowshoe'>Lena Lake - Valley of Silent Men Snowshoe</option>
+      <option value='Lightning Peak'>Lightning Peak</option>
+      <option value='Lillian Ridge'>Lillian Ridge</option>
+      <option value='Lillian River'>Lillian River</option>
+      <option value='Little Quilcene River'>Little Quilcene River</option>
+      <option value='Lower Big Quilcene River'>Lower Big Quilcene River</option>
+      <option value='Lower Dungeness River'>Lower Dungeness River</option>
+      <option value='Lower Gray Wolf River'>Lower Gray Wolf River</option>
+      <option value='Lower Pete's Creek'>Lower Pete's Creek</option>
+      <option value='Lower South Fork Skokomish River'>Lower South Fork Skokomish River</option>
+      <option value='Marmot Pass - Upper Big Quilcene'>Marmot Pass - Upper Big Quilcene</option>
+      <option value='Marmot Pass via Upper Dungeness River Trail'>Marmot Pass via Upper Dungeness River Trail</option>
+      <option value='Mary E. Theler Wetlands Nature Preserve'>Mary E. Theler Wetlands Nature Preserve</option>
+      <option value='Marymere Falls'>Marymere Falls</option>
+      <option value='McCormick Forest Park'>McCormick Forest Park</option>
+      <option value='Mildred Lakes'>Mildred Lakes</option>
+      <option value='Miller Peninsula-Thompson Spit'>Miller Peninsula-Thompson Spit</option>
+      <option value='Millersylvania State Park'>Millersylvania State Park</option>
+      <option value='Mima Mounds'>Mima Mounds</option>
+      <option value='Mink Lake'>Mink Lake</option>
+      <option value='Mink Lake to Little Divide'>Mink Lake to Little Divide</option>
+      <option value='Mount Angeles'>Mount Angeles</option>
+      <option value='Mount Angeles Snowshoe'>Mount Angeles Snowshoe</option>
+      <option value='Mount Ellinor'>Mount Ellinor</option>
+      <option value='Mount Jupiter'>Mount Jupiter</option>
+      <option value='Mount Muller'>Mount Muller</option>
+      <option value='Mount Rose'>Mount Rose</option>
+      <option value='Mount Storm King'>Mount Storm King</option>
+      <option value='Mount Townsend'>Mount Townsend</option>
+      <option value='Mount Townsend - Silver Lakes Traverse'>Mount Townsend - Silver Lakes Traverse</option>
+      <option value='Mount Townsend Snowshoe'>Mount Townsend Snowshoe</option>
+      <option value='Mount Walker'>Mount Walker</option>
+      <option value='Mount Zion'>Mount Zion</option>
+      <option value='Murhut Falls'>Murhut Falls</option>
+      <option value='Ned Hill'>Ned Hill</option>
+      <option value='Newberry Hill Heritage Park'>Newberry Hill Heritage Park</option>
+      <option value='North Coast Route'>North Coast Route</option>
+      <option value='North Fork Quinault River and Halfway House'>North Fork Quinault River and Halfway House</option>
+      <option value='North Fork Skokomish River'>North Fork Skokomish River</option>
+      <option value='North Fork Skokomish River and Flapjack Lakes'>North Fork Skokomish River and Flapjack Lakes</option>
+      <option value='North Fork Sol Duc River'>North Fork Sol Duc River</option>
+      <option value='Notch Pass'>Notch Pass</option>
+      <option value='Olympic Hot Springs'>Olympic Hot Springs</option>
+      <option value='PJ Lake'>PJ Lake</option>
+      <option value='Peabody Creek Trail'>Peabody Creek Trail</option>
+      <option value='Penrose Point State Park'>Penrose Point State Park</option>
+      <option value='Pete's Creek - Colonel Bob Peak'>Pete's Creek - Colonel Bob Peak</option>
+      <option value='Priest Point Park'>Priest Point Park</option>
+      <option value='Pyramid Mountain / Pyramid Peak'>Pyramid Mountain / Pyramid Peak</option>
+      <option value='Queets Campground Loop'>Queets Campground Loop</option>
+      <option value='Queets River'>Queets River</option>
+      <option value='Quillayute River Slough'>Quillayute River Slough</option>
+      <option value='Quinault National Recreation Trails'>Quinault National Recreation Trails</option>
+      <option value='Quinault River-Pony Bridge-Enchanted Valley'>Quinault River-Pony Bridge-Enchanted Valley</option>
+      <option value='Rain Shadow Loop'>Rain Shadow Loop</option>
+      <option value='Ranger Hole - Interrorem Nature Trail'>Ranger Hole - Interrorem Nature Trail</option>
+      <option value='Royal Basin - Royal Lake'>Royal Basin - Royal Lake</option>
+      <option value='Ruby Beach'>Ruby Beach</option>
+      <option value='Second Beach'>Second Beach</option>
+      <option value='Shi Shi Beach and Point of the Arches'>Shi Shi Beach and Point of the Arches</option>
+      <option value='Silver Lakes'>Silver Lakes</option>
+      <option value='Six Ridge'>Six Ridge</option>
+      <option value='Slab Camp Creek and Gray Wolf River'>Slab Camp Creek and Gray Wolf River</option>
+      <option value='Smokey Bottom (West Lake Mills)'>Smokey Bottom (West Lake Mills)</option>
+      <option value='Snider-Jackson Traverse'>Snider-Jackson Traverse</option>
+      <option value='Sol Duc Falls'>Sol Duc Falls</option>
+      <option value='South Coast Wilderness Trail - Toleak Point'>South Coast Wilderness Trail - Toleak Point</option>
+      <option value='South Fork Hoh River - Big Flat'>South Fork Hoh River - Big Flat</option>
+      <option value='Spider Lake'>Spider Lake</option>
+      <option value='Spoon Creek Falls'>Spoon Creek Falls</option>
+      <option value='Spruce Railroad Trail'>Spruce Railroad Trail</option>
+      <option value='Staircase Rapids'>Staircase Rapids</option>
+      <option value='Striped Peak'>Striped Peak</option>
+      <option value='Sunnybrook Meadows'>Sunnybrook Meadows</option>
+      <option value='Switchback'>Switchback</option>
+      <option value='The Brothers'>The Brothers</option>
+      <option value='Third Beach'>Third Beach</option>
+      <option value='Three Lakes'>Three Lakes</option>
+      <option value='Tubal Cain Mine'>Tubal Cain Mine</option>
+      <option value='Tubal Cain Mine to Buckhorn Lake'>Tubal Cain Mine to Buckhorn Lake</option>
+      <option value='Tumwater Falls Park'>Tumwater Falls Park</option>
+      <option value='Tunnel Creek'>Tunnel Creek</option>
+      <option value='Tunnel Creek - Dosewallips Trailhead'>Tunnel Creek - Dosewallips Trailhead</option>
+      <option value='Twanoh State Park'>Twanoh State Park</option>
+      <option value='Upper Dungeness River'>Upper Dungeness River</option>
+      <option value='Upper Lena Lake'>Upper Lena Lake</option>
+      <option value='Upper South Fork Skokomish River'>Upper South Fork Skokomish River</option>
+      <option value='Valhalla Peak'>Valhalla Peak</option>
+      <option value='Wagonwheel Lake'>Wagonwheel Lake</option>
+      <option value='Watershed Park'>Watershed Park</option>
+      <option value='Welch Peaks'>Welch Peaks</option>
+      <option value='West Elwha'>West Elwha</option>
+      <option value='West Fork Dosewallips River'>West Fork Dosewallips River</option>
+      <option value='West Fork Humptulips River'>West Fork Humptulips River</option>
+      <option value='Westport State Park - Westport Light Trail'>Westport State Park - Westport Light Trail</option>
+      <option value='Wolf Creek'>Wolf Creek</option>
+      <option value='Wynoochee Lake'>Wynoochee Lake</option>
+      <option value='Wynoochee Pass to Sundown Lake'>Wynoochee Pass to Sundown Lake</option>
+      </select>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-uppercase">Pick a date: </div>
+        <div class="col-md-12">
+          <div class="d-flex justify-content-center">
+            <input id="datepicker" width="250" />
+            <script>
+              $('#datepicker').datepicker({
+                uiLibrary: 'bootstrap4'
+              });
+            </script>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 classWithPad">
+          <a class="btn btn-primary btn-xl btn-block text-uppercase js-scroll-trigger" id="results" href="#services">Check the trail</a>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Services -->
+  <section id="services">
+    <div class="container h-100 center-block">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+
+          <div>
+
+            <script type="text/javascript">
+              let get_input_coefficients = function() {
+                let hike_input = $("select#hike")
+                let hike_date_input = $("input#datepicker")
+                let hike = hike_input.val()
+                let hike_date = hike_date_input.val()
+                return {
+                  'hike': hike,
+                  'hike_date': hike_date
+                }
+              };
+              let send_coefficient_json = function(coefficients) {
+                $.ajax({
+                  url: '/solve',
+                  contentType: "application/json; charset=utf-8",
+                  type: 'POST',
+                  success: function(data) {
+                    display_solutions(data);
+                  },
+                  data: JSON.stringify(coefficients)
+                });
+              };
+              let display_solutions = function(solutions) {
+                var spansnow = $("span#snowprob").text();
+                var spanroad = $("span#roadprob").text();
+                var spanbugs = $("span#bugsprob").text();
+                var spantrail = $("span#trailprob").text();
+                $("#snowp").removeClass("p" + spansnow.replace("%",""));
+                $("#bugsp").removeClass("p" + spanbugs.replace("%",""));
+                $("#roadp").removeClass("p" + spanroad.replace("%",""));
+                $("#trailp").removeClass("p" + spantrail.replace("%",""));
+                $("span#snowprob").html(solutions.snow_prob)
+                $("span#roadprob").html(solutions.road_prob)
+                $("span#bugsprob").html(solutions.bugs_prob)
+                $("span#trailprob").html(solutions.trail_prob)
+                var spansnow = $("span#snowprob").text();
+                var spanroad = $("span#roadprob").text();
+                var spanbugs = $("span#bugsprob").text();
+                var spantrail = $("span#trailprob").text();
+                $("#snowp").addClass("p" + spansnow.replace("%",""));
+                $("#bugsp").addClass("p" + spanbugs.replace("%",""));
+                $("#roadp").addClass("p" + spanroad.replace("%",""));
+                $("#trailp").addClass("p" + spantrail.replace("%",""));
+                // var hike = $("#hike_input").text();
+                // var date = $("#hike_date").text();
+                // $("#usersearch").addClass("You chose to search for"+hike+"on"+date".");
+
+              };
+              $(document).ready(function() {
+                $("#results").click(function() {
+                  let coefficients = get_input_coefficients();
+                  send_coefficient_json(coefficients);
+                })
+              })
+            </script>
+          </div>
+
+          <h2 class="section-heading text-uppercase">Trail Status</h2>
+          <h3 class="section-subheading text-muted"><span id="textsolution usersearch">
+            Probability of the following conditions are for the hike and date you chose.
+            Condition reports are based on actual user reports from WTA hikes.
+            Typically, a high probability of a condition means there have been many
+             reports that the condition is extreme enough to greatly impact your trip.
+             These results are to guide your decision-making. Please hike prepared, stay safe, and enjoy!
+           </span></h3>
+          <!-- The span has an id so that later we can fill in the solution
+                 using js. -->
+
+        </div>
+      </div>
+      <link rel="stylesheet" href="/static/css/circle.css">
+      <div class="row h-100 justify-content-center align-items-center">
+        <div class="col-6 text-center">
+          <div class="clearfix float-right">
+
+            <div class="c100  dark green  justify-content-center align-items-center text-center" id="snowp">
+              <span id="snowprob">%</span>
+              <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-6">
+          <!-- /green -->
+
+          <!-- <i class="fa fa-circle fa-stack-2x text-primary"></i>
+              <i class="fa fa-laptop fa-stack-1x fa-inverse"></i> -->
+          <!-- green -->
+          <div class="clearfix">
+
+            <div class="c100  dark green" id="roadp">
+              <span id="roadprob">%</span>
+              <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <!-- /green -->
+      </div>
+      <div class="row h-100 justify-content-center align-items-center">
+        <div class="col">
+          <h4 class="service-heading text-right">Significant Snow</h4>
+          <p class="text-muted"><span id="snowsolution"></span></p>
+        </div>
+        <div class="col">
+          <h4 class="service-heading text-left">Poor Road Conditions</h4>
+          <p class="text-muted"></p>
+        </div>
+      </div>
+      <!-- <span class="fa-stack fa-4x"> -->
+      <!-- <i class="fa fa-circle fa-stack-2x text-primary"></i>
+              <i class="fa fa-lock fa-stack-1x fa-inverse"></i> -->
+      <!-- green -->
+      <div class="row h-100 justify-content-center align-items-center">
+        <div class="col">
+          <div class="clearfix float-right">
+
+            <div class="c100  dark green justify-content-center" id="bugsp">
+              <span id="bugsprob">%</span>
+              <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+        <div class="col">
+          <div class="clearfix">
+
+            <div class="c100  dark green" id="trailp">
+              <span id="trailprob">%</span>
+              <div class="slice">
+                <div class="bar"></div>
+                <div class="fill"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row h-100 justify-content-center align-items-center">
+        <div class="col">
+          <h4 class="service-heading text-right">Lots Of Bugs/Mosquitos</h4>
+          <p class="text-muted"></p>
+        </div>
+        <div class="col">
+          <h4 class="service-heading text-left">Notable Trail Problems</h4>
+          <p class="text-muted"><span id="snowsolution"></span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- Portfolio Grid -->
+  <!-- <section class="bg-light" id="portfolio">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">Washington Trails</h2>
+            <h3 class="section-subheading text-muted">Want to check out a new trail? Here are some ideas</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href='https://www.wta.org/go-hiking/hikes/mount-ellinor'>
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="/static/img/portfolio/mount_ellinor.jpeg" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Olympic National Park</h4>
+              <p class="text-muted">Mt. Ellinor</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal2">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="/static/img/portfolio/02-thumbnail.jpg" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Explore</h4>
+              <p class="text-muted">Graphic Design</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal3">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="/static/img/portfolio/03-thumbnail.jpg" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Finish</h4>
+              <p class="text-muted">Identity</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal4">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="/static/img/portfolio/04-thumbnail.jpg" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Lines</h4>
+              <p class="text-muted">Branding</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal5">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="/static/img/portfolio/05-thumbnail.jpg" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Southwest</h4>
+              <p class="text-muted">Website Design</p>
+            </div>
+          </div>
+          <div class="col-md-4 col-sm-6 portfolio-item">
+            <a class="portfolio-link" data-toggle="modal" href="#portfolioModal6">
+              <div class="portfolio-hover">
+                <div class="portfolio-hover-content">
+                  <i class="fa fa-plus fa-3x"></i>
+                </div>
+              </div>
+              <img class="img-fluid" src="/static/img/portfolio/06-thumbnail.jpg" alt="">
+            </a>
+            <div class="portfolio-caption">
+              <h4>Window</h4>
+              <p class="text-muted">Photography</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- About -->
+  <!-- <section id="about">
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-12 text-center">
+            <h2 class="section-heading text-uppercase">About</h2>
+            <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-12">
+            <ul class="timeline">
+              <li>
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="/static/img/about/1.jpg" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>2009-2011</h4>
+                    <h4 class="subheading">Our Humble Beginnings</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                  </div>
+                </div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="/static/img/about/2.jpg" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>March 2011</h4>
+                    <h4 class="subheading">An Agency is Born</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                  </div>
+                </div>
+              </li>
+              <li>
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="/static/img/about/3.jpg" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>December 2012</h4>
+                    <h4 class="subheading">Transition to Full Service</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                  </div>
+                </div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image">
+                  <img class="rounded-circle img-fluid" src="/static/img/about/4.jpg" alt="">
+                </div>
+                <div class="timeline-panel">
+                  <div class="timeline-heading">
+                    <h4>July 2014</h4>
+                    <h4 class="subheading">Phase Two Expansion</h4>
+                  </div>
+                  <div class="timeline-body">
+                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                  </div>
+                </div>
+              </li>
+              <li class="timeline-inverted">
+                <div class="timeline-image">
+                  <h4>Be Part
+                    <br>Of Our
+                    <br>Story!</h4>
+                </div>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section> -->
+
+  <!-- Team -->
+  <section class="bg-light" id="team">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">Women Behind the project</h2>
+          <h3 class="section-subheading text-muted">and websites top user</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <div class="team-member">
+            <img class="mx-auto rounded-circle" src="/static/img/team/ashley_profile.JPG" alt="">
+            <h4>Ashley Huddleston</h4>
+            <p class="text-muted">Data Scientist</p>
+            <ul class="list-inline social-buttons">
+              <li class="list-inline-item">
+                <a href="https://github.com/huddlestona/Trail_Report">
+                    <i class="fa fa-github"></i>
+                  </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://www.linkedin.com/in/ashley-huddleston/">
+                    <i class="fa fa-linkedin"></i>
+                  </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-8 mx-auto text-center">
+          <p class="large text-muted"></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Clients -->
+  <!-- <section class="py-5">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-3 col-sm-6">
+            <a href="#">
+              <img class="img-fluid d-block mx-auto" src="/static/img/logos/envato.jpg" alt="">
+            </a>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <a href="#">
+              <img class="img-fluid d-block mx-auto" src="/static/img/logos/designmodo.jpg" alt="">
+            </a>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <a href="#">
+              <img class="img-fluid d-block mx-auto" src="/static/img/logos/themeforest.jpg" alt="">
+            </a>
+          </div>
+          <div class="col-md-3 col-sm-6">
+            <a href="#">
+              <img class="img-fluid d-block mx-auto" src="/static/img/logos/creative-market.jpg" alt="">
+            </a>
+          </div>
+        </div>
+      </div>
+    </section> -->
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <div class="row">
+        <div class="col-lg-12 text-center">
+          <h2 class="section-heading text-uppercase">Contact Creator</h2>
+          <h3 class="section-subheading text-muted">L</h3>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-lg-12">
+          <form id="contactForm" name="sentMessage" novalidate="novalidate">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <input class="form-control" id="name" type="text" placeholder="Your Name *" required="required" data-validation-required-message="Please enter your name.">
+                  <p class="help-block text-danger"></p>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" id="email" type="email" placeholder="Your Email *" required="required" data-validation-required-message="Please enter your email address.">
+                  <p class="help-block text-danger"></p>
+                </div>
+                <div class="form-group">
+                  <input class="form-control" id="phone" type="tel" placeholder="Your Phone *" required="required" data-validation-required-message="Please enter your phone number.">
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <textarea class="form-control" id="message" placeholder="Your Message *" required="required" data-validation-required-message="Please enter a message."></textarea>
+                  <p class="help-block text-danger"></p>
+                </div>
+              </div>
+              <div class="clearfix"></div>
+              <div class="col-lg-12 text-center">
+                <div id="success"></div>
+                <button id="sendMessageButton" class="btn btn-primary btn-xl text-uppercase" type="submit">Send Message</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-4">
+          <span class="copyright">Copyright &copy; Trail Report 2018</span>
+        </div>
+        <div class="col-md-4">
+          <ul class="list-inline social-buttons">
+            <li class="list-inline-item">
+              <!-- <a href="#">
+                  <i class="fa fa-twitter"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fa fa-facebook"></i>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="#">
+                  <i class="fa fa-linkedin"></i> -->
+              <!-- </a> -->
+            </li>
+          </ul>
+        </div>
+        <div class="col-md-4">
+          <ul class="list-inline quicklinks">
+            <li class="list-inline-item">
+              <a href="#">Privacy Policy</a>
+            </li>
+            <li class="list-inline-item">
+              <a href="#">Terms of Use</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Portfolio Modals -->
+
+  <!-- Modal 1 -->
+  <!-- <div class="portfolio-modal modal fade" id="portfolioModal1" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+  <!-- <h2 class="text-uppercase">Trail Report</h2>
+                  <p class="item-intro text-muted">Learn what trail conditions will look like.</p>
+                  <img class="img-fluid d-block mx-auto" src="static/img/portfolio/01-full.jpg" alt="">
+                  <p>Using machine learning and webscraped data from WTA to determine the probability of specififc trail conditions. </p>
+                  <ul class="list-inline">
+                    <li>Date: May 2018</li>
+                    <li>Client: Trail Report</li>
+                    <li>Category: Data Science</li>
+                  </ul>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->-->
+
+  <!-- Modal 2 -->
+  <!-- <div class="portfolio-modal modal fade" id="portfolioModal2" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+  <!-- <h2 class="text-uppercase">Project Name</h2>
+                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                  <img class="img-fluid d-block mx-auto" src="statc/img/portfolio/02-full.jpg" alt="">
+                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                  <ul class="list-inline">
+                    <li>Date: January 2017</li>
+                    <li>Client: Explore</li>
+                    <li>Category: Graphic Design</li>
+                  </ul>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->-->
+
+  <!-- Modal 3 -->
+  <!-- <div class="portfolio-modal modal fade" id="portfolioModal3" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div> -->
+  <!-- <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  Project Details Go Here -->
+  <!-- <h2 class="text-uppercase">Project Name</h2>
+                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                  <img class="img-fluid d-block mx-auto" src="/static/img/portfolio/03-full.jpg" alt="">
+                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                  <ul class="list-inline">
+                    <li>Date: January 2017</li>
+                    <li>Client: Finish</li>
+                    <li>Category: Identity</li>
+                  </ul>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+  <!-- Modal 4 -->
+  <!-- <div class="portfolio-modal modal fade" id="portfolioModal4" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body">
+                  <!-- Project Details Go Here -->
+  <!-- <h2 class="text-uppercase">Project Name</h2>
+                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                  <img class="img-fluid d-block mx-auto" src="/static/img/portfolio/04-full.jpg" alt="">
+                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                  <ul class="list-inline">
+                    <li>Date: January 2017</li>
+                    <li>Client: Lines</li>
+                    <li>Category: Branding</li>
+                  </ul>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->-->
+
+  <!-- Modal 5 -->
+  <!-- <div class="portfolio-modal modal fade" id="portfolioModal5" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body"> -->
+  <!-- Project Details Go Here -->
+  <!-- <h2 class="text-uppercase">Project Name</h2>
+                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                  <img class="img-fluid d-block mx-auto" src="/static/img/portfolio/05-full.jpg" alt="">
+                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                  <ul class="list-inline">
+                    <li>Date: January 2017</li>
+                    <li>Client: Southwest</li>
+                    <li>Category: Website Design</li>
+                  </ul>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+  <!-- Modal 6 -->
+  <!-- <div class="portfolio-modal modal fade" id="portfolioModal6" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="close-modal" data-dismiss="modal">
+            <div class="lr">
+              <div class="rl"></div>
+            </div>
+          </div>
+          <div class="container">
+            <div class="row">
+              <div class="col-lg-8 mx-auto">
+                <div class="modal-body"> -->
+  <!-- Project Details Go Here -->
+  <!-- <h2 class="text-uppercase">Project Name</h2>
+                  <p class="item-intro text-muted">Lorem ipsum dolor sit amet consectetur.</p>
+                  <img class="img-fluid d-block mx-auto" src="/static/img/portfolio/06-full.jpg" alt="">
+                  <p>Use this area to describe your project. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Est blanditiis dolorem culpa incidunt minus dignissimos deserunt repellat aperiam quasi sunt officia expedita beatae cupiditate, maiores repudiandae, nostrum, reiciendis facere nemo!</p>
+                  <ul class="list-inline">
+                    <li>Date: January 2017</li>
+                    <li>Client: Window</li>
+                    <li>Category: Photography</li>
+                  </ul>
+                  <button class="btn btn-primary" data-dismiss="modal" type="button">
+                    <i class="fa fa-times"></i>
+                    Close Project</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div> -->
+
+  <!-- Bootstrap core JavaScript -->
+  <script src="static/vendor/jquery/jquery.min.js"></script>
+  <script src="static/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+
+  <!-- Plugin JavaScript -->
+  <script src="static/vendor/jquery-easing/jquery.easing.min.js"></script>
+
+  <!-- Contact form JavaScript -->
+  <script src="static/js/jqBootstrapValidation.js"></script>
+  <script src="static/js/contact_me.js"></script>
+
+  <!-- Custom scripts for this template -->
+  <script src="static/js/agency.min.js"></script>
+
+</body>
+
+</html>
