@@ -98,7 +98,11 @@ def main_pred():
     with open('tp.pkl','rb') as f:
         tp = pickle.load(f)
     pred = tp.predict(X_test)
-    print(pred)
+    X_test = get_data(hike,date)
+    pred = tp.predict(X_test)
+    print ("{0:.0f}".format(float(pred['condition|snow'][:,1][0])*100),
+            "{0:.0f}".format(float(pred['condition|trail'][:,1][0])*100),
+            "{0:.0f}".format(float(pred['condition|bugs'][:,1][0])*100),
+            "{0:.0f}".format(float(pred['condition|road'][:,1][0])*100))
 if __name__ == '__main__':
-    main_dump()
     main_pred()
