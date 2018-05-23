@@ -1,4 +1,4 @@
-from Modules.knn_model import make_logistic,prep_neighbors,dates_in_circle,prep_for_knn
+from Modules.knn_model import prep_neighbors,dates_in_circle,prep_for_knn,make_forest
 from Modules.Merge_Weather import get_weather_data,get_closest_station,merge_weather_trails
 import pandas as pd
 import numpy as np
@@ -77,7 +77,7 @@ class TrailPred(object):
     def fit(self):
         for condition in self.conditions:
             y_train = self.prep_train(condition)
-            self.models[condition]= make_logistic(self.X_train,y_train)
+            self.models[condition]= make_forest(self.X_train,y_train)
 
     def predict(self,X_test):
         pred = {}
@@ -100,5 +100,4 @@ def main_pred():
     pred = tp.predict(X_test)
     print(pred)
 if __name__ == '__main__':
-    main_dump()
     main_pred()
