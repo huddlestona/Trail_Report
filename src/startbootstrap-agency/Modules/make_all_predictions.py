@@ -100,4 +100,4 @@ def main_pred():
     pred = tp.predict(X_test)
     print(pred)
 if __name__ == '__main__':
-    main_pred()
+    main_dump()
