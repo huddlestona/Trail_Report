@@ -152,6 +152,9 @@
             <div class="intro-heading text-uppercase">Where will you go next? </div>
           </div>
         </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-uppercase">Pick a trail:</div>
         <div class="col-md-12">
           <!-- hike search button -->
           <div class="form-group">
@@ -348,7 +351,10 @@
       </select>
           </div>
         </div>
-        <div class="col-sm">
+      </div>
+      <div class="row">
+        <div class="col-md-12 text-uppercase">Pick a date: </div>
+        <div class="col-md-12">
           <div class="d-flex justify-content-center">
             <input id="datepicker" width="250" />
             <script>
@@ -358,11 +364,12 @@
             </script>
           </div>
         </div>
+      </div>
+      <div class="row">
         <div class="col-md-12 classWithPad">
           <a class="btn btn-primary btn-xl btn-block text-uppercase js-scroll-trigger" id="results" href="#services">Check the trail</a>
         </div>
       </div>
-    </div>
     </div>
   </header>
 
@@ -401,10 +408,10 @@
                 var spanroad = $("span#roadprob").text();
                 var spanbugs = $("span#bugsprob").text();
                 var spantrail = $("span#trailprob").text();
-                $("#snowp").removeClass("p" + spansnow);
-                $("#bugsp").removeClass("p" + spanbugs);
-                $("#roadp").removeClass("p" + spanroad);
-                $("#trailp").removeClass("p" + spantrail);
+                $("#snowp").removeClass("p" + spansnow.replace("%",""));
+                $("#bugsp").removeClass("p" + spanbugs.replace("%",""));
+                $("#roadp").removeClass("p" + spanroad.replace("%",""));
+                $("#trailp").removeClass("p" + spantrail.replace("%",""));
                 $("span#snowprob").html(solutions.snow_prob)
                 $("span#roadprob").html(solutions.road_prob)
                 $("span#bugsprob").html(solutions.bugs_prob)
@@ -413,10 +420,13 @@
                 var spanroad = $("span#roadprob").text();
                 var spanbugs = $("span#bugsprob").text();
                 var spantrail = $("span#trailprob").text();
-                $("#snowp").addClass("p" + spansnow);
-                $("#bugsp").addClass("p" + spanbugs);
-                $("#roadp").addClass("p" + spanroad);
-                $("#trailp").addClass("p" + spantrail);
+                $("#snowp").addClass("p" + spansnow.replace("%",""));
+                $("#bugsp").addClass("p" + spanbugs.replace("%",""));
+                $("#roadp").addClass("p" + spanroad.replace("%",""));
+                $("#trailp").addClass("p" + spantrail.replace("%",""));
+                // var hike = $("#hike_input").text();
+                // var date = $("#hike_date").text();
+                // $("#usersearch").addClass("You chose to search for"+hike+"on"+date".");
 
               };
               $(document).ready(function() {
@@ -429,7 +439,13 @@
           </div>
 
           <h2 class="section-heading text-uppercase">Trail Status</h2>
-          <h3 class="section-subheading text-muted"><span id="textsolution"> Probability of the following conditions when hiking Mt.Angeles on 05/27/2018. </span></h3>
+          <h3 class="section-subheading text-muted"><span id="textsolution usersearch">
+            Probability of the following conditions are for the hike and date you chose.
+            Condition reports are based on actual user reports from WTA hikes.
+            Typically, a high probability of a condition means there have been many
+             reports that the condition is extreme enough to greatly impact your trip.
+             These results are to guide your decision making, please hike prepared, stay safe, and enjoy!
+           </span></h3>
           <!-- The span has an id so that later we can fill in the solution
                  using js. -->
 
@@ -438,13 +454,10 @@
       <link rel="stylesheet" href="/static/css/circle.css">
       <div class="row h-100 justify-content-center align-items-center">
         <div class="col-6 text-center">
-          <!-- <i class="fa fa-circle fa-stack-2x text-primary"></i>
-              <i class="fa fa-shopping-cart fa-stack-1x fa-inverse"></i> -->
-          <!-- green -->
           <div class="clearfix float-right">
 
             <div class="c100  dark green  justify-content-center align-items-center text-center" id="snowp">
-              <span id="snowprob"></span>
+              <span id="snowprob">%</span>
               <div class="slice">
                 <div class="bar"></div>
                 <div class="fill"></div>
@@ -461,7 +474,7 @@
           <div class="clearfix">
 
             <div class="c100  dark green" id="roadp">
-              <span id="roadprob"></span>
+              <span id="roadprob">%</span>
               <div class="slice">
                 <div class="bar"></div>
                 <div class="fill"></div>
@@ -474,11 +487,11 @@
       </div>
       <div class="row h-100 justify-content-center align-items-center">
         <div class="col">
-          <h4 class="service-heading text-right">Snow</h4>
+          <h4 class="service-heading text-right">Signifticant Snow</h4>
           <p class="text-muted"><span id="snowsolution"></span></p>
         </div>
         <div class="col">
-          <h4 class="service-heading text-left">Road</h4>
+          <h4 class="service-heading text-left">Poor Road Conditions</h4>
           <p class="text-muted"></p>
         </div>
       </div>
@@ -491,7 +504,7 @@
           <div class="clearfix float-right">
 
             <div class="c100  dark green justify-content-center" id="bugsp">
-              <span id="bugsprob"></span>
+              <span id="bugsprob">%</span>
               <div class="slice">
                 <div class="bar"></div>
                 <div class="fill"></div>
@@ -504,7 +517,7 @@
           <div class="clearfix">
 
             <div class="c100  dark green" id="trailp">
-              <span id="trailprob"></span>
+              <span id="trailprob">%</span>
               <div class="slice">
                 <div class="bar"></div>
                 <div class="fill"></div>
@@ -515,11 +528,11 @@
       </div>
       <div class="row h-100 justify-content-center align-items-center">
         <div class="col">
-          <h4 class="service-heading text-right">  Bugs</h4>
+          <h4 class="service-heading text-right">Lot's Of Bugs/Mosquitos</h4>
           <p class="text-muted"></p>
         </div>
         <div class="col">
-          <h4 class="service-heading text-left">  Trail</h4>
+          <h4 class="service-heading text-left">Noteable Trail Problems</h4>
           <p class="text-muted"><span id="snowsolution"></span></p>
         </div>
       </div>
@@ -775,8 +788,8 @@
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
-          <h2 class="section-heading text-uppercase">Contact Us</h2>
-          <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+          <h2 class="section-heading text-uppercase">Contact Creator</h2>
+          <h3 class="section-subheading text-muted">L</h3>
         </div>
       </div>
       <div class="row">
@@ -820,7 +833,7 @@
     <div class="container">
       <div class="row">
         <div class="col-md-4">
-          <span class="copyright">Copyright &copy; Your Website 2018</span>
+          <span class="copyright">Copyright &copy; Trail Report 2018</span>
         </div>
         <div class="col-md-4">
           <ul class="list-inline social-buttons">
