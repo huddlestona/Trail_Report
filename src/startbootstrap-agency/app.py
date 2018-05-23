@@ -23,9 +23,9 @@ def solve():
 def _get_prediction(hike, date):
     X_test = get_data(hike,date)
     pred = tp.predict(X_test)
-    return ("{0:.0f}".format(float(pred['condition|snow'][:,1][0])*100),
-            "{0:.0f}".format(float(pred['condition|trail'][:,1][0])*100),
-            "{0:.0f}".format(float(pred['condition|bugs'][:,1][0])*100),
-            "{0:.0f}".format(float(pred['condition|road'][:,1][0])*100))
+    return ("{0:.0f}%".format(float(pred['condition|snow'][:,1][0])*100),
+            "{0:.0f}%".format(float(pred['condition|trail'][:,1][0])*100),
+            "{0:.0f}%".format(float(pred['condition|bugs'][:,1][0])*100),
+            "{0:.0f}%".format(float(pred['condition|road'][:,1][0])*100))
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True)
