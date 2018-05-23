@@ -72,15 +72,14 @@ def get_neighbors(neigh,df,condition):
         averages.append(neighbors[condition].mean())
     df[f'neighbors_average {condition}'] = averages
 
-def make_forest(X_train,y_train,X_test):
+def make_forest(X_train,y_train):
     """Runs RandomForestClassifier on prepped data."""
     model = RandomForestClassifier(n_estimators=500)
     fit = model.fit(X_train,y_train)
-    pred = model.predict_proba(X_test)
-    return model, pred
+    return model
 
 def make_logistic(X_train,y_train):
     """Runs LogisticRegression on prepped data."""
     model = LogisticRegression()
     model.fit(X_train, y_train)
-    return model 
+    return model
