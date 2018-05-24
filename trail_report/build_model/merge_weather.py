@@ -5,7 +5,6 @@ from math import sin, cos, sqrt, atan2, radians
 from io import BytesIO
 import boto3
 
-#get weather and prep for merge
 def get_weather_as_df(keys):
     """
     Uses keys to import all weather csvs, downloaded from national weather association
@@ -20,17 +19,17 @@ def get_weather_as_df(keys):
     bucket_name = 'trailreportdata'
     files = b''
     for key in keys:
-        response = s3.get_object(Bucket= bucket_name, Key= key)
+        response = s3.get_object(Bucket=bucket_name, Key=key)
         body = response['Body']
         csv = body.read()
-        files+= csv
+        files += csv
     f = BytesIO(files)
     csv = pd.read_csv(f)
     return csv
 
-def get_hike_distance(df1lat, df1long,df2lat, df2long):
+def get_hike_distance(df1lat, df1long, df2lat, df2long):
     """
-    Get's distance of two points from eachother.
+    Get distance of two points from eachother.
     **Input parameters**
     ------------------------------------------------------------------------------
     df1lat: int.
@@ -59,9 +58,9 @@ def get_hike_distance(df1lat, df1long,df2lat, df2long):
     distance = R * c
     return distance
 
-def get_closest_station(df_hike,df_weather):
+def get_closest_station(df_hike, df_weather):
     """
-    Calls get_hike_distance on each hike for each weather station.
+    Call get_hike_distance on each hike for each weather station.
     Adds columns to df_hike
     **Input parameters**
     ------------------------------------------------------------------------------
@@ -93,7 +92,7 @@ def get_closest_station(df_hike,df_weather):
 
 def clean_weather_df(weather_df):
     """
-    Takes the weather_df and returns a dataframe with the station name
+    Take the weather_df and returns a dataframe with the station name
     and numeric weather
     **Input parameters**
     ------------------------------------------------------------------------------
@@ -111,21 +110,21 @@ def clean_weather_df(weather_df):
     all_weatherdf['name']= num_weather['NAME']
     return all_weatherdf
 
-def merge_weather_trails(df_weather,df_hike):
-    """ Adds weather info to df_hike"""
+def merge_weather_trails(df_weather, df_hike):
+    """ Add weather info to df_hike"""
     df_trail_year = pd.merge(df_hike, df_weather, how='left', left_on=['closet_station','last_year'], right_on= ['name','DATE'])
     df_all_clean = df_trail_year.drop(['DATE','name'], axis =1)
     return df_all_clean
 
 def import_weather(keys):
-    """Get's weather for mentioned keys."""
+    """Get weather for mentioned keys."""
     #imports weather and cleans
     df_all_weather = get_weather_as_df(keys)
     return clean_weather_df(df_all_weather)
 
 def get_weather_data():
     """
-    Retrieved weather for written keys,prep two dataframes.
+    Retrieve weather for written keys,prep two dataframes.
     **Input parameters**
     ------------------------------------------------------------------------------
     None. Retreives data internally.

@@ -1,5 +1,5 @@
-from Modules.knn_model import prep_neighbors,dates_in_circle,prep_for_knn,make_forest
-from Modules.Merge_Weather import get_weather_data,get_closest_station,merge_weather_trails
+from .knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
+from .merge_weather import get_weather_data, get_closest_station, merge_weather_trails
 import pandas as pd
 import numpy as np
 import math
@@ -28,11 +28,10 @@ def get_data(hike,date):
 
 
 def load_databases():
-    weather,weather_dist = get_weather_data()
-    df_init = pd.read_csv('static/files/olympics_merged.csv', sep = '|',lineterminator='\n')
-    #df = pd.read_csv('startbootstrap-agency/static/files/olympics_merged.csv', sep = '|',lineterminator='\n')
+    weather, weather_dist = get_weather_data()
+    df_init = pd.read_csv('data/olympics_merged.csv', sep = '|',lineterminator='\n')
     df = df_init.fillna(0)
-    df_trail = pd.read_csv('static/files/WTA_trails_clean_w_medians.csv',lineterminator='\n')
+    df_trail = pd.read_csv('data/WTA_trails_clean_w_medians.csv',lineterminator='\n')
     return df, df_trail, weather, weather_dist
 
 
@@ -54,7 +53,6 @@ def get_condition_averages(df,indx_list,condition):
     return average
 
 def clean_for_model(hike_all_df):
-    #self.add_hike_dummy()
     df_clean = hike_all_df.drop(['url','which_pass','super_region',
     'sub_region','closet_station','hike_name','last_year','month','year','date','Unnamed: 0'], axis=1)
     df_full = df_clean.fillna(0)
@@ -66,8 +64,8 @@ class TrailPred(object):
     def __init__(self):
         self.models = {}
         self.conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
-        self.X_train = pd.read_csv('static/files/olympics_Xall.csv',sep = '|',lineterminator='\n')
-        self.y_all = pd.read_csv('static/files/olympics_yall.csv',sep = '|',lineterminator='\n')
+        self.X_train = pd.read_csv('data/olympics_Xall.csv',sep = '|',lineterminator='\n')
+        self.y_all = pd.read_csv('data/olympics_yall.csv',sep = '|',lineterminator='\n')
         self.actual_cols = self.X_train.columns.tolist()
 
     def prep_train(self,condition):
