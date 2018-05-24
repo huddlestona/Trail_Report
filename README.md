@@ -1,56 +1,39 @@
 # Trail_Report
-## Using Machine Learning to predict hiking trail conditions and features to increase trail accessibility and safety in off-seasons   
+## Using machine learning to predict prbability of impactful hiking trail conditions in Washington to increase trail accessibility and safety.
 
-### Business Understanding:
+### Motivation
 
-Often when looking for a hike in winter and spring, it is hard to get a sense of what current trail conditions are like. It is common to go read the recent reports and realize no one has written a report in the last 5 years for the season you are hiking in. A predictive report will give off-season hikers more confidence in exploring different areas. This report would have users input a trail and a date, and return the likelihood of snow on the trails, need for season specific gear, if the wildflowers are in bloom, etc. 
+As an avid hiker, I’ve spent a lot of time on[Washington Trail Association's](https://www.wta.org/)(WTA) website, scrolling through trail reports to determine current conditions. This often ends with little insight gained, and a risky decision between possibly getting stuck in snow or hiking a popular trail and hoping for a parking spot. I realized providing the probability of trail and road conditions on an easy to access platform could increase a hiker’s likelihood of checking out a less-popular trail, or any trail at all. This would thin out trail use, save time, and increases hiker awareness and safety.
 
-### Data Understanding:
+### Product:[Trail-Report.com](https://www.trail-report.com)
 
-I plan to use WTA trip reports(using python NLP modules), WTA trail information (elevation, log/lat, length, etc.), past weather patterns, and current/future weather patterns to predict future key words that would be written in trail reports. I will use the past two years trail reports as training data (may increase in size due to some trials not having trip reports for a few years back). 
+At trail-report.com you can choose a hike from the dropdown list,select the date you would like to go, and it will return the probabilty another hiker would report snow,trail,road,or bug conditions on your hike. 
 
-### Data Gathering:
+Currently, the model is applied to hikes in the Olympic Penninsula. All Washington hikes will be deployed in the near future, alongside text snippits of relivent past reports.
 
-**WTA:** Trip reports and trail information, gathered through requests and scraping 
+Website created using Flask and self-hosted on AWS.
 
-**Past Weather Reports:** CSV form from https://www.climate.gov/maps-data/dataset/past-weather-zip-code-data-table
-- Plan to pull from all of washington and align with data by closest lat/log and elevation
+### Data Used
 
-**Current weather:** Various public APIs, limit of 1000 pulls per day without paying. Will either use limited location reports or limited days for reports. Currently getting in touch with previous students who have worked with weather data. 
+**Trail Information and Trail Reports:** Scraped through requests and BeautifulSoup from [WTA](https://www.wta.org/). Trail reports begin in 1997 and are continuosly scraped to keep the model up to date.
 
-### Data Preparation:
+**Weather Trends:** Collected as CSVs from [Climate.gov](https://www.climate.gov/maps-data/dataset/past-weather-zip-code-data-table). Trails connected with closest weather station data by lat/log cordinates.
 
-**Trip Reports**:
+### Modeling
 
-- Overall:  Report info, date/time, conditions, warnings, photo descriptions, if photo was posted
-- Each report: Use NLP to pull out keywords that indicate snow/ice or other trail conditions. Create catagorical features.
-- Trail overall: Elevation gain, lat/log, use during seasons in the past
+Due to multiple ways to report warnings of trail conditions on [WTA](https://www.wta.org/), my model is built to work with 4 different y variables:
+-Significant Snow
+-Poor Road Conditions
+-Lots Of Bugs/Mosquitos
+-Notable Trail Problems
 
-**Past Weather**:
+These were measured as boolean values- weather a trail report warned reader of a condition. Logistic Regression, Random Forest, and Gradient boosted models were all tried. While logistic regression gave insight on the type of correlation features had when determining snow conditions, it performed significantly worse predicting other condtions(snow AUC: .95, other conditions: .65 AUC(avg). Using a random forest model was much more consistent across the board with AUC scores of: .........A random forest model was ultimatly chosen to best represent the data, and further tuned decreasing the log-loss to a 0.44.
 
-- Collect in a CSV, for each trip report add features for the weather for that day as well as a summary of the 3 months (or other lengths) leading up to the date
+To fill in the gaps on trails with less trail reports, KNearestNeighbors was used. Within each sub-region- hike elevation,distance from a median point, and date. The most important aspect of the date were month and day. To capture the date in a non-linear form it was expressed as the cos and sin of the date in radians (with a year reprenting one circle). With these features, we were able to detemine most relivent past trail reports to the model, and get an average of their report of each condtion. This model on it's own had an AUC of .62, abd became an important feature in the final model.
 
-**Current Weather**:
+### Future Work
+- Add relevent text snipits for each feature using KNN on past trail reports. This feature is currently in production and will be implimented shortly.
+- Applying model to all of Washignton. Program is currently scaled to scrape and build the model on all WTA reports. Due to the volume of past reports, an AWS EC2 instance or related service is highly recommeneded for the scraping process. This data is currently being retrieved and will be implimented on the website in the future.
+- Combine model with a recomender system to recomend hikers hikes based on their inputed hike preferences and trail conditions.
 
-- Take current days weather and the past month-3 months weather average into database
-- Also account for future weather predictions
-
-### Modeling:
-
-**Output**: 
-
-Trail conditions: Starting focus will be snow/ice amount. Could add flower blooming/waterfall strength/ fallen trees/ etc. This will be a list of potential things a hiker should be aware of going to the trail, with the likelihood of each aspect. (75% chance snow on trail, 20% chance need to bring crampons)
-
-**Model Type**:
-
-I plan to use Supervised learning, testing all basic model types. Could potentially use some unsupervised learning to gain insight into how to categorize trails across different seasons. Potential use of a neural network- need more research.
-
-Training group will be all data collected up to a certain date (plan on cutoff being Jan 2016). All trip reports after that will be used to test. See if keywords in new trip reports match predicted key words and snow levels found by the model. Also will go hike places and see if the conditions are as predicted/ have other people report back when they go hiking.
-
-**Potential issues**: 
-
-Some trip reports have very little reports to base off. More reports during the summer and spring may add skew. May not be able to accurately use predictive weather. 
-
-### Deployment
-
-Website for consumers to search for a trail report. Users will type in the hike and the day they would like to go, and receive back a list of possible conditions/trail features with likelihoods attached.  
+### Sources 
