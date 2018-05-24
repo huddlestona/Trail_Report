@@ -7,7 +7,7 @@ import boto3
 
 def get_weather_as_df(keys):
     """
-    Uses keys to import all weather csvs, downloaded from national weather association
+    Use keys to import all weather csvs, downloaded from national weather association
     **Input parameters**
     ------------------------------------------------------------------------------
     keys: list. All links for weather saved in s3

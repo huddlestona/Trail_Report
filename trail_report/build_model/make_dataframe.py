@@ -7,7 +7,7 @@ from knn_model import prep_for_knn,prep_neighbors,get_neighbors
 import pandas as pd
 
 def split_x_y(df):
-    """Fills in nas and splits data with y being the inputed conditon column."""
+    """Fill in nas and splits data with y being the inputed conditon column."""
     conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
     df_full = df.fillna(0)
     train_y = df_full[conditions]
@@ -16,13 +16,13 @@ def split_x_y(df):
     return train_X,train_y
 
 def clean_X(df):
-    """Drops unneeded colums in df."""
+    """Drop unneeded colums in df."""
     df_clean = df.drop(['Date','last_year','month'], axis=1)
     return df_clean
 
 def add_knn(df):
     """
-    Preps data for knn, runs knn, and adds knn past report values as column in df.
+    Prep data for knn, runs knn, and adds knn past report values as column in df.
     **Input parameters**
     ------------------------------------------------------------------------------
     df: pandas dataframe of merged trail data and trail reports
@@ -39,7 +39,7 @@ def add_knn(df):
     return df_clean
 
 def merge_all_files(df_clean):
-    """Takes clean df and adds weather by nearest station."""
+    """Take clean df and adds weather by nearest station."""
     df_weather,df_weather_dist = get_weather_data()
     get_closest_station(df_clean,df_weather_dist)
     df_merge = merge_weather_trails(df_weather,df_clean)

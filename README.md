@@ -48,7 +48,7 @@ After cloning the repo the following comands can be run in the termianl from the
 
 `bash run_web_app.sh`
 
-#### Run Model in the command line
+#### Run model in the command line
 
 `python trail_report/build_model/make_all_prediction.py`
 

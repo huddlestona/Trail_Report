@@ -15,7 +15,7 @@ from sklearn.linear_model import LogisticRegression
 conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
 
 def prep_for_knn(df):
-    """Drops unneeded columns, adds new dat columns, and fills nas."""
+    """Drop unneeded columns, adds new dat columns, and fills nas."""
     df_new = df.drop(['Creator','Trail','Report',
     'Votes','_id','hike_name','url',
     'super_region','sub_region','which_pass'], axis=1)
@@ -34,7 +34,7 @@ def dates_in_circle(dates):
 
 def prep_neighbors(df,condition):
     """
-    Takes the df and y condition and returns a fit KNeighborsClassifier.
+    Take the df and y condition and returns a fit KNeighborsClassifier.
 
     **Input parameters**
     ------------------------------------------------------------------------------
@@ -55,7 +55,7 @@ def prep_neighbors(df,condition):
 
 def get_neighbors(neigh,df,condition):
     """
-    Retreives average condition results of 20 past reports and adds them to df.
+    Retreive average condition results of 20 past reports and adds them to df.
     **Input parameters**
     ------------------------------------------------------------------------------
     df: pandas df. Dataframe prepped by prep_for_knn
@@ -73,13 +73,13 @@ def get_neighbors(neigh,df,condition):
     df[f'neighbors_average {condition}'] = averages
 
 def make_forest(X_train,y_train):
-    """Runs RandomForestClassifier on prepped data."""
+    """Fit RandomForestClassifier on prepped data."""
     model = RandomForestClassifier(n_estimators=500)
     fit = model.fit(X_train,y_train)
     return model
 
 def make_logistic(X_train,y_train):
-    """Runs LogisticRegression on prepped data."""
+    """Fit LogisticRegression on prepped data."""
     model = LogisticRegression()
     model.fit(X_train, y_train)
     return model
