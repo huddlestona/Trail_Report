@@ -22,10 +22,10 @@ Website created using Flask and self-hosted on AWS.
 ### Modeling
 
 Due to multiple ways to report warnings of trail conditions on [WTA](https://www.wta.org/), my model is built to work with 4 different y variables:
--Significant Snow
--Poor Road Conditions
--Lots Of Bugs/Mosquitos
--Notable Trail Problems
+- Significant Snow
+- Poor Road Conditions
+- Lots Of Bugs/Mosquitos
+- Notable Trail Problems
 
 These were measured as boolean values- weather a trail report warned reader of a condition. Logistic Regression, Random Forest, and Gradient boosted models were all tried. While logistic regression gave insight on the type of correlation features had when determining snow conditions, it performed significantly worse predicting other condtions(snow AUC: .95, other conditions: .65 AUC(avg). Using a random forest model was much more consistent across the board with an average AUC score of: .86. A random forest model was ultimatly chosen to best represent the data, and further tuned decreasing the log-loss to a 0.44.
 
