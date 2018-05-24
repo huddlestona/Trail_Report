@@ -27,9 +27,19 @@ Due to multiple ways to report warnings of trail conditions on [WTA](https://www
 -Lots Of Bugs/Mosquitos
 -Notable Trail Problems
 
-These were measured as boolean values- weather a trail report warned reader of a condition. Logistic Regression, Random Forest, and Gradient boosted models were all tried. While logistic regression gave insight on the type of correlation features had when determining snow conditions, it performed significantly worse predicting other condtions(snow AUC: .95, other conditions: .65 AUC(avg). Using a random forest model was much more consistent across the board with AUC scores of: .........A random forest model was ultimatly chosen to best represent the data, and further tuned decreasing the log-loss to a 0.44.
+These were measured as boolean values- weather a trail report warned reader of a condition. Logistic Regression, Random Forest, and Gradient boosted models were all tried. While logistic regression gave insight on the type of correlation features had when determining snow conditions, it performed significantly worse predicting other condtions(snow AUC: .95, other conditions: .65 AUC(avg). Using a random forest model was much more consistent across the board with an average AUC score of: .86. A random forest model was ultimatly chosen to best represent the data, and further tuned decreasing the log-loss to a 0.44.
 
 To fill in the gaps on trails with less trail reports, KNearestNeighbors was used. Within each sub-region- hike elevation,distance from a median point, and date. The most important aspect of the date were month and day. To capture the date in a non-linear form it was expressed as the cos and sin of the date in radians (with a year reprenting one circle). With these features, we were able to detemine most relivent past trail reports to the model, and get an average of their report of each condtion. This model on it's own had an AUC of .62, abd became an important feature in the final model.
+
+### Access the model
+After cloning the Repo, you can run the model from the terminal:
+
+`python trail_report/make_model/make_any_prediction.py`
+
+This program run's on a pre-set date and hike. To change the date and hike you would like to run. Change the imputs in the main block.
+
+The repo has the following layout:
+
 
 ### Future Work
 - Add relevent text snipits for each feature using KNN on past trail reports. This feature is currently in production and will be implimented shortly.
@@ -37,3 +47,6 @@ To fill in the gaps on trails with less trail reports, KNearestNeighbors was use
 - Combine model with a recomender system to recomend hikers hikes based on their inputed hike preferences and trail conditions.
 
 ### Sources 
+  1. Washington Trails Association. [WTA](https://www.wta.org/). 
+  2. Images on website used with permission from personal sources. 
+  3. Jade Tabony's WTA trail recomender system project used as a reference for webscraping - [Repo](https://github.com/Jadetabony/wta_hikes)
