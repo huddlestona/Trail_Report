@@ -41,7 +41,7 @@ After cloning the repo the following comands can be run in the termianl from the
 
 #### Run Model in the command line
 
-`python trail_report/make_model/make_any_prediction.py`
+`python trail_report/build_model/make_all_prediction.py`
 
 This program runs on a pre-set date and hike. To change the date and hike you would like to run. Change the imputs in the main block.
 
