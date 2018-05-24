@@ -17,7 +17,13 @@ Website created using Flask and self-hosted on AWS.
 
 **Trail Information and Trail Reports:** Scraped through requests and BeautifulSoup from [WTA](https://www.wta.org/). Trail reports begin in 1997 and are continuosly scraped to keep the model up to date.
 
+Example of scraped trail information:
+
 ![Trail-Infomation](imgs/trail_info_example.png)
+
+
+Example of scraped trail report:
+
 ![Trail-Report](imgs/trail_report_example.png)
 
 **Weather Trends:** Collected as CSVs from [Climate.gov](https://www.climate.gov/maps-data/dataset/past-weather-zip-code-data-table). Trails connected with closest weather station data by lat/log cordinates.
