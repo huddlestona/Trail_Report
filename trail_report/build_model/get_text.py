@@ -1,3 +1,4 @@
+"""This file is still in production. Will eventually be called in make_any_prediction.py"""
 from knn_model import prep_neighbors,dates_in_circle
 
 def get_hike_reports(df,hike):
@@ -117,4 +118,4 @@ def add_hike_dummy(self):
 
 
 if __name__ == '__main__':
-df = pd.read_csv('../data/olympics_merged.csv', sep = '|',lineterminator='\n')
+pass 
