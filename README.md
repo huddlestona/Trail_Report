@@ -31,14 +31,19 @@ These were measured as boolean values- weather a trail report warned reader of a
 
 To fill in the gaps on trails with less trail reports, KNearestNeighbors was used. Within each sub-region- hike elevation,distance from a median point, and date. The most important aspect of the date were month and day. To capture the date in a non-linear form it was expressed as the cos and sin of the date in radians (with a year reprenting one circle). With these features, we were able to detemine most relivent past trail reports to the model, and get an average of their report of each condtion. This model on it's own had an AUC of .62, abd became an important feature in the final model.
 
-### Access the model
-After cloning the Repo, you can run the model from the terminal:
+### Access the project
+
+After cloning the repo the following comands can be run in the termianl from the main folder.
+
+#### Website
+
+`bash run_web_app.sh`
+
+#### Run Model in the command line
 
 `python trail_report/make_model/make_any_prediction.py`
 
-This program run's on a pre-set date and hike. To change the date and hike you would like to run. Change the imputs in the main block.
-
-The repo has the following layout:
+This program runs on a pre-set date and hike. To change the date and hike you would like to run. Change the imputs in the main block.
 
 
 ### Future Work
