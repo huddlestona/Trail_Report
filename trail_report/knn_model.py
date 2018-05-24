@@ -21,7 +21,7 @@ def prep_for_knn(df):
     'super_region','sub_region','which_pass'], axis=1)
     df_new['Date'] = pd.to_datetime(df_new['Date'])
     df_new['month'] = df_new['Date'].apply(lambda x: x.month)
-    #df_new['date_sin'],df_new['date_cos'] = dates_in_circle(df_new['Date'])
+    df_new['date_sin'],df_new['date_cos'] = dates_in_circle(df_new['Date'])
     df_full = df_new.fillna(0)
     return df_full
 
@@ -76,7 +76,7 @@ def make_forest(X_train,y_train):
     """Runs RandomForestClassifier on prepped data."""
     model = RandomForestClassifier(n_estimators=500)
     fit = model.fit(X_train,y_train)
-    return fit
+    return model
 
 def make_logistic(X_train,y_train):
     """Runs LogisticRegression on prepped data."""

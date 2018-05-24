@@ -1,5 +1,5 @@
-from knn_model import make_logistic,prep_neighbors,dates_in_circle,prep_for_knn,make_forest
-from Cleaning.Merge_Weather import get_weather_data,get_closest_station,merge_weather_trails
+from Modules.knn_model import prep_neighbors,dates_in_circle,prep_for_knn,make_forest
+from Modules.Merge_Weather import get_weather_data,get_closest_station,merge_weather_trails
 import pandas as pd
 import numpy as np
 import math
@@ -29,10 +29,10 @@ def get_data(hike,date):
 
 def load_databases():
     weather,weather_dist = get_weather_data()
-    df_init = pd.read_csv('../data/olympics_merged.csv', sep = '|',lineterminator='\n')
+    df_init = pd.read_csv('static/files/olympics_merged.csv', sep = '|',lineterminator='\n')
     #df = pd.read_csv('startbootstrap-agency/static/files/olympics_merged.csv', sep = '|',lineterminator='\n')
     df = df_init.fillna(0)
-    df_trail = pd.read_csv('../data/WTA_trails_clean_w_medians.csv',lineterminator='\n')
+    df_trail = pd.read_csv('static/files/WTA_trails_clean_w_medians.csv',lineterminator='\n')
     return df, df_trail, weather, weather_dist
 
 
@@ -66,8 +66,8 @@ class TrailPred(object):
     def __init__(self):
         self.models = {}
         self.conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
-        self.X_train = pd.read_csv('../data/olympics_Xall.csv',sep = '|',lineterminator='\n')
-        self.y_all = pd.read_csv('../data/olympics_yall.csv',sep = '|',lineterminator='\n')
+        self.X_train = pd.read_csv('static/files/olympics_Xall.csv',sep = '|',lineterminator='\n')
+        self.y_all = pd.read_csv('static/files/olympics_yall.csv',sep = '|',lineterminator='\n')
         self.actual_cols = self.X_train.columns.tolist()
 
     def prep_train(self,condition):
@@ -93,16 +93,11 @@ def main_dump():
 
 def main_pred():
     hike = 'Mount Rose'
-    date = '2018-05-06'
+    date = '05/22/18'
     X_test = get_data(hike,date)
     with open('tp.pkl','rb') as f:
         tp = pickle.load(f)
     pred = tp.predict(X_test)
-    X_test = get_data(hike,date)
-    pred = tp.predict(X_test)
-    print ("{0:.0f}".format(float(pred['condition|snow'][:,1][0])*100),
-            "{0:.0f}".format(float(pred['condition|trail'][:,1][0])*100),
-            "{0:.0f}".format(float(pred['condition|bugs'][:,1][0])*100),
-            "{0:.0f}".format(float(pred['condition|road'][:,1][0])*100))
+    print(pred)
 if __name__ == '__main__':
-    main_pred()
+    main_dump()
