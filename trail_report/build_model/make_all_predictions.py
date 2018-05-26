@@ -7,6 +7,7 @@ from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import scale
 from sklearn.preprocessing import normalize
 import pickle
+import boto3
 
 
 def get_data(hike,date):
@@ -82,6 +83,22 @@ class TrailPred(object):
         for condition,model in self.models.items():
             pred[condition]= model.predict_proba(X_test[self.actual_cols])
         return pred
+
+def get_pickle():
+    """
+    Access pickle of all fit models from public s3 bucket
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    None.
+    **Output**
+    ------------------------------------------------------------------------------
+    tp.models: dictionary built by class tp. Keys: conditions, values:fit models
+    """
+    s3 = boto3.client('s3')
+    bucket_name = 'trailreportdata'
+    response = s3.get_object(Bucket=bucket_name, Key='tp.pkl')
+    body = response['Body']
+    return response
 
 def main_dump():
     tp = TrailPred()
