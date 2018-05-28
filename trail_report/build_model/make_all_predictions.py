@@ -1,5 +1,5 @@
-from .knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
-from .merge_weather import get_weather_data, get_closest_station, merge_weather_trails
+from knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
+from merge_weather import get_weather_data, get_closest_station, merge_weather_trails
 import pandas as pd
 import numpy as np
 import math
@@ -8,6 +8,7 @@ from sklearn.preprocessing import scale
 from sklearn.preprocessing import normalize
 import pickle
 import boto3
+from io import BytesIO
 
 
 def get_data(hike,date):
@@ -30,7 +31,7 @@ def get_data(hike,date):
 
 def load_databases():
     weather, weather_dist = get_weather_data()
-    df_init = pd.read_csv('data/olympics_merged.csv', sep = '|',lineterminator='\n')
+    df_init = pd.read_csv('data/WTA_olympics_merged.csv', sep = '|',lineterminator='\n')
     df = df_init.fillna(0)
     df_trail = pd.read_csv('data/WTA_trails_clean_w_medians.csv',lineterminator='\n')
     return df, df_trail, weather, weather_dist
@@ -92,13 +93,14 @@ def get_pickle():
     None.
     **Output**
     ------------------------------------------------------------------------------
-    tp.models: dictionary built by class tp. Keys: conditions, values:fit models
+    tp: dictionary built by class tp. Keys: conditions, values:fit models
     """
-    s3 = boto3.client('s3')
-    bucket_name = 'trailreportdata'
-    response = s3.get_object(Bucket=bucket_name, Key='tp.pkl')
-    body = response['Body']
-    return response
+    s3 = boto3.resource('s3')
+    with BytesIO() as data:
+        s3.Bucket("trailreportdata").download_fileobj("tp.pkl", data)
+        data.seek(0)    # move back to the beginning after writing
+        tp = pickle.load(data)
+    return tp
 
 def main_dump():
     tp = TrailPred()
@@ -110,9 +112,10 @@ def main_pred():
     hike = 'Mount Rose'
     date = '05/22/18'
     X_test = get_data(hike,date)
-    with open('tp.pkl','rb') as f:
-        tp = pickle.load(f)
+    # with open('tp.pkl','rb') as f:
+    #     tp = pickle.load(f)
+    tp = get_pickle()
     pred = tp.predict(X_test)
     print(pred)
 if __name__ == '__main__':
-    main_dump()
+    main_pred()
