@@ -165,6 +165,6 @@ if __name__ == '__main__':
     trail_page_raw_html = db['trail_html']
     # trail_reports.drop()
     # raw_html.drop()
-    trail_page_raw_html.drop()
+    # trail_page_raw_html.drop()
     hike_urls = pd.read_csv('../../data/WTA_all_trail_data.csv')
     TripReportBuilder(hike_urls)
