@@ -1,14 +1,15 @@
 from __future__ import division
 from math import sqrt
 from flask import Flask, render_template, request, jsonify
-from ..build_model.make_all_predictions import get_data, TrailPred
+from ..build_model.make_all_predictions import get_data, TrailPred, get_pickle
 import pickle 
 
 
 app = Flask(__name__)
 
-with open('tp.pkl','rb') as f:
-    tp = pickle.load(f)
+# with open('tp.pkl','rb') as f:
+#     tp = pickle.load(f)
+tp = get_pickle()
 
 @app.route('/', methods=['GET'])
 def index():
