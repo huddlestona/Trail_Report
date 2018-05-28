@@ -5,10 +5,6 @@ and save the hikes webpage in a MongoDB.
 """
 from bs4 import BeautifulSoup
 import requests
-import pandas as pd
-import numpy as np
-import matplotlib as plt
-import seaborn as sn
 import re
 import math
 import csv
