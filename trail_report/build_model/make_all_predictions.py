@@ -1,5 +1,5 @@
-from knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
-from merge_weather import get_weather_data, get_closest_station, merge_weather_trails
+from .knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
+from .merge_weather import get_weather_data, get_closest_station, merge_weather_trails
 import pandas as pd
 import numpy as np
 import math
