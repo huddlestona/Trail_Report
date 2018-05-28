@@ -152,6 +152,6 @@ def build_csv(urls, csv_title):
 if __name__ == '__main__':
     starturl= 'https://www.wta.org/go-outside/hikes?'
     #currently only works with this start url- can't switch pages on a search result page
-    title = 'WTA_all_trail_data'
+    title = 'WTA_all_trail_data_2'
     urls = iterate_all_reports(starturl)
-    build_csv(urls, title)
+    build_csv(urls[2853:], title)
