@@ -57,8 +57,8 @@ def clean_trailreport(df):
 
 if __name__ == '__main__':
     mc = pymongo.MongoClient()
-    db = mc['wta']
+    db = mc['wta_all']
     trail_reports = db['trail_reports']
     df = pd.DataFrame(list(trail_reports.find()))
     clean__reports_df = clean_trailreport(df)
-    clean__reports_df.to_csv('../../data/WTA_olympics_trailreports.csv', sep = '|',index_label=False)
+    clean__reports_df.to_csv('../../data/WTA_trailreports_clean.csv', sep = '|',index_label=False)
