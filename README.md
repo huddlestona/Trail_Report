@@ -5,7 +5,7 @@
 
 As an avid hiker, I’ve spent a lot of time on [Washington Trail Association's](https://www.wta.org/)(WTA) website, scrolling through trail reports to determine current conditions. This often ends with little insight gained, and a risky decision between possibly getting stuck in snow or hiking a popular trail and hoping for a parking spot. I realized providing the probability of trail and road conditions on an easy to access platform could increase a hiker’s likelihood of checking out a less-popular trail, or any trail at all. This would thin out trail use, save time, and increases hiker awareness and safety.
 
-### Product:[trail-report.com](www.trail-report.com)
+### Product:[trail-report.com](http://www.trail-report.com/)
 
 At trail-report.com you can choose a hike from the dropdown list,select the date you would like to go, and it will return the probabilty another hiker would report snow,trail,road,or bug conditions on your hike. 
 
