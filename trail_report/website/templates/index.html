@@ -125,11 +125,11 @@
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#services">Trail Status</a>
           </li>
-          <!-- <li class="nav-item">
+           <!-- <li class="nav-item">
               <a class="nav-link js-scroll-trigger" href="#portfolio">Hikes</a>
-            </li>
+            </li> -->
             <li class="nav-item">
-              <a class="nav-link js-scroll-trigger" href="#about">About</a> -->
+              <a class="nav-link js-scroll-trigger" href="#about">About</a>
           </li>
           <li class="nav-item">
             <a class="nav-link js-scroll-trigger" href="#team">Team</a>
@@ -154,6 +154,7 @@
         </div>
       </div>
       <div class="row">
+        <div class="col-md-12 intro-lead-in">Check current conditions first</div>
         <div class="col-md-12 text-uppercase">Pick a trail:</div>
         <div class="col-md-12">
           <!-- hike search button -->
@@ -637,12 +638,12 @@
     </section>
 
     <!-- About -->
-  <!-- <section id="about">
+  <section id="about">
       <div class="container">
         <div class="row">
           <div class="col-lg-12 text-center">
             <h2 class="section-heading text-uppercase">About</h2>
-            <h3 class="section-subheading text-muted">Lorem ipsum dolor sit amet consectetur.</h3>
+            <h3 class="section-subheading text-muted">How do we determine trail conditions?</h3>
           </div>
         </div>
         <div class="row">
@@ -650,91 +651,98 @@
             <ul class="timeline">
               <li>
                 <div class="timeline-image">
-                  <img class="rounded-circle img-fluid" src="/static/img/about/1.jpg" alt="">
+                  <img class="rounded-circle img-fluid" src="/static/img/about/backpackers_small.jpg" alt="">
                 </div>
                 <div class="timeline-panel">
                   <div class="timeline-heading">
-                    <h4>2009-2011</h4>
-                    <h4 class="subheading">Our Humble Beginnings</h4>
+                    <!-- <h4>2009-2011</h4> -->
+                    <h4 class="subheading">Collect Trail Information</h4>
                   </div>
                   <div class="timeline-body">
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                    <p class="text-muted">All hike information and trail reports collected from the WTA site.</p>
                   </div>
                 </div>
               </li>
               <li class="timeline-inverted">
                 <div class="timeline-image">
-                  <img class="rounded-circle img-fluid" src="/static/img/about/2.jpg" alt="">
+                  <img class="rounded-circle img-fluid" src="/static/img/about/clouds.JPG" alt="">
                 </div>
                 <div class="timeline-panel">
                   <div class="timeline-heading">
-                    <h4>March 2011</h4>
-                    <h4 class="subheading">An Agency is Born</h4>
+                    <!-- <h4>March 2011</h4> -->
+                    <h4 class="subheading">Add weather trends</h4>
                   </div>
                   <div class="timeline-body">
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                    <p class="text-muted">Current and past weather trends for each location collected from NOAA.</p>
                   </div>
                 </div>
               </li>
               <li>
                 <div class="timeline-image">
-                  <img class="rounded-circle img-fluid" src="/static/img/about/3.jpg" alt="">
+                  <img class="rounded-circle img-fluid" src="/static/img/about/snow_hiker.jpg" alt="">
                 </div>
                 <div class="timeline-panel">
                   <div class="timeline-heading">
-                    <h4>December 2012</h4>
-                    <h4 class="subheading">Transition to Full Service</h4>
+                    <!-- <h4>December 2012</h4> -->
+                    <h4 class="subheading">Fill in the gaps for lesser hiked trails</h4>
                   </div>
                   <div class="timeline-body">
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                    <p class="text-muted">Using trail location, elevation, and hiking date, similar trail reports from the past are found to give us insight.</p>
                   </div>
                 </div>
               </li>
               <li class="timeline-inverted">
                 <div class="timeline-image">
-                  <img class="rounded-circle img-fluid" src="/static/img/about/4.jpg" alt="">
+                  <img class="rounded-circle img-fluid" src="/static/img/about/dog_mountain.png" alt="">
                 </div>
                 <div class="timeline-panel">
                   <div class="timeline-heading">
-                    <h4>July 2014</h4>
-                    <h4 class="subheading">Phase Two Expansion</h4>
+                    <!-- <h4>July 2014</h4> -->
+                    <h4 class="subheading">Predict current condition reports</h4>
                   </div>
                   <div class="timeline-body">
-                    <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sunt ut voluptatum eius sapiente, totam reiciendis temporibus qui quibusdam, recusandae sit vero unde, sed, incidunt et ea quo dolore laudantium consectetur!</p>
+                    <p class="text-muted">Using the collected data, four individual models were built- predicting snow, trail, road, and bug conditions.</p>
                   </div>
                 </div>
               </li>
               <li class="timeline-inverted">
                 <div class="timeline-image">
-                  <h4>Be Part
-                    <br>Of Our
-                    <br>Story!</h4>
+                  <h4>Now we can
+                    <br>go hike well
+                    <br>informed!</h4>
                 </div>
               </li>
             </ul>
           </div>
         </div>
+        <div class="row">
+        <h3 class="section-subheading text-muted tezt-center">Want to learn more? Checkout the project on GitHub.
+            <a href="https://github.com/huddlestona/Trail_Report">
+              <i class="fa fa-github"></i>
+            </a>
+        </h3> 
       </div>
-    </section> -->
+      </div>
+    </section>
 
   <!-- Team -->
   <section class="bg-light" id="team">
     <div class="container">
       <div class="row">
         <div class="col-lg-12 text-center">
-          <h2 class="section-heading text-uppercase">Women Behind the project</h2>
-          <h3 class="section-subheading text-muted">and websites top user</h3>
+          <h2 class="section-heading text-uppercase">Woman Behind the project</h2>
+          <!-- <h3 class="section-subheading text-muted"></h3> -->
         </div>
       </div>
       <div class="row">
         <div class="col-lg-12 text-center">
           <div class="team-member">
-            <img class="mx-auto rounded-circle" src="/static/img/team/ashley_profile.JPG" alt="">
+            <img class="mx-auto rounded-circle" src="/static/img/team/AshleyHuddleston-1.jpg" alt="">
             <h4>Ashley Huddleston</h4>
             <p class="text-muted">Data Scientist</p>
             <ul class="list-inline social-buttons">
               <li class="list-inline-item">
-                <a href="https://github.com/huddlestona/Trail_Report">
+                <a href="https://github.com/huddlestona">
                     <i class="fa fa-github"></i>
                   </a>
               </li>
@@ -789,7 +797,7 @@
       <div class="row">
         <div class="col-lg-12 text-center">
           <h2 class="section-heading text-uppercase">Contact Creator</h2>
-          <h3 class="section-subheading text-muted">L</h3>
+          <h3 class="section-subheading text-muted"></h3>
         </div>
       </div>
       <div class="row">
