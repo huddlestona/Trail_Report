@@ -46,10 +46,10 @@ def merge_all_files(df_clean):
     return df_merge
 
 if __name__ == '__main__':
-    df = pd.read_csv('../data/olympics_merged.csv', sep = '|',lineterminator='\n')
+    df = pd.read_csv('../../data/WTA_all_merged.csv', sep = '|',lineterminator='\n')
     df_clean = add_knn(df)
     df_merge = merge_all_files(df_clean)
     df_final = clean_X(df_merge)
     train_X,train_y = split_x_y(df_final)
-    train_X.to_csv('../data/olympics_Xall.csv', sep = '|',index_label=False)
-    train_y.to_csv('../data/olympics_yall.csv', sep = '|', index_label=False)
+    train_X.to_csv('../../data/Xall.csv', sep = '|',index_label=False)
+    train_y.to_csv('../../data/yall.csv', sep = '|', index_label=False)
