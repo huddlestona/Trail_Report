@@ -2,6 +2,38 @@ import re
 import pandas as import pd
 from trail_report.build_model.make_all_predictions import load_databases
 
+class TrailText(object):
+
+    def __init__(self):
+        self.models = {}
+        self.conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
+        self.X_all = pd.read_csv('data/olympics_Xall.csv',sep = '|',lineterminator='\n')
+        self.y_all = pd.read_csv('data/olympics_yall.csv',sep = '|',lineterminator='\n')
+        self.actual_cols = self.X_train.columns.tolist()
+
+    def prep_train(self,condition):
+        y_train = self.y_all[condition]
+        X_train = self.X_all[['date_cos','date_sin','PRCP',f'neighbors_average {condition}']]
+        return y_train, X_train
+
+    def fit(self):
+        for condition in self.conditions:
+            y_train,X_train = self.prep_train(condition)
+            self.models[condition]= text_knn(X_train,y_train)
+
+    def predict(self,X_all):
+        pred = {}
+        for condition,model in self.models.items():
+            indxs = model.kneighbors(X_test[self.actual_cols])
+            pred[condition] = list(indx[1][0])
+        return pred
+
+def text_knn(X_train,y_train):
+    neigh = KNeighborsClassifier(n_neighbors=5)
+    X_s = scale(knn_cols)
+    neigh.fit(X_s,y)
+    return neigh
+    
 def get_all_cond_neighs(X,y):
     """run knn for all conditions"""
     all_indxs = {}
