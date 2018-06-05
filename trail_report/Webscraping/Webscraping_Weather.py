@@ -18,12 +18,27 @@ def get_past_weather_data(urls):
 if __name__ == '__main__':
     s3 = boto3.client('s3')
     bucket_name = 'trailreportdata'
-    urls = ['https://www.ncei.noaa.gov/orders/cdo/1340157.csv',
-    'https://www.ncei.noaa.gov/orders/cdo/1340154.csv',
-    'https://www.ncei.noaa.gov/orders/cdo/1340149.csv',
-    'https://www.ncei.noaa.gov/orders/cdo/1340148.csv',
-    'https://www.ncei.noaa.gov/orders/cdo/1340144.csv',
-    'https://www.ncei.noaa.gov/orders/cdo/1340141.csv',
-    'https://www.ncei.noaa.gov/orders/cdo/1340136.csv',
-    'https://www.ncei.noaa.gov/orders/cdo/1340127.csv']
+    urls = [
+        'https://www.ncei.noaa.gov/orders/cdo/1364038.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364041.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364042.csv', 
+        'https://www.ncei.noaa.gov/orders/cdo/1364043.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364044.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364046.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364047.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364048.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364051.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364052.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364053.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364054.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364055.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364058.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364059.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364060.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364061.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364062.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364063.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364064.csv',
+        'https://www.ncei.noaa.gov/orders/cdo/1364066.csv'
+    ]
     get_past_weather_data(urls)
