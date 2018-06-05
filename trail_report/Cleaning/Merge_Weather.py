@@ -134,7 +134,27 @@ def get_weather_data():
     df_weather: Pandas dataframe. All goverment weather.
     df_weather_dist: Pandas dataframe. Lat/Long for every weather station.
     """
-    keys = ['Global_sum_FIPS:53031 FIPS:53009.csv','Global_sum_FIPS:53045 FIPS:53027.csv']
+    keys = ['1364038.csv',
+            '1364041.csv',
+            '1364042.csv',
+            '1364043.csv',
+            '1364044.csv',
+            '1364046.csv',
+            '1364047.csv',
+            '1364048.csv',
+            '1364051.csv',
+            '1364052.csv',
+            '1364053.csv',
+            '1364054.csv',
+            '1364055.csv',
+            '1364058.csv',
+            '1364059.csv',
+            '1364060.csv',
+            '1364061.csv',
+            '1364062.csv',
+            '1364063.csv',
+            '1364064.csv',
+            '1364066.csv']
     df_weather = import_weather(keys)
     df_weather_dist = df_weather[['LATITUDE','LONGITUDE','name']].drop_duplicates().reset_index()
     return df_weather,df_weather_dist
