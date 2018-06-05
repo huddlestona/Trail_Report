@@ -9,6 +9,7 @@ import re
 import math
 import csv
 
+
 def iterate_all_reports(starturl):
     """
     Determines the number of hikes listed on the WTA trails page and get said number of report urls
@@ -25,17 +26,18 @@ def iterate_all_reports(starturl):
     soup = BeautifulSoup(r, 'lxml')
     trail_count = soup.select_one('span.search-count').text
     count = int("".join(filter(str.isdigit, trail_count)))
-    numit = math.ceil(float(count)/30)
+    numit = math.ceil(float(count) / 30)
     for i in range(int(numit)):
         spot = f'b_start:int= {str(i*30)}'
-        url = starturl+spot
+        url = starturl + spot
         r = requests.get(url)
         soup = BeautifulSoup(r.text, 'lxml')
         for div in soup.findAll('a', attrs={'class': 'listitem-title'}):
             hike_urls.append(div['href'])
             counter += 1
-        print ('Collected %d websites' % counter)
+        print('Collected %d websites' % counter)
     return hike_urls
+
 
 def trail_data_parser(url):
     """
@@ -49,26 +51,26 @@ def trail_data_parser(url):
     Data cleaning is completed in a seperate python script.
     """
     all_features = ['Mountain views',
-            'Wildlife',
-            'Old growth',
-            'Rivers',
-            'Good for kids',
-            'Dogs not allowed',
-            'Coast',
-            'Lakes',
-            'Waterfalls',
-            'Fall foilage',
-            'Wildflowers/Meadows',
-            'Summits',
-            'Ridges/passes',
-            'Established campsites']
+                    'Wildlife',
+                    'Old growth',
+                    'Rivers',
+                    'Good for kids',
+                    'Dogs not allowed',
+                    'Coast',
+                    'Lakes',
+                    'Waterfalls',
+                    'Fall foilage',
+                    'Wildflowers/Meadows',
+                    'Summits',
+                    'Ridges/passes',
+                    'Established campsites']
 
     r = requests.get(url)
     soup = BeautifulSoup(r.text, 'lxml')
     row_data = {}
     try:
         row_data['hike_name'] = soup.select_one('h1.documentFirstHeading').text
-    except:
+    except BaseException:
         row_data['hike_name'] = 'NaN'
     try:
         stats = soup.select('div.hike-stat div')
@@ -76,10 +78,10 @@ def trail_data_parser(url):
         row_data['region'] = all_stat[0]
         row_data['distance'] = all_stat[1]
         row_data['elevation_gain'] = int(re.findall('\d+', all_stat[3])[0])
-        row_data['highest_point'] = int(re.findall('\d+',all_stat[4])[0])
+        row_data['highest_point'] = int(re.findall('\d+', all_stat[4])[0])
         row_data['rating'] = all_stat[9]
-        row_data['number_votes'] = int(re.findall('\d+',all_stat[11])[0])
-    except:
+        row_data['number_votes'] = int(re.findall('\d+', all_stat[11])[0])
+    except BaseException:
         row_data['region'] = 'NaN'
         row_data['distance'] = 'NaN'
         row_data['elevation_gain'] = None
@@ -95,23 +97,23 @@ def trail_data_parser(url):
                 row_data[feature] = 1
             else:
                 row_data[feature] = 0
-    except:
+    except BaseException:
         None
     try:
         row_data['which_pass'] = soup.select_one('div.alert a').text
-    except:
+    except BaseException:
         row_data['which_pass'] = 'NaN'
     try:
         lat_long = soup.select('div.latlong span')
         full_lat_long = [float(l.text) for l in lat_long]
         row_data['lat'] = full_lat_long[0]
         row_data['long'] = full_lat_long[1]
-    except:
+    except BaseException:
         row_data['lat'] = None
         row_data['long'] = None
     try:
         row_data['numReports'] = soup.select_one('span.ReportCount').text
-    except:
+    except BaseException:
         row_data['numReports'] = None
 
     row_data['url'] = url
@@ -129,16 +131,16 @@ def build_csv(urls, csv_title):
     ------------------------------------------------------------------------------
     None. Saves all trail data for each url in urls as a new line in a csv file
     """
-    fieldnames = ['Coast','Dogs not allowed',
-                      'Established campsites','Fall foilage',
-                      'Good for kids','Lakes','Mountain views',
-                      'Old growth','Ridges/passes','Rivers','Summits',
-                      'Waterfalls','Wildflowers/Meadows','Wildlife',
-                      'distance','elevation_gain','highest_point',
-                      'hike_name','lat','long','numReports',
-                      'number_votes','rating','region',
-                      'url','which_pass']
-    with open(csv_title +'.csv', 'w', newline='') as csvfile:
+    fieldnames = ['Coast', 'Dogs not allowed',
+                  'Established campsites', 'Fall foilage',
+                  'Good for kids', 'Lakes', 'Mountain views',
+                  'Old growth', 'Ridges/passes', 'Rivers', 'Summits',
+                  'Waterfalls', 'Wildflowers/Meadows', 'Wildlife',
+                  'distance', 'elevation_gain', 'highest_point',
+                  'hike_name', 'lat', 'long', 'numReports',
+                  'number_votes', 'rating', 'region',
+                  'url', 'which_pass']
+    with open(csv_title + '.csv', 'w', newline='') as csvfile:
         writer = csv.DictWriter(csvfile, fieldnames=fieldnames)
         writer.writeheader()
         counter = 0
@@ -146,12 +148,14 @@ def build_csv(urls, csv_title):
             trail_data = trail_data_parser(lnk)
             writer.writerow(trail_data)
             counter += 1
-            print (f"{counter} trails written to CSV")
+            print(f"{counter} trails written to CSV")
     return None
 
+
 if __name__ == '__main__':
-    starturl= 'https://www.wta.org/go-outside/hikes?'
-    #currently only works with this start url- can't switch pages on a search result page
+    starturl = 'https://www.wta.org/go-outside/hikes?'
+    # currently only works with this start url- can't switch pages on a search
+    # result page
     title = 'WTA_all_trail_data_2'
     urls = iterate_all_reports(starturl)
     build_csv(urls[2853:], title)

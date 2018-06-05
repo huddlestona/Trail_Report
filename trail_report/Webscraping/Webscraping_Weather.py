@@ -4,6 +4,7 @@ import pandas as pd
 from io import BytesIO
 import numpy as np
 
+
 def get_past_weather_data(urls):
     for url in urls:
         response = requests.get(url)
@@ -12,8 +13,9 @@ def get_past_weather_data(urls):
         else:
             data = response.content
             filename = url.split("/")[-1]
-            s3.put_object(Bucket= bucket_name, Body= data, Key= filename)
+            s3.put_object(Bucket=bucket_name, Body=data, Key=filename)
             print(f'{filename} downloaded')
+
 
 if __name__ == '__main__':
     s3 = boto3.client('s3')
@@ -21,7 +23,7 @@ if __name__ == '__main__':
     urls = [
         'https://www.ncei.noaa.gov/orders/cdo/1364038.csv',
         'https://www.ncei.noaa.gov/orders/cdo/1364041.csv',
-        'https://www.ncei.noaa.gov/orders/cdo/1364042.csv', 
+        'https://www.ncei.noaa.gov/orders/cdo/1364042.csv',
         'https://www.ncei.noaa.gov/orders/cdo/1364043.csv',
         'https://www.ncei.noaa.gov/orders/cdo/1364044.csv',
         'https://www.ncei.noaa.gov/orders/cdo/1364046.csv',

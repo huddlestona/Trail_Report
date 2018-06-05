@@ -5,6 +5,7 @@ from math import sin, cos, sqrt, atan2, radians
 from io import BytesIO
 import boto3
 
+
 def get_weather_as_df(keys):
     """
     Use keys to import all weather csvs, downloaded from national weather association
@@ -26,6 +27,7 @@ def get_weather_as_df(keys):
     f = BytesIO(files)
     csv = pd.read_csv(f)
     return csv
+
 
 def get_hike_distance(df1lat, df1long, df2lat, df2long):
     """
@@ -58,6 +60,7 @@ def get_hike_distance(df1lat, df1long, df2lat, df2long):
     distance = R * c
     return distance
 
+
 def get_closest_station(df_hike, df_weather):
     """
     Call get_hike_distance on each hike for each weather station.
@@ -73,17 +76,18 @@ def get_closest_station(df_hike, df_weather):
     closest_station = []
     station_distance = []
     for hike_idx in df_hike.index:
-        hike_long = df_hike.loc[hike_idx,'long']
-        hike_lat = df_hike.loc[hike_idx,'lat']
+        hike_long = df_hike.loc[hike_idx, 'long']
+        hike_lat = df_hike.loc[hike_idx, 'lat']
         distances = []
         for stat_idx in df_weather.index:
-            stat_long = df_weather.loc[stat_idx,'LONGITUDE']
-            stat_lat = df_weather.loc[stat_idx,'LATITUDE']
-            distance = get_hike_distance(hike_lat, hike_long,stat_lat, stat_long)
+            stat_long = df_weather.loc[stat_idx, 'LONGITUDE']
+            stat_lat = df_weather.loc[stat_idx, 'LATITUDE']
+            distance = get_hike_distance(
+                hike_lat, hike_long, stat_lat, stat_long)
             distances.append(distance)
         shortest_idx = np.argmax(distances)
         distance = max(distances)
-        station = df_weather.loc[int(shortest_idx),'name']
+        station = df_weather.loc[int(shortest_idx), 'name']
         closest_station.append(station)
         station_distance.append(distance)
     df_hike['closet_station'] = closest_station
@@ -103,24 +107,30 @@ def clean_weather_df(weather_df):
     """
     col = weather_df.columns
     drop_col = list(col[7::2])
-    clean_num = weather_df.drop(319, axis=0)
-    num_weather = clean_num.drop(drop_col,axis=1)
-    just_num = num_weather.drop(['NAME','STATION'], axis=1)
+    clean_num = weather_df[weather_df['LATITUDE'].str.contains("LATITUDE") == False]
+    num_weather = clean_num.drop(drop_col, axis=1)
+    just_num = num_weather.drop(['NAME', 'STATION'], axis=1)
     all_weatherdf = just_num.apply(pd.to_numeric)
-    all_weatherdf['name']= num_weather['NAME']
+    all_weatherdf['name'] = num_weather['NAME']
     return all_weatherdf
+
 
 def merge_weather_trails(df_weather, df_hike):
     """ Add weather info to df_hike"""
-    df_trail_year = pd.merge(df_hike, df_weather, how='left', left_on=['closet_station','last_year'], right_on= ['name','DATE'])
-    df_all_clean = df_trail_year.drop(['DATE','name'], axis =1)
+    df_trail_year = pd.merge(
+        df_hike, df_weather, how='left', left_on=[
+            'closet_station', 'last_year'], right_on=[
+            'name', 'DATE'])
+    df_all_clean = df_trail_year.drop(['DATE', 'name'], axis=1)
     return df_all_clean
+
 
 def import_weather(keys):
     """Get weather for mentioned keys."""
-    #imports weather and cleans
+    # imports weather and cleans
     df_all_weather = get_weather_as_df(keys)
     return clean_weather_df(df_all_weather)
+
 
 def get_weather_data():
     """
@@ -133,7 +143,28 @@ def get_weather_data():
     df_weather: Pandas dataframe. All goverment weather.
     df_weather_dist: Pandas dataframe. Lat/Long for every weather station.
     """
-    keys = ['Global_sum_FIPS:53031 FIPS:53009.csv','Global_sum_FIPS:53045 FIPS:53027.csv']
+    keys = ['1364038.csv',
+            '1364041.csv',
+            '1364042.csv',
+            '1364043.csv',
+            '1364044.csv',
+            '1364046.csv',
+            '1364047.csv',
+            '1364048.csv',
+            '1364051.csv',
+            '1364052.csv',
+            '1364053.csv',
+            '1364054.csv',
+            '1364055.csv',
+            '1364058.csv',
+            '1364059.csv',
+            '1364060.csv',
+            '1364061.csv',
+            '1364062.csv',
+            '1364063.csv',
+            '1364064.csv',
+            '1364066.csv']
     df_weather = import_weather(keys)
-    df_weather_dist = df_weather[['LATITUDE','LONGITUDE','name']].drop_duplicates().reset_index()
-    return df_weather,df_weather_dist
+    df_weather_dist = df_weather[[
+        'LATITUDE', 'LONGITUDE', 'name']].drop_duplicates().reset_index()
+    return df_weather, df_weather_dist

@@ -5,7 +5,9 @@ from math import sin, cos, sqrt, atan2, radians
 from io import BytesIO
 import boto3
 
-#get weather and prep for merge
+# get weather and prep for merge
+
+
 def get_weather_as_df(keys):
     """
     Uses keys to import all weather csvs, downloaded from national weather association
@@ -20,15 +22,16 @@ def get_weather_as_df(keys):
     bucket_name = 'trailreportdata'
     files = b''
     for key in keys:
-        response = s3.get_object(Bucket= bucket_name, Key= key)
+        response = s3.get_object(Bucket=bucket_name, Key=key)
         body = response['Body']
         csv = body.read()
-        files+= csv
+        files += csv
     f = BytesIO(files)
     csv = pd.read_csv(f)
     return csv
 
-def get_hike_distance(df1lat, df1long,df2lat, df2long):
+
+def get_hike_distance(df1lat, df1long, df2lat, df2long):
     """
     Get's distance of two points from eachother.
     **Input parameters**
@@ -59,7 +62,8 @@ def get_hike_distance(df1lat, df1long,df2lat, df2long):
     distance = R * c
     return distance
 
-def get_closest_station(df_hike,df_weather):
+
+def get_closest_station(df_hike, df_weather):
     """
     Calls get_hike_distance on each hike for each weather station.
     Adds columns to df_hike
@@ -74,17 +78,18 @@ def get_closest_station(df_hike,df_weather):
     closest_station = []
     station_distance = []
     for hike_idx in df_hike.index:
-        hike_long = df_hike.loc[hike_idx,'long']
-        hike_lat = df_hike.loc[hike_idx,'lat']
+        hike_long = df_hike.loc[hike_idx, 'long']
+        hike_lat = df_hike.loc[hike_idx, 'lat']
         distances = []
         for stat_idx in df_weather.index:
-            stat_long = df_weather.loc[stat_idx,'LONGITUDE']
-            stat_lat = df_weather.loc[stat_idx,'LATITUDE']
-            distance = get_hike_distance(hike_lat, hike_long,stat_lat, stat_long)
+            stat_long = df_weather.loc[stat_idx, 'LONGITUDE']
+            stat_lat = df_weather.loc[stat_idx, 'LATITUDE']
+            distance = get_hike_distance(
+                hike_lat, hike_long, stat_lat, stat_long)
             distances.append(distance)
         shortest_idx = np.argmax(distances)
         distance = max(distances)
-        station = df_weather.loc[int(shortest_idx),'name']
+        station = df_weather.loc[int(shortest_idx), 'name']
         closest_station.append(station)
         station_distance.append(distance)
     df_hike['closet_station'] = closest_station
@@ -104,24 +109,30 @@ def clean_weather_df(weather_df):
     """
     col = weather_df.columns
     drop_col = list(col[7::2])
-    clean_num = weather_df.drop(319, axis=0)
-    num_weather = clean_num.drop(drop_col,axis=1)
-    just_num = num_weather.drop(['NAME','STATION'], axis=1)
+    clean_num = weather_df[weather_df['LATITUDE'].str.contains("LATITUDE") == False]
+    num_weather = clean_num.drop(drop_col, axis=1)
+    just_num = num_weather.drop(['NAME', 'STATION'], axis=1)
     all_weatherdf = just_num.apply(pd.to_numeric)
-    all_weatherdf['name']= num_weather['NAME']
+    all_weatherdf['name'] = num_weather['NAME']
     return all_weatherdf
 
-def merge_weather_trails(df_weather,df_hike):
+
+def merge_weather_trails(df_weather, df_hike):
     """ Adds weather info to df_hike"""
-    df_trail_year = pd.merge(df_hike, df_weather, how='left', left_on=['closet_station','last_year'], right_on= ['name','DATE'])
-    df_all_clean = df_trail_year.drop(['DATE','name'], axis =1)
+    df_trail_year = pd.merge(
+        df_hike, df_weather, how='left', left_on=[
+            'closet_station', 'last_year'], right_on=[
+            'name', 'DATE'])
+    df_all_clean = df_trail_year.drop(['DATE', 'name'], axis=1)
     return df_all_clean
+
 
 def import_weather(keys):
     """Get's weather for mentioned keys."""
-    #imports weather and cleans
+    # imports weather and cleans
     df_all_weather = get_weather_as_df(keys)
     return clean_weather_df(df_all_weather)
+
 
 def get_weather_data():
     """
@@ -156,5 +167,6 @@ def get_weather_data():
             '1364064.csv',
             '1364066.csv']
     df_weather = import_weather(keys)
-    df_weather_dist = df_weather[['LATITUDE','LONGITUDE','name']].drop_duplicates().reset_index()
-    return df_weather,df_weather_dist
+    df_weather_dist = df_weather[[
+        'LATITUDE', 'LONGITUDE', 'name']].drop_duplicates().reset_index()
+    return df_weather, df_weather_dist

@@ -9,6 +9,7 @@ import pandas as pd
 from multiprocessing.dummy import Pool
 from multiprocessing import cpu_count
 
+
 def select_text(parent_element, css_selector):
     """
     Selects Trail Report text string if text was written.
@@ -23,6 +24,7 @@ def select_text(parent_element, css_selector):
     element = parent_element.select_one(css_selector)
     return get_text_if_not_none(element)
 
+
 def get_text_if_not_none(element):
     """Retrieves text if field is not empty."""
     if element is None:
@@ -30,6 +32,7 @@ def get_text_if_not_none(element):
     else:
         text = element.text
     return text
+
 
 def select_date(parent_element, css_selector):
     """
@@ -45,6 +48,7 @@ def select_date(parent_element, css_selector):
     element = parent_element.select_one(css_selector)
     return get_date_if_not_none(element)
 
+
 def get_date_if_not_none(element):
     """Retrieves date if field is not empty."""
     if element is None:
@@ -53,7 +57,8 @@ def get_date_if_not_none(element):
         text = element.attrs.get('title')
     return text
 
-def parse_trip_report(title,parent_element):
+
+def parse_trip_report(title, parent_element):
     """
     Return a dictionary representing a single trip report.
     **Input parameters**
@@ -66,9 +71,9 @@ def parse_trip_report(title,parent_element):
     """
     creator = select_text(parent_element, 'div.CreatorInfo span a')
     date = select_date(parent_element, 'span.elapsed-time')
-    report = select_text(parent_element,'div.show-with-full')
-    trail_conditions = select_text(parent_element,'div.trail-issues')
-    votes = select_text(parent_element,'span.UpvoteCount')
+    report = select_text(parent_element, 'div.show-with-full')
+    trail_conditions = select_text(parent_element, 'div.trail-issues')
+    votes = select_text(parent_element, 'span.UpvoteCount')
     return {
         "Trail": title,
         "Creator": creator,
@@ -77,6 +82,7 @@ def parse_trip_report(title,parent_element):
         "Trail_condtions": trail_conditions,
         "Votes": votes
     }
+
 
 def get_trail_report(title, hikeurl, params=None):
     """
@@ -94,15 +100,17 @@ def get_trail_report(title, hikeurl, params=None):
     soup = BeautifulSoup(r, 'lxml')
     save_raw_html(r)
     for parent_element in soup.select('div#trip-reports div.item'):
-        trip_report = parse_trip_report(title,parent_element)
+        trip_report = parse_trip_report(title, parent_element)
         trail_reports.insert_one(trip_report)
     return None
+
 
 def save_raw_html(r):
     """Saves raw html from the request."""
     raw_insert = {"raw_html": r}
     raw_html.insert_one(raw_insert)
     return None
+
 
 def iterate_all_reports(title, hikeurl):
     """
@@ -116,21 +124,23 @@ def iterate_all_reports(title, hikeurl):
     ------------------------------------------------------------------------------
     None. Appends entry to MongoDB using pymongo.
     """
-    #lists how many reports are on the page
+    # lists how many reports are on the page
     r = requests.get(hikeurl + '/@@related_tripreport_listing').text
     soup = BeautifulSoup(r, 'lxml')
-    numit = math.ceil(float(soup.find('div', {'id': 'count-data'}).text)/5)
+    numit = math.ceil(float(soup.find('div', {'id': 'count-data'}).text) / 5)
     for i in range(int(numit)):
-        get_trail_report(title, hikeurl, params={'b_start:int': str(i*5)})
+        get_trail_report(title, hikeurl, params={'b_start:int': str(i * 5)})
     return None
 
-def save_trail_html(title,url):
+
+def save_trail_html(title, url):
     """Saves raw html from the request."""
     r = requests.get(url).text
     raw_insert = {'trail': title,
                   "raw_html": r}
     trail_page_raw_html.insert_one(raw_insert)
     return None
+
 
 def TripReportBuilder(df):
     """
@@ -152,10 +162,11 @@ def TripReportBuilder(df):
             iterate_all_reports(title, url)
             save_trail_html(title, url)
             count += 1
-            print (f'Unique Trails {count}')
+            print(f'Unique Trails {count}')
         else:
             continue
     return None
+
 
 if __name__ == '__main__':
     mc = pymongo.MongoClient()
