@@ -3,3 +3,4 @@
 __pycache__/
 First_model_again_AUC.png
 tp.pkl
+data/WTA_all_merged.csv
