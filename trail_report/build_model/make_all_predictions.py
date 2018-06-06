@@ -100,11 +100,11 @@ class TrailPred(object):
             'condition|bugs',
             'condition|road']
         self.X_train = pd.read_csv(
-            'data/olympics_Xall.csv',
+            'data/Xall.csv',
             sep='|',
             lineterminator='\n')
         self.y_all = pd.read_csv(
-            'data/olympics_yall.csv',
+            'data/yall.csv',
             sep='|',
             lineterminator='\n')
         self.actual_cols = self.X_train.columns.tolist()
@@ -150,7 +150,7 @@ def main_dump():
     """Dump models to a pickle."""
     tp = TrailPred()
     tp.fit()
-    with open('tp.pkl', 'wb') as f:
+    with open('tp_all.pkl', 'wb') as f:
         pickle.dump(tp, f)
 
 
@@ -167,4 +167,4 @@ def main_pred():
 
 
 if __name__ == '__main__':
-    main_pred()
+    main_dump()
