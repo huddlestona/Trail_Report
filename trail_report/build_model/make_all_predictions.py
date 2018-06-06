@@ -11,6 +11,7 @@ import pickle
 import boto3
 from io import BytesIO
 import os.path
+import io
 
 
 def get_data(hike, date):
@@ -54,15 +55,27 @@ def load_databases():
 
 def get_hike_data():
     """Get trail and report db from public s3 bucket."""
-    s3 = boto3.client('s3')
+    s3 = boto3.resource('s3')
     bucket_name = 'trailreportdata'
-    with BytesIO() as trails:
-        s3.Bucket(bucket_name).download_fileobj("WTA_trails_clean_w_medians.csv", trails)
-        trails.seek(0)
-    with BytesIO as reports:
-        s3.Bucket(bucket_name).download_fileobj("WTA_all_merged.csv", reports)
-        reports.seek(0)
-    return trails,reports
+    #get_trail
+    trail_content = s3.Object(bucket_name,"WTA_trails_clean_w_medians.csv").get()
+    trail = BytesIO(trail_content['Body'].read())
+    df_trail = pd.read_csv(trail,sep = '|',lineterminator='\n')
+    #get_reports
+    reports_content = s3.Object(bucket_name,"WTA_all_merged.csv").get()
+    reports = BytesIO(reports_content['Body'].read())
+    df = pd.read_csv(reports,sep = '|',lineterminator='\n')
+    # with BytesIO() as trails:
+    #     s3.Bucket(bucket_name).download_fileobj("WTA_trails_clean_w_medians.csv", trails)
+    #     trails.seek(0)
+    #     df_trail = pd.read_csv(trails)
+
+    # with BytesIO() as reports:
+    #     s3.Bucket(bucket_name).download_fileobj("WTA_all_merged.csv", reports)
+    #     reports.seek(0)
+    #     df = pd.read_csv(reports)
+
+    return df, df_trail
     
 
 def get_new_neighbors(df, condition, hike, date_stamp):

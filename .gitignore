@@ -6,3 +6,4 @@ tp.pkl
 data/WTA_all_merged.csv
 data/Xall.csv
 data/yall.csv
+trail_report/build_model/tp_all.pkl
