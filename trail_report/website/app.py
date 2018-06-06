@@ -12,7 +12,8 @@ tp = get_pickle()
 
 @app.route('/', methods=['GET'])
 def index():
-    return render_template('index.html')
+    trails = list(('test','hike','other trail'))
+    return render_template('index.html', trails=trails)
 
 
 @app.route('/solve', methods=['POST'])
