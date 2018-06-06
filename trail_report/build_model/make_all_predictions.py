@@ -1,6 +1,6 @@
 """This file holds functions that get new and prep new data, then make predictions."""
-from .knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
-from .merge_weather import get_weather_data, get_closest_station, merge_weather_trails
+from knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
+from merge_weather import get_weather_data, get_closest_station, merge_weather_trails
 import pandas as pd
 import numpy as np
 import math
@@ -10,6 +10,7 @@ from sklearn.preprocessing import normalize
 import pickle
 import boto3
 from io import BytesIO
+import os.path
 
 
 def get_data(hike, date):
@@ -39,16 +40,30 @@ def get_data(hike, date):
 def load_databases():
     """Load databases of hike and weather info."""
     weather, weather_dist = get_weather_data()
-    df_init = pd.read_csv(
-        'data/WTA_olympics_merged.csv',
-        sep='|',
-        lineterminator='\n')
-    df = df_init.fillna(0)
-    df_trail = pd.read_csv(
-        'data/WTA_trails_clean_w_medians.csv',
-        lineterminator='\n')
+    trails,reports = get_hike_data()
+    # df_init = pd.read_csv(
+    #     'data/WTA_all_merged.csv',
+    #     sep='|',
+    #     lineterminator='\n')
+    # df = df_init.fillna(0)
+    # df_trail = pd.read_csv(
+    #     'data/WTA_trails_clean_w_medians.csv',
+    #     lineterminator='\n')
+    
     return df, df_trail, weather, weather_dist
 
+def get_hike_data():
+    """Get trail and report db from public s3 bucket."""
+    s3 = boto3.client('s3')
+    bucket_name = 'trailreportdata'
+    with BytesIO() as trails:
+        s3.Bucket(bucket_name).download_fileobj("WTA_trails_clean_w_medians.csv", trails)
+        trails.seek(0)
+    with BytesIO as reports:
+        s3.Bucket(bucket_name).download_fileobj("WTA_all_merged.csv", reports)
+        reports.seek(0)
+    return trails,reports
+    
 
 def get_new_neighbors(df, condition, hike, date_stamp):
     """Get index of closest 20 neighbors in df."""
@@ -90,7 +105,6 @@ def clean_for_model(hike_all_df):
 
 
 class TrailPred(object):
-    """ Prep and fit all conditon models, make predictions on new hiker input.""""
 
     def __init__(self):
         self.models = {}
@@ -100,11 +114,11 @@ class TrailPred(object):
             'condition|bugs',
             'condition|road']
         self.X_train = pd.read_csv(
-            'data/Xall.csv',
+            '../../data/Xall.csv',
             sep='|',
             lineterminator='\n')
         self.y_all = pd.read_csv(
-            'data/yall.csv',
+            '../../data/yall.csv',
             sep='|',
             lineterminator='\n')
         self.actual_cols = self.X_train.columns.tolist()
@@ -140,7 +154,7 @@ def get_pickle():
     """
     s3 = boto3.resource('s3')
     with BytesIO() as data:
-        s3.Bucket("trailreportdata").download_fileobj("tp.pkl", data)
+        s3.Bucket("trailreportdata").download_fileobj("tp_all.pkl", data)
         data.seek(0)    # move back to the beginning after writing
         tp = pickle.load(data)
     return tp
@@ -150,8 +164,15 @@ def main_dump():
     """Dump models to a pickle."""
     tp = TrailPred()
     tp.fit()
-    with open('tp_all.pkl', 'wb') as f:
-        pickle.dump(tp, f)
+    file_path = "tp_all.pkl"
+    n_bytes = 2**31
+    max_bytes = 2**31 - 1
+    data = tp
+    ## write
+    bytes_out = pickle.dumps(data)
+    with open(file_path, 'wb') as f_out:
+        for idx in range(0, n_bytes, max_bytes):
+            f_out.write(bytes_out[idx:idx+max_bytes])
 
 
 def main_pred():
