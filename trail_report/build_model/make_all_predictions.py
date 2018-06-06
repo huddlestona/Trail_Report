@@ -1,6 +1,6 @@
 """This file holds functions that get new and prep new data, then make predictions."""
-from knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
-from merge_weather import get_weather_data, get_closest_station, merge_weather_trails
+from .knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
+from .merge_weather import get_weather_data, get_closest_station, merge_weather_trails
 import pandas as pd
 import numpy as np
 import math
@@ -18,7 +18,8 @@ fs = s3fs.S3FileSystem(anon=False)
 
 def get_data(hike, date):
     """Load,prep, and clean data needed from hikers input."""
-    df, df_trail, weather, weather_dist = load_databases()
+    df_init, df_trail, weather, weather_dist = load_databases()
+    df = df_init.fillna(0)
     hike_df = df_trail.loc[df_trail['hike_name'] == hike]
     date_stamp = pd.to_datetime(date)
     conditions = [
