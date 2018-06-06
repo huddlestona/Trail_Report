@@ -2,6 +2,7 @@ from __future__ import division
 from math import sqrt
 from flask import Flask, render_template, request, jsonify
 from ..build_model.make_all_predictions import get_data, TrailPred, get_pickle
+from ..build_model.trail_names import Trails
 import pickle
 
 
@@ -12,8 +13,7 @@ tp = get_pickle()
 
 @app.route('/', methods=['GET'])
 def index():
-    trails = list(('test','hike','other trail'))
-    return render_template('index.html', trails=trails)
+    return render_template('index.html', trails=Trails)
 
 
 @app.route('/solve', methods=['POST'])
