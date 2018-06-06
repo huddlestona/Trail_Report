@@ -40,7 +40,7 @@ def get_data(hike, date):
 def load_databases():
     """Load databases of hike and weather info."""
     weather, weather_dist = get_weather_data()
-    trails,reports = get_hike_data()
+    df_trail,df = get_hike_data()
     # df_init = pd.read_csv(
     #     'data/WTA_all_merged.csv',
     #     sep='|',
@@ -188,4 +188,4 @@ def main_pred():
 
 
 if __name__ == '__main__':
-    main_dump()
+    main_pred()
