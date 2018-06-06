@@ -12,6 +12,8 @@ import boto3
 from io import BytesIO
 import os.path
 import io
+import s3fs
+fs = s3fs.S3FileSystem(anon=False)
 
 
 def get_data(hike, date):
@@ -41,7 +43,7 @@ def get_data(hike, date):
 def load_databases():
     """Load databases of hike and weather info."""
     weather, weather_dist = get_weather_data()
-    df_trail,df = get_hike_data()
+    df,df_trail = get_hike_data()
     # df_init = pd.read_csv(
     #     'data/WTA_all_merged.csv',
     #     sep='|',
@@ -55,16 +57,12 @@ def load_databases():
 
 def get_hike_data():
     """Get trail and report db from public s3 bucket."""
-    s3 = boto3.resource('s3')
-    bucket_name = 'trailreportdata'
     #get_trail
-    trail_content = s3.Object(bucket_name,"WTA_trails_clean_w_medians.csv").get()
-    trail = BytesIO(trail_content['Body'].read())
-    df_trail = pd.read_csv(trail,sep = '|',lineterminator='\n')
+    with fs.open('trailreportdata/WTA_trails_clean_w_medians.csv') as f:
+        df_trail = pd.read_csv(f,lineterminator="\n")
     #get_reports
-    reports_content = s3.Object(bucket_name,"WTA_all_merged.csv").get()
-    reports = BytesIO(reports_content['Body'].read())
-    df = pd.read_csv(reports,sep = '|',lineterminator='\n')
+    with fs.open('trailreportdata/WTA_all_merged.csv') as f:
+        df = pd.read_csv(f,sep = '|',lineterminator="\n")
     # with BytesIO() as trails:
     #     s3.Bucket(bucket_name).download_fileobj("WTA_trails_clean_w_medians.csv", trails)
     #     trails.seek(0)
