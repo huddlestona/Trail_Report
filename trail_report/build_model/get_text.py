@@ -1,235 +1,92 @@
 """This file is still in production. Will eventually be called in make_any_prediction.py"""
 from knn_model import prep_neighbors, dates_in_circle
+import pandas as pd
+from sklearn.neighbors import KNeighborsClassifier
+from sklearn.preprocessing import scale
+from sklearn.preprocessing import normalize
+import re
 
+class TrailText(object):
 
-def get_hike_reports(df, hike):
-    return df.loc[df['Trail'] == hike][[condition,
-                                        'Report', 'date_cos', 'date_sin', 'Votes']]
+    def __init__(self):
+        self.models = {}
+        self.conditions = ['condition|snow', 'condition|trail','condition|bugs','condition|road']
+        self.X_all = pd.read_csv('data/olympics_Xall.csv',sep = '|',lineterminator='\n')
+        self.y_all = pd.read_csv('data/olympics_yall.csv',sep = '|',lineterminator='\n')
+        self.actual_cols = self.X_all.columns.tolist()
 
+    def prep_train(self,condition):
+        y_train = self.y_all[condition]
+        X_train = self.X_all[['date_cos','date_sin','PRCP',f'neighbors_average {condition}']]
+        return y_train, X_train
 
-def text_neighbors_indx(df, hike):
-    """
-    Takes the df and y condition and returns a fit KNeighborsClassifier.
+    def fit(self):
+        for condition in self.conditions:
+            y_train,X_train = self.prep_train(condition)
+            self.models[condition]= text_knn(X_train,y_train)
 
-    **Input parameters**
-    ------------------------------------------------------------------------------
-    df: pandas df. Dataframe prepped by prep_for_knn
-    condition: condition to choose for y value.
-    **Output**
-    ------------------------------------------------------------------------------
-    neigh: Fit KNeighborsClassifier. Fit with highest_point,
-    distance_from_median, month of report, all to scale.
-    """
-    self.reports_df = self.df.loc[df['Trail'] == self.hike][[
-        self.condition, 'Report', 'date_cos', 'date_sin', 'Votes']]
+    def predict(self):
+        self.pred = {}
+        for condition,model in self.models.items():
+            X = self.X_all[['date_cos','date_sin','PRCP',f'neighbors_average {condition}']]
+            indxs = model.kneighbors(X)
+            self.pred[condition] = list(indxs[1][0])
+    
+    def get_all_text(self):
+        self.all_text = {}
+        for condition,indxs in self.pred.items():
+            n_text = neigh_text(df,indxs)
+            top = get_all_tops(n_text,condition)
+            self.all_text[condition] = top
+
+def text_knn(X_train,y_train):
     neigh = KNeighborsClassifier(n_neighbors=5)
-    X = self.reports_df['date_cos', 'date_sin', 'Votes']
-    y = self.reports_df[condition]
-    y = y.astype(bool)
-    X_s = scale(X)
-    neigh.fit(X_s, y)
-    x_input = self.X_test['date_cos', 'date_sin', 'Votes']
-    neighbors = neigh.kneighbors(x_input)
-    self.text_indx = list(neighbors[1][0])
+    X_s = scale(X_train)
+    neigh.fit(X_s,y_train)
+    return neigh
 
+def neigh_text(df,indxs):
+    '''works on full datatframe'''
+    n_text = {}
+    reps= {}
+    for i,idx_neighbors in enumerate(indxs):
+        neighbors = df.iloc[idx_neighbors]['Report']
+        date = df.iloc[idx_neighbors]['Date']
+        reps[date]= neighbors
+        n_text[i] = reps
+    return reps
 
-def add_hike_dummy(self):
-    hikes = [
-        "Anderson Lake State Park",
-        "Anderson Point",
-        "Appleton Pass",
-        "Aurora Creek",
-        "Baldy",
-        "Banner Forest",
-        "Barnes Creek",
-        "Big Cedar Tree - Quinault",
-        "Big Creek",
-        "Big Tree Trail",
-        "Blue Mountain - Deer Park Snowshoe",
-        "Bogachiel Peak",
-        "Bogachiel River",
-        "Boulder Lake (Olympics)",
-        "Buckhorn Mountain",
-        "Burfoot Park",
-        "Cape Alava",
-        "Cape Alava Loop (Ozette Triangle)",
-        "Cape Flattery",
-        "Capitol State Forest - Capitol Peak",
-        "Capitol State Forest - McLane Creek",
-        "Capitol State Forest - Mount Molly",
-        "Capitol State Forest - Rock Candy Mountain",
-        "Capitol State Forest - Sherman Creek Loop",
-        "Cascade Rock",
-        "Church Creek",
-        "Clear Creek Trail",
-        "Colonel Bob Trail - Colonel Bob Peak",
-        "Constance Pass",
-        "Copper Creek",
-        "Cub Peak",
-        "Deadfall",
-        "Deer Park to Maiden Peak",
-        "Deer Ridge",
-        "Dirty Face Ridge",
-        "Dodger Point",
-        "Dosewallips River Road",
-        "Dosewallips State Park - Steam Donkey Trail",
-        "Dry Creek",
-        "Duckabush River",
-        "Dungeness Spit",
-        "Eagle Point Snowshoe",
-        "Elbo Creek",
-        "Elk Lakes",
-        "Elk Mountain to Maiden Peak",
-        "Elwha River and Geyser Valley",
-        "Elwha River and Lillian River",
-        "Elwha To Hurricane Hill",
-        "Fallsview Canyon (Falls View)",
-        "Fletcher Canyon",
-        "Fort Flagler State Park",
-        "Foulweather Bluff Preserve Trail",
-        "Gibbs Lake",
-        "Gladys Divide",
-        "Glines Canyon Overlook Trail",
-        "Gold Mountain",
-        "Grand Ridge",
-        "Grand Valley",
-        "Grand Valley via Grand Pass Trail",
-        "Graves Creek",
-        "Green Mountain - Gold Creek Trail",
-        "Green Mountain - Wildcat Trail",
-        "Griff Creek",
-        "Guillemot Cove",
-        "Hall of Mosses",
-        "Hansville Greenway",
-        "Happy Lake Ridge",
-        "Harstine Island State Park",
-        "Heart O' the Forest",
-        "Heather Creek Trail via Upper Dungeness River",
-        "Heather Park",
-        "High Divide - Seven Lakes Basin Loop",
-        "Hoh River Trail to Blue Glacier",
-        "Hoh River Trail to Five Mile Island",
-        "Home Lake",
-        "Hurricane Hill",
-        "Hurricane Ridge Snowshoe",
-        "Illahee Forest Preserve",
-        "Indian Island County Park",
-        "Jefferson Ridge",
-        "Kalaloch - Browns Point",
-        "Kalaloch Creek Nature Trail",
-        "Kestner Homestead",
-        "Klahhane Ridge",
-        "Klahhane Ridge Snowshoe",
-        "Kloshe Nanitch",
-        "Kopachuck State Park Trail",
-        "Lake Angeles",
-        "Lake Constance",
-        "Lake of the Angels",
-        "Lena Lake",
-        "Lena Lake - Valley of Silent Men Snowshoe",
-        "Lightning Peak",
-        "Lillian Ridge",
-        "Lillian River",
-        "Little Quilcene River",
-        "Lower Big Quilcene River",
-        "Lower Dungeness River",
-        "Lower Gray Wolf River",
-        "Lower Pete's Creek",
-        "Lower South Fork Skokomish River",
-        "Marmot Pass - Upper Big Quilcene",
-        "Marmot Pass via Upper Dungeness River Trail",
-        "Mary E. Theler Wetlands Nature Preserve",
-        "Marymere Falls",
-        "McCormick Forest Park",
-        "Mildred Lakes",
-        "Miller Peninsula-Thompson Spit",
-        "Millersylvania State Park",
-        "Mima Mounds",
-        "Mink Lake",
-        "Mink Lake to Little Divide",
-        "Mount Angeles",
-        "Mount Angeles Snowshoe",
-        "Mount Ellinor",
-        "Mount Jupiter",
-        "Mount Muller",
-        "Mount Rose",
-        "Mount Storm King",
-        "Mount Townsend",
-        "Mount Townsend - Silver Lakes Traverse",
-        "Mount Townsend Snowshoe",
-        "Mount Walker",
-        "Mount Zion",
-        "Murhut Falls",
-        "Ned Hill",
-        "Newberry Hill Heritage Park",
-        "North Coast Route",
-        "North Fork Quinault River and Halfway House",
-        "North Fork Skokomish River",
-        "North Fork Skokomish River and Flapjack Lakes",
-        "North Fork Sol Duc River",
-        "Notch Pass",
-        "Olympic Hot Springs",
-        "PJ Lake",
-        "Peabody Creek Trail",
-        "Penrose Point State Park",
-        "Pete's Creek - Colonel Bob Peak",
-        "Priest Point Park",
-        "Pyramid Mountain / Pyramid Peak",
-        "Queets Campground Loop",
-        "Queets River",
-        "Quillayute River Slough",
-        "Quinault National Recreation Trails",
-        "Quinault River-Pony Bridge-Enchanted Valley",
-        "Rain Shadow Loop",
-        "Ranger Hole - Interrorem Nature Trail",
-        "Royal Basin - Royal Lake",
-        "Ruby Beach",
-        "Second Beach",
-        "Shi Shi Beach and Point of the Arches",
-        "Silver Lakes",
-        "Six Ridge",
-        "Slab Camp Creek and Gray Wolf River",
-        "Smokey Bottom (West Lake Mills)",
-        "Snider-Jackson Traverse",
-        "Sol Duc Falls",
-        "South Coast Wilderness Trail - Toleak Point",
-        "South Fork Hoh River - Big Flat",
-        "Spider Lake",
-        "Spoon Creek Falls",
-        "Spruce Railroad Trail",
-        "Staircase Rapids",
-        "Striped Peak",
-        "Sunnybrook Meadows",
-        "Switchback",
-        "The Brothers",
-        "Third Beach",
-        "Three Lakes",
-        "Tubal Cain Mine",
-        "Tubal Cain Mine to Buckhorn Lake",
-        "Tumwater Falls Park",
-        "Tunnel Creek",
-        "Tunnel Creek - Dosewallips Trailhead",
-        "Twanoh State Park",
-        "Upper Dungeness River",
-        "Upper Lena Lake",
-        "Upper South Fork Skokomish River",
-        "Valhalla Peak",
-        "Wagonwheel Lake",
-        "Watershed Park",
-        "Welch Peaks",
-        "West Elwha",
-        "West Fork Dosewallips River",
-        "West Fork Humptulips River",
-        "Westport State Park - Westport Light Trail",
-        "Wolf Creek",
-        "Wynoochee Lake",
-        "Wynoochee Pass to Sundown Lake"]
-    for one_hike in hikes:
-        if one_hike == self.hike:
-            self.hike_all_df[one_hike] = 1
-        else:
-            self.hike_all_df[one_hike] = 0
+def get_all_tops(all_reps,condition):
+    consequitivedots = re.compile(r'\.{3,}')
+    top_sentences = {}
+    # for i,one in enumerate(n_text):
+    for date,rep in all_reps.items():
+        no_dots = consequitivedots.sub('', rep)
+        all_simple = no_dots.replace("!",".").replace("?",".")
+        sentences = all_simple.split('.')
+        top_sentences[date]= (get_top_sentences(sentences,condition))
+    return top_sentences
 
-
-if __name__ == '__main__':
-pass
+def get_top_sentences(sentences,condition):
+    bug_keys = ['bugs','mosquito','mosquitos','bugspray','stung','nets']
+    snow_keys = ['snow','need','safe','danger','crampons','axe','ice','recommend','conditions','post-holing','slippery']
+    road_keys = ['washout','road','mud','snow','closed','potholes','4WD','low clearence']
+    trail_keys = ['bring','snow','need','bugs','mud','washout','safe','danger','crampons','axe','ice','recommend','conditions','help','lost','trail','signs']
+    
+    if condition == 'condition|snow':
+        key_words = snow_keys
+    elif condition == 'condition|trail':
+        key_words = trail_keys
+    elif condition == 'condition|bugs':
+        key_words = bug_keys
+    else:
+        key_words = road_keys
+    
+    important = []
+    for sentence in sentences:
+        for word in key_words:
+            if word in sentence:
+                important.append(sentence)
+    if len(important) < 1:
+        important.append('No relevent reports to show at this time!')
+    return set(important)
