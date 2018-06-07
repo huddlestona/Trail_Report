@@ -1,7 +1,7 @@
 from __future__ import division
 from math import sqrt
 from flask import Flask, render_template, request, jsonify
-from ..build_model.make_all_predictions import get_data, TrailPred, get_pickle
+from ..build_model.make_all_predictions import get_data, TrailPred, get_pickle,load_databases
 from ..build_model.trail_names import Trails
 import pickle
 
@@ -9,7 +9,7 @@ import pickle
 app = Flask(__name__)
 
 tp = get_pickle()
-
+df_init, df_trail, weather, weather_dist = load_databases()
 
 @app.route('/', methods=['GET'])
 def index():
@@ -28,7 +28,7 @@ def solve():
 
 
 def _get_prediction(hike, date):
-    X_test = get_data(hike, date)
+    X_test = get_data(hike, date, df_init, df_trail, weather, weather_dist)
     pred = tp.predict(X_test)
     return ("{0:.0f}%".format(float(pred['condition|snow'][:, 1][0]) * 100),
             "{0:.0f}%".format(float(pred['condition|trail'][:, 1][0]) * 100),

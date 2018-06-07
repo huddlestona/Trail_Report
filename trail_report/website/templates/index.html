@@ -36,6 +36,17 @@
   <script src="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/js/gijgo.min.js" type="text/javascript"></script>
   <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
+    <!-- Dropdown search button s3 b4 test  -->
+  <link rel="stylesheet" href="/path/to/select2.css">
+<link rel="stylesheet" href="/path/to/select2-bootstrap4.css">
+  
+  <!-- Dropdown search button s3  -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+  <!-- Dropdown search button s3 bootsrap  -->
+  <!-- <link rel="stylesheet" href="select2.css">
+  <link rel="stylesheet" href="select2-bootstrap4.css"> -->
+
   <!-- Search Button style  -->
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
@@ -159,201 +170,20 @@
         <div class="col-md-12">
           <!-- hike search button -->
           <div class="form-group">
-            <select id="hike">
+            <select id="hike" class="hike_search">
               {% for trail in trails %}
               <option value="{{trail}}">{{trail}}</option>
               {% endfor %}
-      <!-- <option value='Anderson Lake State Park'>Anderson Lake State Park</option>
-      <option value='Anderson Point'>Anderson Point</option>
-      <option value='Appleton Pass'>Appleton Pass</option>
-      <option value='Aurora Creek'>Aurora Creek</option>
-      <option value='Baldy'>Baldy</option>
-      <option value='Banner Forest'>Banner Forest</option>
-      <option value='Barnes Creek'>Barnes Creek</option>
-      <option value='Big Cedar Tree - Quinault'>Big Cedar Tree - Quinault</option>
-      <option value='Big Creek'>Big Creek</option>
-      <option value='Big Tree Trail'>Big Tree Trail</option>
-      <option value='Blue Mountain - Deer Park Snowshoe'>Blue Mountain - Deer Park Snowshoe</option>
-      <option value='Bogachiel Peak'>Bogachiel Peak</option>
-      <option value='Bogachiel River'>Bogachiel River</option>
-      <option value='Boulder Lake (Olympics)'>Boulder Lake (Olympics)</option>
-      <option value='Buckhorn Mountain'>Buckhorn Mountain</option>
-      <option value='Burfoot Park'>Burfoot Park</option>
-      <option value='Cape Alava'>Cape Alava</option>
-      <option value='Cape Alava Loop (Ozette Triangle)'>Cape Alava Loop (Ozette Triangle)</option>
-      <option value='Cape Flattery'>Cape Flattery</option>
-      <option value='Capitol State Forest - Capitol Peak'>Capitol State Forest - Capitol Peak</option>
-      <option value='Capitol State Forest - McLane Creek'>Capitol State Forest - McLane Creek</option>
-      <option value='Capitol State Forest - Mount Molly'>Capitol State Forest - Mount Molly</option>
-      <option value='Capitol State Forest - Rock Candy Mountain'>Capitol State Forest - Rock Candy Mountain</option>
-      <option value='Capitol State Forest - Sherman Creek Loop'>Capitol State Forest - Sherman Creek Loop</option>
-      <option value='Cascade Rock'>Cascade Rock</option>
-      <option value='Church Creek'>Church Creek</option>
-      <option value='Clear Creek Trail'>Clear Creek Trail</option>
-      <option value='Colonel Bob Trail - Colonel Bob Peak'>Colonel Bob Trail - Colonel Bob Peak</option>
-      <option value='Constance Pass'>Constance Pass</option>
-      <option value='Copper Creek'>Copper Creek</option>
-      <option value='Cub Peak'>Cub Peak</option>
-      <option value='Deadfall'>Deadfall</option>
-      <option value='Deer Park to Maiden Peak'>Deer Park to Maiden Peak</option>
-      <option value='Deer Ridge'>Deer Ridge</option>
-      <option value='Dirty Face Ridge'>Dirty Face Ridge</option>
-      <option value='Dodger Point'>Dodger Point</option>
-      <option value='Dosewallips River Road'>Dosewallips River Road</option>
-      <option value='Dosewallips State Park - Steam Donkey Trail'>Dosewallips State Park - Steam Donkey Trail</option>
-      <option value='Dry Creek'>Dry Creek</option>
-      <option value='Duckabush River'>Duckabush River</option>
-      <option value='Dungeness Spit'>Dungeness Spit</option>
-      <option value='Eagle Point Snowshoe'>Eagle Point Snowshoe</option>
-      <option value='Elbo Creek'>Elbo Creek</option>
-      <option value='Elk Lakes'>Elk Lakes</option>
-      <option value='Elk Mountain to Maiden Peak'>Elk Mountain to Maiden Peak</option>
-      <option value='Elwha River and Geyser Valley'>Elwha River and Geyser Valley</option>
-      <option value='Elwha River and Lillian River'>Elwha River and Lillian River</option>
-      <option value='Elwha To Hurricane Hill'>Elwha To Hurricane Hill</option>
-      <option value='Fallsview Canyon (Falls View)'>Fallsview Canyon (Falls View)</option>
-      <option value='Fletcher Canyon'>Fletcher Canyon</option>
-      <option value='Fort Flagler State Park'>Fort Flagler State Park</option>
-      <option value='Foulweather Bluff Preserve Trail'>Foulweather Bluff Preserve Trail</option>
-      <option value='Gibbs Lake'>Gibbs Lake</option>
-      <option value='Gladys Divide'>Gladys Divide</option>
-      <option value='Glines Canyon Overlook Trail'>Glines Canyon Overlook Trail</option>
-      <option value='Gold Mountain'>Gold Mountain</option>
-      <option value='Grand Ridge'>Grand Ridge</option>
-      <option value='Grand Valley'>Grand Valley</option>
-      <option value='Grand Valley via Grand Pass Trail'>Grand Valley via Grand Pass Trail</option>
-      <option value='Graves Creek'>Graves Creek</option>
-      <option value='Green Mountain - Gold Creek Trail'>Green Mountain - Gold Creek Trail</option>
-      <option value='Green Mountain - Wildcat Trail'>Green Mountain - Wildcat Trail</option>
-      <option value='Griff Creek'>Griff Creek</option>
-      <option value='Guillemot Cove'>Guillemot Cove</option>
-      <option value='Hall of Mosses'>Hall of Mosses</option>
-      <option value='Hansville Greenway'>Hansville Greenway</option>
-      <option value='Happy Lake Ridge'>Happy Lake Ridge</option>
-      <option value='Harstine Island State Park'>Harstine Island State Park</option>
-      <option value='Heart O' the Forest'>Heart O' the Forest</option>
-      <option value='Heather Creek Trail via Upper Dungeness River'>Heather Creek Trail via Upper Dungeness River</option>
-      <option value='Heather Park'>Heather Park</option>
-      <option value='High Divide - Seven Lakes Basin Loop'>High Divide - Seven Lakes Basin Loop</option>
-      <option value='Hoh River Trail to Blue Glacier'>Hoh River Trail to Blue Glacier</option>
-      <option value='Hoh River Trail to Five Mile Island'>Hoh River Trail to Five Mile Island</option>
-      <option value='Home Lake'>Home Lake</option>
-      <option value='Hurricane Hill'>Hurricane Hill</option>
-      <option value='Hurricane Ridge Snowshoe'>Hurricane Ridge Snowshoe</option>
-      <option value='Illahee Forest Preserve'>Illahee Forest Preserve</option>
-      <option value='Indian Island County Park'>Indian Island County Park</option>
-      <option value='Jefferson Ridge'>Jefferson Ridge</option>
-      <option value='Kalaloch - Browns Point'>Kalaloch - Browns Point</option>
-      <option value='Kalaloch Creek Nature Trail'>Kalaloch Creek Nature Trail</option>
-      <option value='Kestner Homestead'>Kestner Homestead</option>
-      <option value='Klahhane Ridge'>Klahhane Ridge</option>
-      <option value='Klahhane Ridge Snowshoe'>Klahhane Ridge Snowshoe</option>
-      <option value='Kloshe Nanitch'>Kloshe Nanitch</option>
-      <option value='Kopachuck State Park Trail'>Kopachuck State Park Trail</option>
-      <option value='Lake Angeles'>Lake Angeles</option>
-      <option value='Lake Constance'>Lake Constance</option>
-      <option value='Lake of the Angels'>Lake of the Angels</option>
-      <option value='Lena Lake'>Lena Lake</option>
-      <option value='Lena Lake - Valley of Silent Men Snowshoe'>Lena Lake - Valley of Silent Men Snowshoe</option>
-      <option value='Lightning Peak'>Lightning Peak</option>
-      <option value='Lillian Ridge'>Lillian Ridge</option>
-      <option value='Lillian River'>Lillian River</option>
-      <option value='Little Quilcene River'>Little Quilcene River</option>
-      <option value='Lower Big Quilcene River'>Lower Big Quilcene River</option>
-      <option value='Lower Dungeness River'>Lower Dungeness River</option>
-      <option value='Lower Gray Wolf River'>Lower Gray Wolf River</option>
-      <option value='Lower Pete's Creek'>Lower Pete's Creek</option>
-      <option value='Lower South Fork Skokomish River'>Lower South Fork Skokomish River</option>
-      <option value='Marmot Pass - Upper Big Quilcene'>Marmot Pass - Upper Big Quilcene</option>
-      <option value='Marmot Pass via Upper Dungeness River Trail'>Marmot Pass via Upper Dungeness River Trail</option>
-      <option value='Mary E. Theler Wetlands Nature Preserve'>Mary E. Theler Wetlands Nature Preserve</option>
-      <option value='Marymere Falls'>Marymere Falls</option>
-      <option value='McCormick Forest Park'>McCormick Forest Park</option>
-      <option value='Mildred Lakes'>Mildred Lakes</option>
-      <option value='Miller Peninsula-Thompson Spit'>Miller Peninsula-Thompson Spit</option>
-      <option value='Millersylvania State Park'>Millersylvania State Park</option>
-      <option value='Mima Mounds'>Mima Mounds</option>
-      <option value='Mink Lake'>Mink Lake</option>
-      <option value='Mink Lake to Little Divide'>Mink Lake to Little Divide</option>
-      <option value='Mount Angeles'>Mount Angeles</option>
-      <option value='Mount Angeles Snowshoe'>Mount Angeles Snowshoe</option>
-      <option value='Mount Ellinor'>Mount Ellinor</option>
-      <option value='Mount Jupiter'>Mount Jupiter</option>
-      <option value='Mount Muller'>Mount Muller</option>
-      <option value='Mount Rose'>Mount Rose</option>
-      <option value='Mount Storm King'>Mount Storm King</option>
-      <option value='Mount Townsend'>Mount Townsend</option>
-      <option value='Mount Townsend - Silver Lakes Traverse'>Mount Townsend - Silver Lakes Traverse</option>
-      <option value='Mount Townsend Snowshoe'>Mount Townsend Snowshoe</option>
-      <option value='Mount Walker'>Mount Walker</option>
-      <option value='Mount Zion'>Mount Zion</option>
-      <option value='Murhut Falls'>Murhut Falls</option>
-      <option value='Ned Hill'>Ned Hill</option>
-      <option value='Newberry Hill Heritage Park'>Newberry Hill Heritage Park</option>
-      <option value='North Coast Route'>North Coast Route</option>
-      <option value='North Fork Quinault River and Halfway House'>North Fork Quinault River and Halfway House</option>
-      <option value='North Fork Skokomish River'>North Fork Skokomish River</option>
-      <option value='North Fork Skokomish River and Flapjack Lakes'>North Fork Skokomish River and Flapjack Lakes</option>
-      <option value='North Fork Sol Duc River'>North Fork Sol Duc River</option>
-      <option value='Notch Pass'>Notch Pass</option>
-      <option value='Olympic Hot Springs'>Olympic Hot Springs</option>
-      <option value='PJ Lake'>PJ Lake</option>
-      <option value='Peabody Creek Trail'>Peabody Creek Trail</option>
-      <option value='Penrose Point State Park'>Penrose Point State Park</option>
-      <option value='Pete's Creek - Colonel Bob Peak'>Pete's Creek - Colonel Bob Peak</option>
-      <option value='Priest Point Park'>Priest Point Park</option>
-      <option value='Pyramid Mountain / Pyramid Peak'>Pyramid Mountain / Pyramid Peak</option>
-      <option value='Queets Campground Loop'>Queets Campground Loop</option>
-      <option value='Queets River'>Queets River</option>
-      <option value='Quillayute River Slough'>Quillayute River Slough</option>
-      <option value='Quinault National Recreation Trails'>Quinault National Recreation Trails</option>
-      <option value='Quinault River-Pony Bridge-Enchanted Valley'>Quinault River-Pony Bridge-Enchanted Valley</option>
-      <option value='Rain Shadow Loop'>Rain Shadow Loop</option>
-      <option value='Ranger Hole - Interrorem Nature Trail'>Ranger Hole - Interrorem Nature Trail</option>
-      <option value='Royal Basin - Royal Lake'>Royal Basin - Royal Lake</option>
-      <option value='Ruby Beach'>Ruby Beach</option>
-      <option value='Second Beach'>Second Beach</option>
-      <option value='Shi Shi Beach and Point of the Arches'>Shi Shi Beach and Point of the Arches</option>
-      <option value='Silver Lakes'>Silver Lakes</option>
-      <option value='Six Ridge'>Six Ridge</option>
-      <option value='Slab Camp Creek and Gray Wolf River'>Slab Camp Creek and Gray Wolf River</option>
-      <option value='Smokey Bottom (West Lake Mills)'>Smokey Bottom (West Lake Mills)</option>
-      <option value='Snider-Jackson Traverse'>Snider-Jackson Traverse</option>
-      <option value='Sol Duc Falls'>Sol Duc Falls</option>
-      <option value='South Coast Wilderness Trail - Toleak Point'>South Coast Wilderness Trail - Toleak Point</option>
-      <option value='South Fork Hoh River - Big Flat'>South Fork Hoh River - Big Flat</option>
-      <option value='Spider Lake'>Spider Lake</option>
-      <option value='Spoon Creek Falls'>Spoon Creek Falls</option>
-      <option value='Spruce Railroad Trail'>Spruce Railroad Trail</option>
-      <option value='Staircase Rapids'>Staircase Rapids</option>
-      <option value='Striped Peak'>Striped Peak</option>
-      <option value='Sunnybrook Meadows'>Sunnybrook Meadows</option>
-      <option value='Switchback'>Switchback</option>
-      <option value='The Brothers'>The Brothers</option>
-      <option value='Third Beach'>Third Beach</option>
-      <option value='Three Lakes'>Three Lakes</option>
-      <option value='Tubal Cain Mine'>Tubal Cain Mine</option>
-      <option value='Tubal Cain Mine to Buckhorn Lake'>Tubal Cain Mine to Buckhorn Lake</option>
-      <option value='Tumwater Falls Park'>Tumwater Falls Park</option>
-      <option value='Tunnel Creek'>Tunnel Creek</option>
-      <option value='Tunnel Creek - Dosewallips Trailhead'>Tunnel Creek - Dosewallips Trailhead</option>
-      <option value='Twanoh State Park'>Twanoh State Park</option>
-      <option value='Upper Dungeness River'>Upper Dungeness River</option>
-      <option value='Upper Lena Lake'>Upper Lena Lake</option>
-      <option value='Upper South Fork Skokomish River'>Upper South Fork Skokomish River</option>
-      <option value='Valhalla Peak'>Valhalla Peak</option>
-      <option value='Wagonwheel Lake'>Wagonwheel Lake</option>
-      <option value='Watershed Park'>Watershed Park</option>
-      <option value='Welch Peaks'>Welch Peaks</option>
-      <option value='West Elwha'>West Elwha</option>
-      <option value='West Fork Dosewallips River'>West Fork Dosewallips River</option>
-      <option value='West Fork Humptulips River'>West Fork Humptulips River</option>
-      <option value='Westport State Park - Westport Light Trail'>Westport State Park - Westport Light Trail</option>
-      <option value='Wolf Creek'>Wolf Creek</option>
-      <option value='Wynoochee Lake'>Wynoochee Lake</option>
-      <option value='Wynoochee Pass to Sundown Lake'>Wynoochee Pass to Sundown Lake</option> -->
       </select>
           </div>
+          <!-- test -->
+          <!-- <select class="js-example-basic-single" name="state">
+              <option value="AL">Alabama</option>
+                ...
+              <option value="WY">Wyoming</option>
+            </select> -->
+
+
         </div>
       </div>
       <div class="row">
@@ -387,7 +217,7 @@
 
             <script type="text/javascript">
               let get_input_coefficients = function() {
-                let hike_input = $("select#hike")
+                let hike_input = $("select#hike 'hike_search'")
                 let hike_date_input = $("input#datepicker")
                 let hike = hike_input.val()
                 let hike_date = hike_date_input.val()
@@ -437,8 +267,14 @@
                 $("#results").click(function() {
                   let coefficients = get_input_coefficients();
                   send_coefficient_json(coefficients);
-                })
-              })
+                });
+                $('hike_search').select2({
+                theme: "bootstrap4"
+                });
+                $('.js-example-basic-single').select2({
+                                                      theme: 'bootstrap4',
+                                                      })
+                });
             </script>
           </div>
 
@@ -757,8 +593,9 @@
                   </a>
               </li>
               <li class="list-inline-item">
-                  <a href="https://docs.google.com/viewer?url=https://docs.google.com/document/d/19Nc_fakDkpFVVOvkbJP8ovBp60pN2O1oRI4mFj8MbD0//export?format=pdf" class="btn btn-lg" target="_blank">
-                    <i class="fa file-text"></i>
+                  <a href="https://docs.google.com/viewer?url=https://docs.google.com/document/d/13KLnu9hcpi88vLsMf0pKR9f7zTyAF7zpmvRAi0CWleA/export?format=pdf">
+                    <i class="fa fa-file-text"></i>
+                    <i class="fa fa-sub fa-user"></i>
                   </a>
                 </li>
             </ul>

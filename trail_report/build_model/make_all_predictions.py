@@ -16,9 +16,8 @@ import s3fs
 fs = s3fs.S3FileSystem(anon=False)
 
 
-def get_data(hike, date):
+def get_data(hike, date, df_init, df_trail, weather, weather_dist):
     """Load,prep, and clean data needed from hikers input."""
-    df_init, df_trail, weather, weather_dist = load_databases()
     df = df_init.fillna(0)
     hike_df = df_trail.loc[df_trail['hike_name'] == hike]
     date_stamp = pd.to_datetime(date)
@@ -44,7 +43,7 @@ def get_data(hike, date):
 def load_databases():
     """Load databases of hike and weather info."""
     weather, weather_dist = get_weather_data()
-    df,df_trail = get_hike_data()
+    df_init,df_trail = get_hike_data()
     # df_init = pd.read_csv(
     #     'data/WTA_all_merged.csv',
     #     sep='|',
@@ -54,7 +53,7 @@ def load_databases():
     #     'data/WTA_trails_clean_w_medians.csv',
     #     lineterminator='\n')
     
-    return df, df_trail, weather, weather_dist
+    return df_init, df_trail, weather, weather_dist
 
 def get_hike_data():
     """Get trail and report db from public s3 bucket."""
