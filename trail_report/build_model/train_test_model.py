@@ -1,6 +1,6 @@
 """ The file, when called in the terminal, will return the AUC for the model with the current data."""
-from knn_model import prep_for_knn, make_forest, make_logistic
-from Cleaning.Merge_Weather import get_weather_data, merge_weather_trails, get_closest_station
+from knn_model import prep_for_knn, make_forest, make_logistic, prep_neighbors, get_neighbors
+from merge_weather import get_weather_data, merge_weather_trails, get_closest_station
 import pandas as pd
 import numpy as np
 from sklearn.model_selection import train_test_split
@@ -42,10 +42,10 @@ def get_knn_inputs(test, train, condition):
     return train_X, train_y, test_X, test_y
 
 
-def merge_weather(test, train):
+def merge_weather(test, train,condition):
     """Get weather, get's new columns, and merges weather in."""
     df_weather, df_weather_dist = get_weather_data()
-    add_cols(test, train, df_weather_dist)
+    add_cols(test, train, df_weather_dist,condition)
     df_test = merge_weather_trails(df_weather, test)
     df_train = merge_weather_trails(df_weather, train)
     return df_test, df_train
@@ -62,14 +62,20 @@ def get_auc(pred, test_y):
 
 if __name__ == '__main__':
     df = pd.read_csv(
-        '../data/new_olympics_merged.csv',
+        '../../data/WTA_all_merged.csv',
         sep='|',
         lineterminator='\n')
     df_clean = prep_for_knn(df)
     test, train = train_test_split(df_clean, 2016)
-    df_test, df_train = merge_weather(test, train)
+    conditions = [
+    'condition|snow',
+    'condition|trail',
+    'condition|bugs',
+    'condition|road']
+    for condition in conditions:
+        df_test, df_train = merge_weather(test, train,condition)
     # merge and save full df
-    train_X, train_y, test_X, test_y = get_knn_inputs(df_test, df_train)
-    model, pred = make_forest(train_X, train_y, test_X)
-    AUC = get_auc(pred, test_y)
-    print(f'Current Model AUC is {AUC}')
+        train_X, train_y, test_X, test_y = get_knn_inputs(df_test, df_train)
+        model, pred = make_forest(train_X, train_y, test_X)
+        AUC = get_auc(pred, test_y)
+        print(f'Current Model AUC is {AUC}')

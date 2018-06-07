@@ -1,6 +1,6 @@
 """This file holds functions that get new and prep new data, then make predictions."""
-from .knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
-from .merge_weather import get_weather_data, get_closest_station, merge_weather_trails
+from knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
+from merge_weather import get_weather_data, get_closest_station, merge_weather_trails
 import pandas as pd
 import numpy as np
 import math
@@ -175,7 +175,7 @@ def main_dump():
     """Dump models to a pickle."""
     tp = TrailPred()
     tp.fit()
-    file_path = "tp_all.pkl"
+    file_path = "tp_sm.pkl"
     n_bytes = 2**31
     max_bytes = 2**31 - 1
     data = tp
@@ -199,4 +199,4 @@ def main_pred():
 
 
 if __name__ == '__main__':
-    main_pred()
+    main_dump()
