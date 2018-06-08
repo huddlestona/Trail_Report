@@ -1,5 +1,5 @@
 """This file is still in production. Will eventually be called in make_any_prediction.py"""
-from knn_model import prep_neighbors, dates_in_circle
+from trail_report.build_model.knn_model import prep_neighbors, dates_in_circle
 import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import scale
@@ -30,14 +30,17 @@ class TrailText(object):
         for condition,model in self.models.items():
             X = self.X_all[['date_cos','date_sin','PRCP',f'neighbors_average {condition}']]
             indxs = model.kneighbors(X)
-            self.pred[condition] = list(indxs[1][0])
+            self.pred[condition] = list(indxs[1])
     
     def get_all_text(self):
         self.all_text = {}
         for condition,indxs in self.pred.items():
-            n_text = neigh_text(df,indxs)
-            top = get_all_tops(n_text,condition)
-            self.all_text[condition] = top
+            condition_text = []
+            for one_rep in indxs:
+                n_text = neigh_text(df,one_rep)
+                top = get_all_tops(n_text,condition)
+                condition_text.append(top)
+            self.all_text[condition] = condition_text
 
 def text_knn(X_train,y_train):
     neigh = KNeighborsClassifier(n_neighbors=5)
@@ -59,7 +62,6 @@ def neigh_text(df,indxs):
 def get_all_tops(all_reps,condition):
     consequitivedots = re.compile(r'\.{3,}')
     top_sentences = {}
-    # for i,one in enumerate(n_text):
     for date,rep in all_reps.items():
         no_dots = consequitivedots.sub('', rep)
         all_simple = no_dots.replace("!",".").replace("?",".")
@@ -90,3 +92,10 @@ def get_top_sentences(sentences,condition):
     if len(important) < 1:
         important.append('No relevent reports to show at this time!')
     return set(important)
+
+if __name__ == '__main__':
+    tt = TrailText()
+    tt.fit()
+    tt.predict()
+    tt.get_all_text()
+    print (tt.all_text)

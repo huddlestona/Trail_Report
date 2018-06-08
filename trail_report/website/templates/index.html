@@ -115,6 +115,12 @@
       padding: 10px;
     }
 
+    /* .container{
+    overflow:hidden;
+    } */
+
+    .top-buffer { margin-top:20px; }
+
     #hike {
       width: 300px;
     }
@@ -292,11 +298,11 @@
         </div>
       </div>
       <link rel="stylesheet" href="/static/css/circle.css">
-      <div class="row h-100 justify-content-center align-items-center">
-        <div class="col-6 text-center">
+      <div class="row h-100 justify-content-center">
+        <div class="col-6 text-center align-middle">
           <div class="clearfix float-right">
 
-            <div class="c100  dark green  justify-content-center align-items-center text-center" id="snowp">
+            <div class="c100  dark green" id="snowp">
               <span id="snowprob">%</span>
               <div class="slice">
                 <div class="bar"></div>
@@ -305,13 +311,21 @@
             </div>
           </div>
         </div>
+        <div class="col">
+            <h4 class="service-heading text-left">Significant Snow</h4>
+            <p class="text-muted"><span id="snowsolution"></span></p>
+          </div>
+          </div>
+          <div class="row h-100 justify-content-center top-buffer">
+          <div class="col">
+              <h4 class="section-subheading text-muted text-center">Here's some relivant reports</h4>
+              <p class="text-muted"><span id="snowtext"></span></p>
+            </div>
+        </div>
+        <div class="row h-100 justify-content-center">
         <div class="col-6">
-          <!-- /green -->
 
-          <!-- <i class="fa fa-circle fa-stack-2x text-primary"></i>
-              <i class="fa fa-laptop fa-stack-1x fa-inverse"></i> -->
-          <!-- green -->
-          <div class="clearfix">
+          <div class="clearfix float-right">
 
             <div class="c100  dark green" id="roadp">
               <span id="roadprob">%</span>
@@ -323,27 +337,26 @@
 
           </div>
         </div>
-        <!-- /green -->
-      </div>
-      <div class="row h-100 justify-content-center align-items-center">
-        <div class="col">
-          <h4 class="service-heading text-right">Significant Snow</h4>
-          <p class="text-muted"><span id="snowsolution"></span></p>
-        </div>
         <div class="col">
           <h4 class="service-heading text-left">Poor Road Conditions</h4>
           <p class="text-muted"></p>
         </div>
+        </div>
+        <div class="row h-100 justify-content-center top-buffer">
+        <div class="col">
+            <h4 class="section-subheading text-muted text-center">Here's some relivant reports</h4>
+            <p class="text-muted"><span id="snowtext"></span></p>
+          </div>
       </div>
       <!-- <span class="fa-stack fa-4x"> -->
       <!-- <i class="fa fa-circle fa-stack-2x text-primary"></i>
               <i class="fa fa-lock fa-stack-1x fa-inverse"></i> -->
       <!-- green -->
-      <div class="row h-100 justify-content-center align-items-center">
+      <div class="row h-100 justify-content-center">
         <div class="col">
           <div class="clearfix float-right">
 
-            <div class="c100  dark green justify-content-center" id="bugsp">
+            <div class="c100  dark green" id="bugsp">
               <span id="bugsprob">%</span>
               <div class="slice">
                 <div class="bar"></div>
@@ -354,7 +367,19 @@
           </div>
         </div>
         <div class="col">
-          <div class="clearfix">
+            <h4 class="service-heading text-left">Lots Of Bugs/Mosquitos</h4>
+            <p class="text-muted"></p>
+          </div>
+      </div>
+      <div class="row h-100 justify-content-center top-buffer">
+          <div class="col">
+              <h4 class="section-subheading text-muted text-center">Here's some relivant reports</h4>
+              <p class="text-muted"><span id="snowtext"></span></p>
+            </div>
+      </div>
+      <div class="row h-100 justify-content-center">
+        <div class="col">
+          <div class="clearfix float-right">
 
             <div class="c100  dark green" id="trailp">
               <span id="trailprob">%</span>
@@ -365,15 +390,16 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="row h-100 justify-content-center align-items-center">
         <div class="col">
-          <h4 class="service-heading text-right">Lots Of Bugs/Mosquitos</h4>
-          <p class="text-muted"></p>
+            <h4 class="service-heading text-left">Notable Trail Problems</h4>
+            <p class="text-muted"><span id="snowsolution"></span></p>
+          </div>
         </div>
-        <div class="col">
-          <h4 class="service-heading text-left">Notable Trail Problems</h4>
-          <p class="text-muted"><span id="snowsolution"></span></p>
+        <div class="row h-100 justify-content-center top-buffer">
+            <div class="col">
+                <h4 class="section-subheading text-muted text-center">Here's some relivant reports</h4>
+                <p class="text-muted"><span id="snowtext"></span></p>
+              </div>
         </div>
       </div>
     </div>

@@ -1,7 +1,7 @@
 """This file holds functions that get new and prep new data, then make predictions."""
-from knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
-from merge_weather import get_weather_data, get_closest_station, merge_weather_trails
-from get_text import *
+from trail_report.build_model.knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
+from trail_report.build_model.merge_weather import get_weather_data, get_closest_station, merge_weather_trails
+from trail_report.build_model.get_text import *
 import pandas as pd
 import numpy as np
 import math
@@ -129,11 +129,11 @@ class TrailPred(object):
             'condition|bugs',
             'condition|road']
         self.X_train = pd.read_csv(
-            '../../data/Xall.csv',
+            'data/Xall.csv',
             sep='|',
             lineterminator='\n')
         self.y_all = pd.read_csv(
-            '../../data/yall.csv',
+            'data/yall.csv',
             sep='|',
             lineterminator='\n')
         self.actual_cols = self.X_train.columns.tolist()
@@ -223,7 +223,7 @@ def main_pred():
     # with open('tp.pkl','rb') as f:
     #     tp = pickle.load(f)
     tp = get_pickle()
-    pred = tp.predict(X_test)
+    pred = tp.predict_all_text(Text_X_test)
     print(pred)
 
 

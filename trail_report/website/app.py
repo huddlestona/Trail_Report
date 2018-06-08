@@ -8,8 +8,8 @@ import pickle
 
 app = Flask(__name__)
 
-tp = get_pickle()
-df_init, df_trail, weather, weather_dist = load_databases()
+# tp = get_pickle()
+# df_init, df_trail, weather, weather_dist = load_databases()
 
 @app.route('/', methods=['GET'])
 def index():
