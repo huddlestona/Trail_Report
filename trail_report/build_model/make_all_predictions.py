@@ -1,6 +1,7 @@
 """This file holds functions that get new and prep new data, then make predictions."""
 from knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
 from merge_weather import get_weather_data, get_closest_station, merge_weather_trails
+from get_text import *
 import pandas as pd
 import numpy as np
 import math
@@ -37,7 +38,9 @@ def get_data(hike, date, df_init, df_trail, weather, weather_dist):
     get_closest_station(hike_df, weather_dist)
     hike_all_df = merge_weather_trails(weather, hike_df)
     X_test = clean_for_model(hike_all_df)
-    return X_test
+    Text_X_test_all = hike_all_df[['date_cos','date_sin','PRCP',f'neighbors_average {condition}']]
+    Text_X_test = Text_X_test_all.fillna(0)
+    return X_test, Text_X_test
 
 
 def load_databases():
@@ -109,7 +112,7 @@ def clean_for_model(hike_all_df):
                                  'month',
                                  'year',
                                  'date',
-                                 'Unnamed: 0'],
+                                 'Unnamed: 0','DX90', 'FZF4', 'FZF3', ' Snoqualmie Pass', 'Waterfalls', 'FZF1', 'FZF8', 'FZF6', 'None', 'Sno-Parks Permit', 'Dogs not allowed', 'FZF0', 'FZF5', 'National Park Pass', 'Discover Pass', 'NaN', ' North Bend Area', ' Salmon La Sac/Teanaway', 'Coast', ' Chinook Pass - Hwy 410', ' SW - Longmire/Paradise', ' Mountain Loop Highway', ' Hood Canal', ' NE - Sunrise/White River', ' Mount Baker Area', ' Stevens Pass - West', ' Stevens Pass - East', ' North Cascades Highway - Hwy 20', " SE - Cayuse Pass/Steven's Canyon", ' Mount Adams Area', ' Leavenworth Area', ' Mount St. Helens', ' Northern Coast', ' White Pass/Cowlitz River Valley', 'WSF5', 'WDF5', 'WDF2', ' Goat Rocks', 'WSF2', 'AWND', ' Yakima', ' Seattle-Tacoma Area', ' Columbia River Gorge - WA', ' Blewett Pass', ' Pacific Coast', ' Methow/Sawtooth', ' Olympia', ' Lewis River Region', ' Tiger Mountain', ' Bellingham Area', ' Entiat Mountains/Lake Chelan', ' Pasayten', " Spokane Area/Coeur d'Alene", ' Dark Divide', ' Columbia River Gorge - OR', 'Wilderness permit. Self-issue at trailhead (no fee)', ' Wenatchee', 'National Monument Fee', 'Discover Pass, Sno-Parks Permit', ' Okanogan Highlands/Kettle River Range', 'National Monument Fee, Sno-Parks Permit', ' Palouse and Blue Mountains', ' Selkirk Range', ' Cougar Mountain', ' Squak Mountain', ' Tri-Cities', ' Kitsap Peninsula', ' Grand Coulee', 'None, Northwest Forest Pass', 'Refuge Entrance Pass', ' Potholes Region', ' Cle Elum Area', ' Whidbey Island', ' San Juan Islands', ' Long Beach Area', ' Vancouver Area', 'Oregon State Parks Day-Use', ' Orcas Island', 'Fall foilage', 'Backcountry camping permit. Register in person at ranger station (no fee)', 'Northwest Forest Pass, Sno-Parks Permit', 'PSUN', 'WDMV'],
                                 axis=1)
     df_full = df_clean.fillna(0)
     return df_full
@@ -118,7 +121,8 @@ def clean_for_model(hike_all_df):
 class TrailPred(object):
 
     def __init__(self):
-        self.models = {}
+        self.pred_models = {}
+        self.text_models = {}
         self.conditions = [
             'condition|snow',
             'condition|trail',
@@ -137,20 +141,38 @@ class TrailPred(object):
     def prep_train(self, condition):
         """Make y_train for single condition."""
         y_train = self.y_all[condition]
-        return y_train
+        Text_X_train = self.X_train[['date_cos','date_sin','PRCP',f'neighbors_average {condition}']]
+        return y_train, Text_X_train
 
     def fit(self):
         """ Fit model for each condition."""
         for condition in self.conditions:
-            y_train = self.prep_train(condition)
-            self.models[condition] = make_forest(self.X_train, y_train)
+            y_train, Text_X_train = self.prep_train(condition)
+            self.pred_models[condition] = make_forest(self.X_train, y_train)
+            self.text_models[condition]= text_knn(Text_X_train,y_train)
 
     def predict(self, X_test):
         """ Make prediction for each condition."""
         pred = {}
-        for condition, model in self.models.items():
+        for condition, model in self.pred_models.items():
             pred[condition] = model.predict_proba(X_test[self.actual_cols])
         return pred
+
+    def predict_text(self, Text_X_test):
+        self.text_pred = {}
+        for condition,model in self.text_models.items():
+            indxs = model.kneighbors(Text_X_test)
+            self.text_pred[condition] = list(indxs[1])
+
+    def get_all_text(self,df):
+        self.all_text = {}
+        for condition,indxs in self.text_pred.items():
+            condition_text = []
+            for one_rep in indxs:
+                n_text = neigh_text(df,one_rep)
+                top = get_all_tops(n_text,condition)
+                condition_text.append(top)
+            self.all_text[condition] = condition_text
 
 
 def get_pickle():
@@ -173,8 +195,15 @@ def get_pickle():
 
 def main_dump():
     """Dump models to a pickle."""
+    hike = 'Mount Rose'
+    date = '05/22/18'
+    df_init, df_trail, weather, weather_dist = load_databases()
+    X_test, Text_X_test = get_data(hike, date,df_init, df_trail, weather, weather_dist)
     tp = TrailPred()
     tp.fit()
+    # tp.predict_text(Text_X_test)
+    # tp.get_all_text(df_init)
+    # print(tp.all_text)
     file_path = "tp_sm.pkl"
     n_bytes = 2**31
     max_bytes = 2**31 - 1
@@ -190,7 +219,7 @@ def main_pred():
     """Get pickle and make prediction."""
     hike = 'Mount Rose'
     date = '05/22/18'
-    X_test = get_data(hike, date)
+    X_test, Text_X_test = get_data(hike, date,df_init, df_trail, weather, weather_dist)
     # with open('tp.pkl','rb') as f:
     #     tp = pickle.load(f)
     tp = get_pickle()

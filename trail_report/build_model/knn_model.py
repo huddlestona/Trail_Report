@@ -83,7 +83,7 @@ def get_neighbors(neigh, df, condition):
 
 def make_forest(X_train, y_train):
     """Fit RandomForestClassifier on prepped data."""
-    model = RandomForestClassifier(n_estimators=500, max_depth=25)
+    model = RandomForestClassifier(n_estimators=50, max_depth=25)
     fit = model.fit(X_train, y_train)
     return model
 
