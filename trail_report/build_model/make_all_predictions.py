@@ -1,7 +1,7 @@
 """This file holds functions that get new and prep new data, then make predictions."""
-from trail_report.build_model.knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
-from trail_report.build_model.merge_weather import get_weather_data, get_closest_station, merge_weather_trails
-from trail_report.build_model.get_text import *
+from .knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
+from .merge_weather import get_weather_data, get_closest_station, merge_weather_trails
+from .get_text import text_knn,neigh_text,get_all_tops,get_top_sentences
 import pandas as pd
 import numpy as np
 import math
@@ -128,12 +128,14 @@ class TrailPred(object):
             'condition|trail',
             'condition|bugs',
             'condition|road']
-        self.X_train = pd.read_csv(
-            'data/Xall.csv',
+        self.X_train_all = pd.read_csv(
+            '../../data/Xall.csv',
             sep='|',
             lineterminator='\n')
+        self.X_train = self.X_train_all.drop(['DX90', 'FZF4', 'FZF3', ' Snoqualmie Pass', 'Waterfalls', 'FZF1', 'FZF8', 'FZF6', 'None', 'Sno-Parks Permit', 'Dogs not allowed', 'FZF0', 'FZF5', 'National Park Pass', 'Discover Pass', 'NaN', ' North Bend Area', ' Salmon La Sac/Teanaway', 'Coast', ' Chinook Pass - Hwy 410', ' SW - Longmire/Paradise', ' Mountain Loop Highway', ' Hood Canal', ' NE - Sunrise/White River', ' Mount Baker Area', ' Stevens Pass - West', ' Stevens Pass - East', ' North Cascades Highway - Hwy 20', " SE - Cayuse Pass/Steven's Canyon", ' Mount Adams Area', ' Leavenworth Area', ' Mount St. Helens', ' Northern Coast', ' White Pass/Cowlitz River Valley', 'WSF5', 'WDF5', 'WDF2', ' Goat Rocks', 'WSF2', 'AWND', ' Yakima', ' Seattle-Tacoma Area', ' Columbia River Gorge - WA', ' Blewett Pass', ' Pacific Coast', ' Methow/Sawtooth', ' Olympia', ' Lewis River Region', ' Tiger Mountain', ' Bellingham Area', ' Entiat Mountains/Lake Chelan', ' Pasayten', " Spokane Area/Coeur d'Alene", ' Dark Divide', ' Columbia River Gorge - OR', 'Wilderness permit. Self-issue at trailhead (no fee)', ' Wenatchee', 'National Monument Fee', 'Discover Pass, Sno-Parks Permit', ' Okanogan Highlands/Kettle River Range', 'National Monument Fee, Sno-Parks Permit', ' Palouse and Blue Mountains', ' Selkirk Range', ' Cougar Mountain', ' Squak Mountain', ' Tri-Cities', ' Kitsap Peninsula', ' Grand Coulee', 'None, Northwest Forest Pass', 'Refuge Entrance Pass', ' Potholes Region', ' Cle Elum Area', ' Whidbey Island', ' San Juan Islands', ' Long Beach Area', ' Vancouver Area', 'Oregon State Parks Day-Use', ' Orcas Island', 'Fall foilage', 'Backcountry camping permit. Register in person at ranger station (no fee)', 'Northwest Forest Pass, Sno-Parks Permit', 'PSUN', 'WDMV'],
+                                axis=1)
         self.y_all = pd.read_csv(
-            'data/yall.csv',
+            '../../data/yall.csv',
             sep='|',
             lineterminator='\n')
         self.actual_cols = self.X_train.columns.tolist()
@@ -187,7 +189,7 @@ def get_pickle():
     """
     s3 = boto3.resource('s3')
     with BytesIO() as data:
-        s3.Bucket("trailreportdata").download_fileobj("tp_all.pkl", data)
+        s3.Bucket("trailreportdata").download_fileobj("tp_sm.pkl", data)
         data.seek(0)    # move back to the beginning after writing
         tp = pickle.load(data)
     return tp
@@ -219,13 +221,16 @@ def main_pred():
     """Get pickle and make prediction."""
     hike = 'Mount Rose'
     date = '05/22/18'
+    df_init, df_trail, weather, weather_dist = load_databases()
     X_test, Text_X_test = get_data(hike, date,df_init, df_trail, weather, weather_dist)
     # with open('tp.pkl','rb') as f:
     #     tp = pickle.load(f)
     tp = get_pickle()
-    pred = tp.predict_all_text(Text_X_test)
-    print(pred)
+    tp.predict_text(Text_X_test)
+    tp.get_all_text(df_init)
+    pred = tp.predict(X_test)
+    print(pred,tp.all_text)
 
 
 if __name__ == '__main__':
-    main_dump()
+    main_pred()

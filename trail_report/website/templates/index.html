@@ -37,12 +37,12 @@
   <link href="https://cdn.jsdelivr.net/npm/gijgo@1.9.6/css/gijgo.min.css" rel="stylesheet" type="text/css" />
 
     <!-- Dropdown search button s3 b4 test  -->
-  <link rel="stylesheet" href="/path/to/select2.css">
-<link rel="stylesheet" href="/path/to/select2-bootstrap4.css">
+  <!-- <link rel="stylesheet" href="/path/to/select2.css">
+<link rel="stylesheet" href="/path/to/select2-bootstrap4.css"> -->
   
   <!-- Dropdown search button s3  -->
-  <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+  <!-- <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script> -->
   <!-- Dropdown search button s3 bootsrap  -->
   <!-- <link rel="stylesheet" href="select2.css">
   <link rel="stylesheet" href="select2-bootstrap4.css"> -->
@@ -248,6 +248,10 @@
                 var spanroad = $("span#roadprob").text();
                 var spanbugs = $("span#bugsprob").text();
                 var spantrail = $("span#trailprob").text();
+                var spansnow_text = $("span#snowtext").text();
+                var spanroad_text = $("span#roadtext").text();
+                var spanbugs_text = $("span#bugstext").text();
+                var spantrail_text = $("span#trailtext").text();
                 $("#snowp").removeClass("p" + spansnow.replace("%",""));
                 $("#bugsp").removeClass("p" + spanbugs.replace("%",""));
                 $("#roadp").removeClass("p" + spanroad.replace("%",""));
@@ -256,10 +260,18 @@
                 $("span#roadprob").html(solutions.road_prob)
                 $("span#bugsprob").html(solutions.bugs_prob)
                 $("span#trailprob").html(solutions.trail_prob)
+                $("span#snowtext").html(solutions.snow_text)
+                $("span#roadtext").html(solutions.road_text)
+                $("span#bugstext").html(solutions.bugs_text)
+                $("span#trailtext").html(solutions.trail_text)
                 var spansnow = $("span#snowprob").text();
                 var spanroad = $("span#roadprob").text();
                 var spanbugs = $("span#bugsprob").text();
                 var spantrail = $("span#trailprob").text();
+                var spansnow_text = $("span#snowtext").text();
+                var spanroad_text = $("span#roadtext").text();
+                var spanbugs_text = $("span#bugstext").text();
+                var spantrail_text = $("span#trailtext").text();
                 $("#snowp").addClass("p" + spansnow.replace("%",""));
                 $("#bugsp").addClass("p" + spanbugs.replace("%",""));
                 $("#roadp").addClass("p" + spanroad.replace("%",""));
@@ -274,13 +286,7 @@
                   let coefficients = get_input_coefficients();
                   send_coefficient_json(coefficients);
                 });
-                $('hike_search').select2({
-                theme: "bootstrap4"
-                });
-                $('.js-example-basic-single').select2({
-                                                      theme: 'bootstrap4',
-                                                      })
-                });
+              });
             </script>
           </div>
 
@@ -318,7 +324,7 @@
           </div>
           <div class="row h-100 justify-content-center top-buffer">
           <div class="col">
-              <h4 class="section-subheading text-muted text-center">Here's some relivant reports</h4>
+              <h4 class="section-subheading text-muted text-center" id="snow_text"></h4>
               <p class="text-muted"><span id="snowtext"></span></p>
             </div>
         </div>
@@ -344,7 +350,7 @@
         </div>
         <div class="row h-100 justify-content-center top-buffer">
         <div class="col">
-            <h4 class="section-subheading text-muted text-center">Here's some relivant reports</h4>
+            <h4 class="section-subheading text-muted text-center" id="road_text"></h4>
             <p class="text-muted"><span id="snowtext"></span></p>
           </div>
       </div>
@@ -373,7 +379,7 @@
       </div>
       <div class="row h-100 justify-content-center top-buffer">
           <div class="col">
-              <h4 class="section-subheading text-muted text-center">Here's some relivant reports</h4>
+              <h4 class="section-subheading text-muted text-center" id="bugs_text"></h4>
               <p class="text-muted"><span id="snowtext"></span></p>
             </div>
       </div>
@@ -397,7 +403,7 @@
         </div>
         <div class="row h-100 justify-content-center top-buffer">
             <div class="col">
-                <h4 class="section-subheading text-muted text-center">Here's some relivant reports</h4>
+                <h4 class="section-subheading text-muted text-center" id="trail_text"></h4>
                 <p class="text-muted"><span id="snowtext"></span></p>
               </div>
         </div>
