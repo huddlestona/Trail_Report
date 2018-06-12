@@ -1,5 +1,5 @@
 """This file is still in production. Will eventually be called in make_any_prediction.py"""
-from knn_model import prep_neighbors, dates_in_circle
+from .knn_model import prep_neighbors, dates_in_circle
 import pandas as pd
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.preprocessing import scale
