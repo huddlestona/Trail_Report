@@ -62,3 +62,7 @@ def get_relivant_text(reports):
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0', threaded=True)
+    # hike = 'Mount Rose'
+    # date = '05/22/18'
+    # snow_prob, trail_prob, bugs_prob, road_prob,snow_text, trail_text, bugs_text, road_text = _get_prediction(hike,date)
+    # print (snow_prob, trail_prob, bugs_prob, road_prob,snow_text, trail_text, bugs_text, road_text)

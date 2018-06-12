@@ -1,7 +1,7 @@
 """This file holds functions that get new and prep new data, then make predictions."""
-from .knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
-from .merge_weather import get_weather_data, get_closest_station, merge_weather_trails
-from .get_text import text_knn,neigh_text,get_all_tops,get_top_sentences
+from knn_model import prep_neighbors, dates_in_circle, prep_for_knn, make_forest
+from merge_weather import get_weather_data, get_closest_station, merge_weather_trails
+from get_text import text_knn,neigh_text,get_all_tops,get_top_sentences
 import pandas as pd
 import numpy as np
 import math
@@ -20,6 +20,7 @@ fs = s3fs.S3FileSystem(anon=False)
 def get_data(hike, date, df_init, df_trail, weather, weather_dist):
     """Load,prep, and clean data needed from hikers input."""
     df = df_init.fillna(0)
+    add_trail_id(df_init,df_trail,hike)
     hike_df = df_trail.loc[df_trail['hike_name'] == hike]
     date_stamp = pd.to_datetime(date)
     conditions = [
@@ -38,9 +39,23 @@ def get_data(hike, date, df_init, df_trail, weather, weather_dist):
     get_closest_station(hike_df, weather_dist)
     hike_all_df = merge_weather_trails(weather, hike_df)
     X_test = clean_for_model(hike_all_df)
-    Text_X_test_all = hike_all_df[['date_cos','date_sin','PRCP',f'neighbors_average {condition}']]
+    Text_X_test_all = hike_all_df[['date_cos','date_sin','PRCP',f'neighbors_average {condition}','trail_ID']]
     Text_X_test = Text_X_test_all.fillna(0)
     return X_test, Text_X_test
+
+
+def add_trail_id(df,df_trail,hike):
+    """ Counts numbers of each trail and gives unique trail ID. """
+    num_reports = df.groupby('Trail').count()['Date']
+    trail_id = []
+    for num,count in enumerate(num_reports):
+            appends = 0
+            while appends < count:
+                trail_id.append(num*1000)
+                appends += 1
+    df['trail_ID'] = trail_id
+    df_trail['trail_ID'] = df.loc[df['Trail'] == hike]['trail_ID'].iloc[0]
+
 
 
 def load_databases():
@@ -121,6 +136,7 @@ def clean_for_model(hike_all_df):
 class TrailPred(object):
 
     def __init__(self):
+        """ Get data and save preped models."""
         self.pred_models = {}
         self.text_models = {}
         self.conditions = [
@@ -128,12 +144,10 @@ class TrailPred(object):
             'condition|trail',
             'condition|bugs',
             'condition|road']
-        self.X_train_all = pd.read_csv(
+        self.X_train = pd.read_csv(
             '../../data/Xall.csv',
             sep='|',
             lineterminator='\n')
-        self.X_train = self.X_train_all.drop(['DX90', 'FZF4', 'FZF3', ' Snoqualmie Pass', 'Waterfalls', 'FZF1', 'FZF8', 'FZF6', 'None', 'Sno-Parks Permit', 'Dogs not allowed', 'FZF0', 'FZF5', 'National Park Pass', 'Discover Pass', 'NaN', ' North Bend Area', ' Salmon La Sac/Teanaway', 'Coast', ' Chinook Pass - Hwy 410', ' SW - Longmire/Paradise', ' Mountain Loop Highway', ' Hood Canal', ' NE - Sunrise/White River', ' Mount Baker Area', ' Stevens Pass - West', ' Stevens Pass - East', ' North Cascades Highway - Hwy 20', " SE - Cayuse Pass/Steven's Canyon", ' Mount Adams Area', ' Leavenworth Area', ' Mount St. Helens', ' Northern Coast', ' White Pass/Cowlitz River Valley', 'WSF5', 'WDF5', 'WDF2', ' Goat Rocks', 'WSF2', 'AWND', ' Yakima', ' Seattle-Tacoma Area', ' Columbia River Gorge - WA', ' Blewett Pass', ' Pacific Coast', ' Methow/Sawtooth', ' Olympia', ' Lewis River Region', ' Tiger Mountain', ' Bellingham Area', ' Entiat Mountains/Lake Chelan', ' Pasayten', " Spokane Area/Coeur d'Alene", ' Dark Divide', ' Columbia River Gorge - OR', 'Wilderness permit. Self-issue at trailhead (no fee)', ' Wenatchee', 'National Monument Fee', 'Discover Pass, Sno-Parks Permit', ' Okanogan Highlands/Kettle River Range', 'National Monument Fee, Sno-Parks Permit', ' Palouse and Blue Mountains', ' Selkirk Range', ' Cougar Mountain', ' Squak Mountain', ' Tri-Cities', ' Kitsap Peninsula', ' Grand Coulee', 'None, Northwest Forest Pass', 'Refuge Entrance Pass', ' Potholes Region', ' Cle Elum Area', ' Whidbey Island', ' San Juan Islands', ' Long Beach Area', ' Vancouver Area', 'Oregon State Parks Day-Use', ' Orcas Island', 'Fall foilage', 'Backcountry camping permit. Register in person at ranger station (no fee)', 'Northwest Forest Pass, Sno-Parks Permit', 'PSUN', 'WDMV'],
-                                axis=1)
         self.y_all = pd.read_csv(
             '../../data/yall.csv',
             sep='|',
@@ -141,9 +155,9 @@ class TrailPred(object):
         self.actual_cols = self.X_train.columns.tolist()
 
     def prep_train(self, condition):
-        """Make y_train for single condition."""
+        """Make train set for for single condition."""
         y_train = self.y_all[condition]
-        Text_X_train = self.X_train[['date_cos','date_sin','PRCP',f'neighbors_average {condition}']]
+        Text_X_train = self.X_train[['date_cos','date_sin','PRCP',f'neighbors_average {condition}','trail_ID']]
         return y_train, Text_X_train
 
     def fit(self):
@@ -161,12 +175,14 @@ class TrailPred(object):
         return pred
 
     def predict_text(self, Text_X_test):
+        """ Get index of KNN text."""
         self.text_pred = {}
         for condition,model in self.text_models.items():
             indxs = model.kneighbors(Text_X_test)
             self.text_pred[condition] = list(indxs[1])
 
     def get_all_text(self,df):
+        """ Collect and clean KNN text."""
         self.all_text = {}
         for condition,indxs in self.text_pred.items():
             condition_text = []
@@ -216,6 +232,17 @@ def main_dump():
         for idx in range(0, n_bytes, max_bytes):
             f_out.write(bytes_out[idx:idx+max_bytes])
 
+def get_relivant_text(reports):
+    returns = ''
+    for group in reports:
+        for year,parts in group.items():
+            returns += f"On {year} Reports say: \n \n"
+            for sent in parts:
+                returns += u'\u2022 '
+                returns += sent
+                returns += '\n'
+            returns += '\n'
+    return returns
 
 def main_pred():
     """Get pickle and make prediction."""
@@ -229,7 +256,11 @@ def main_pred():
     tp.predict_text(Text_X_test)
     tp.get_all_text(df_init)
     pred = tp.predict(X_test)
-    print(pred,tp.all_text)
+    snow_text = get_relivant_text(tp.all_text['condition|snow'])
+    trail_text = get_relivant_text(tp.all_text['condition|trail'])
+    bugs_text= get_relivant_text(tp.all_text['condition|bugs'])
+    road_text = get_relivant_text(tp.all_text['condition|road'])
+    print (pred,snow_text,trail_text,bugs_text,road_text)
 
 
 if __name__ == '__main__':
