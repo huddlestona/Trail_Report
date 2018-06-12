@@ -99,7 +99,7 @@ def get_top_sentences(sentences,condition):
             if word in sentence:
                 important.append(sentence)
     tops = set(important)
-    if len(tops) = 0:
+    if len(tops) == 0:
         tops = None 
     return tops
 
