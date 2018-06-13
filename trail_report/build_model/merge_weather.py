@@ -168,3 +168,9 @@ def get_weather_data():
     df_weather_dist = df_weather[[
         'LATITUDE', 'LONGITUDE', 'name']].drop_duplicates().reset_index()
     return df_weather, df_weather_dist
+
+
+if __name__ == '__main__':
+    df_weather, df_weather_dist = get_weather_data()
+    df_weather.to_csv('../../data/WA_weather_yearly.csv', sep = '|',index_label=False)
+    df_weather_dist.to_csv('../../data/WA_weather_distances.csv', sep = '|', index_label=False)

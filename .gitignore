@@ -4,7 +4,6 @@ __pycache__/
 First_model_again_AUC.png
 tp.pkl
 data/WTA_all_merged.csv
-data/Xall.csv
-data/yall.csv
+data/WTA_all_simple.csv
 trail_report/build_model/tp_all.pkl
 trail_report/build_model/tp_sm.pkl
