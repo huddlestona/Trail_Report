@@ -60,7 +60,6 @@ def add_trail_id(df,df_trail,hike):
 
 def load_databases():
     """Load databases of hike and weather info."""
-    weather, weather_dist = get_weather_data()
     weather = pd.read_csv(
     '../../data/WA_weather_distances.csv',
     sep='|',
@@ -97,7 +96,7 @@ def get_hike_data():
     csv = body.read()
     files += csv
     f = BytesIO(files)
-    df = pd.read_csv(f,sep = '|',lineterminator='\n')
+    df_init = pd.read_csv(f,sep = '|',lineterminator='\n')
     # with BytesIO() as trails:
     #     s3.Bucket(bucket_name).download_fileobj("WTA_trails_clean_w_medians.csv", trails)
     #     trails.seek(0)
@@ -108,7 +107,7 @@ def get_hike_data():
     #     reports.seek(0)
     #     df = pd.read_csv(reports)
 
-    return df, df_trail
+    return df_init, df_trail
     
 
 def get_new_neighbors(df, condition, hike, date_stamp):
