@@ -60,7 +60,13 @@ def add_trail_id(df,df_trail,hike):
 
 def load_databases():
     """Load databases of hike and weather info."""
-    weather = pd.read_csv(
+    df_trail,df_init = get_hike_data()
+    weather,weather_dist = get_weather_data()
+    return df_init, df_trail, weather, weather_dist
+
+def get_weather_data():
+    """Load weather data as pandas df."""
+        weather = pd.read_csv(
     'data/WA_weather_distances.csv',
     sep='|',
     lineterminator='\n')
@@ -68,24 +74,13 @@ def load_databases():
     'data/WA_weather_yearly.csv',
     sep='|',
     lineterminator='\n')
-    df_init,df_trail = get_hike_data()
-    # df_init = pd.read_csv(
-    #     'data/WTA_all_merged.csv',
-    #     sep='|',
-    #     lineterminator='\n')
-    # df = df_init.fillna(0)
-    # df_trail = pd.read_csv(
-    #     'data/WTA_trails_clean_w_medians.csv',
-    #     lineterminator='\n')
-    
-    return df_init, df_trail, weather, weather_dist
+    return weather,weather_dist
 
 def get_hike_data():
-    """Get trail and report db from public s3 bucket."""
+    """Load trail and report db from public s3 bucket."""
     #get_trail
     df_trail = pd.read_csv(
     'data/WTA_trails_clean_w_medians.csv',
-    sep='|',
     lineterminator='\n')
     #get_reports
     s3 = boto3.client('s3')
@@ -107,7 +102,7 @@ def get_hike_data():
     #     reports.seek(0)
     #     df = pd.read_csv(reports)
 
-    return df_init, df_trail
+    return df_trail, df_init
     
 
 def get_new_neighbors(df, condition, hike, date_stamp):
