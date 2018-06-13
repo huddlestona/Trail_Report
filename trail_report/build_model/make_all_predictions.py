@@ -61,11 +61,11 @@ def add_trail_id(df,df_trail,hike):
 def load_databases():
     """Load databases of hike and weather info."""
     weather = pd.read_csv(
-    '../../data/WA_weather_distances.csv',
+    'data/WA_weather_distances.csv',
     sep='|',
     lineterminator='\n')
     weather_dist = pd.read_csv(
-    '../../data/WA_weather_yearly.csv',
+    'data/WA_weather_yearly.csv',
     sep='|',
     lineterminator='\n')
     df_init,df_trail = get_hike_data()
@@ -84,7 +84,7 @@ def get_hike_data():
     """Get trail and report db from public s3 bucket."""
     #get_trail
     df_trail = pd.read_csv(
-    '../../data/WTA_trails_clean_w_medians.csv',
+    'data/WTA_trails_clean_w_medians.csv',
     sep='|',
     lineterminator='\n')
     #get_reports
@@ -161,11 +161,11 @@ class TrailPred(object):
             'condition|bugs',
             'condition|road']
         self.X_train = pd.read_csv(
-            '../../data/Xall.csv',
+            'data/Xall.csv',
             sep='|',
             lineterminator='\n')
         self.y_all = pd.read_csv(
-            '../../data/yall.csv',
+            'data/yall.csv',
             sep='|',
             lineterminator='\n')
         self.actual_cols = self.X_train.columns.tolist()
