@@ -199,7 +199,7 @@ class TrailPred(object):
     def get_all_text(self,df):
         """ Collect and clean KNN text."""
         self.all_text = {}
-        no_reports = 'No relivant Trip Reports from this hike at this time! Let WTA know how the hike was for you, and we will update our database!'
+        no_reports = 'No relevant reports from this hike right now! Let WTA know how the hike was for you, and we will update our database!'
         for condition,indxs in self.text_pred.items():
             if len(indxs) < 1:
                 self.all_text[condition] = no_reports

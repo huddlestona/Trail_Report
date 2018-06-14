@@ -4,6 +4,7 @@ from flask import Flask, render_template, request, jsonify
 from ..build_model.make_all_predictions import get_data, TrailPred, get_pickle,load_databases
 from ..build_model.trail_names import Trails
 import pickle
+import ast
 
 
 app = Flask(__name__)
@@ -55,21 +56,26 @@ def _get_prediction(hike, date):
             snow_text, trail_text, bugs_text, road_text
             )
 
+    
+
 def get_relivant_text(reports):
     """Clean text from dictionary."""
     returns = ''
-    for year,text in reports.items():
-        returns += f"On {year} Reports say: <br /> <br />"
-        for part in text:
-            returns += u'\u2022 '
-            returns += part
+    if type(reports) is str:
+        returns = reports
+    else:
+        for year,text in reports.items():
+            returns += f"On {year} Reports say: <br /> <br />"
+            for part in text:
+                returns += u'\u2022 '
+                returns += part
+                returns += '<br />'
             returns += '<br />'
-        returns += '<br />'
     return returns
 
 if __name__ == '__main__':
-    # app.run(host='0.0.0.0', threaded=True)
-    hike = 'Rattlesnake Ledge'
-    date = '05/22/18'
-    snow_prob, trail_prob, bugs_prob, road_prob,snow_text, trail_text, bugs_text, road_text = _get_prediction(hike,date)
-    print (snow_prob, trail_prob, bugs_prob, road_prob,'snow_text', snow_text, 'trail_text', trail_text, 'bugs_text', bugs_text, 'road_text', road_text)
+    app.run(host='0.0.0.0', threaded=True)
+    # hike = 'Rattlesnake Ledge'
+    # date = '05/22/18'
+    # snow_prob, trail_prob, bugs_prob, road_prob,snow_text, trail_text, bugs_text, road_text = _get_prediction(hike,date)
+    # print (snow_prob, trail_prob, bugs_prob, road_prob,'snow_text', snow_text, 'trail_text', trail_text, 'bugs_text', bugs_text, 'road_text', road_text)
