@@ -8,9 +8,9 @@ import pickle
 
 app = Flask(__name__)
 
-Print("Est. loading time: 10 minutes")
+print("Est. loading time: 10 minutes")
 tp = get_pickle()
-Print("Almost there.")
+print("Almost there.")
 df_init, df_trail, weather, weather_dist = load_databases()
 
 @app.route('/', methods=['GET'])
