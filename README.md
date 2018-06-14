@@ -11,7 +11,7 @@ I realized that I could increase a hiker’s likelihood of checking out a less-p
 
 At trail-report.com you can choose a hike from a dropdown list and the date that you want to hike. Trail-report.com then returns the probability that will encounter snow, trail, road, or bug conditions on your hike. 
 
-Currently, the model applies to hikes in the Olympic Peninsula. All Washington State hikes are going to be deployed in the near future, alongside text snippets of relevant past reports.
+Currently, I am in the works of adding text snippets of relevant past reports. If you clone the repo, it will contain this current work, and may look different then what is seen on the website.
 
 The website was created using Flask and is self-hosted on AWS.
 
@@ -53,7 +53,7 @@ After cloning the repo, the following commands can be run in the terminal from t
 
 ### Future Work
 - Add relevant text snippets for each feature, using KNN on past trail reports. This feature is currently in production and will be implemented shortly.
-- Apply model to all of Washington. trail-report is currently scaled to scrape and build the model on all WTA reports. Due to the volume of past reports, an AWS EC2 instance or related service is highly recommended for the scraping process. This data is currently being retrieved and will be implemented on the website in the future.
+- ~~Apply model to all of Washington. trail-report is currently scaled to scrape and build the model on all WTA reports. Due to the volume of past reports, an AWS EC2 instance or related service is highly recommended for the scraping process. This data is currently being retrieved and will be implemented on the website in the future.~~ Completed.
 - Combine the model with a recommender system to recommend hikes based on trail conditions and a hiker’s imputed hike preferences.
 
 ### Sources 
