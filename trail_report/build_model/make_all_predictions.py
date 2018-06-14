@@ -13,8 +13,6 @@ import boto3
 from io import BytesIO
 import os.path
 import io
-import s3fs
-fs = s3fs.S3FileSystem(anon=False)
 
 
 def get_data(hike, date, df_init, df_trail, weather, weather_dist):
