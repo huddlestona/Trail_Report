@@ -53,7 +53,7 @@ After cloning the repo, the following commands can be run in the terminal from t
 
 ### Future Work
 - Add relevant text snippets for each feature, using KNN on past trail reports. This feature is currently in production and will be implemented shortly.
-~~- Apply model to all of Washington. trail-report is currently scaled to scrape and build the model on all WTA reports. Due to the volume of past reports, an AWS EC2 instance or related service is highly recommended for the scraping process. This data is currently being retrieved and will be implemented on the website in the future.~~ Completed.
+- ~~Apply model to all of Washington. trail-report is currently scaled to scrape and build the model on all WTA reports. Due to the volume of past reports, an AWS EC2 instance or related service is highly recommended for the scraping process. This data is currently being retrieved and will be implemented on the website in the future.~~ Completed.
 - Combine the model with a recommender system to recommend hikes based on trail conditions and a hiker’s imputed hike preferences.
 
 ### Sources 
