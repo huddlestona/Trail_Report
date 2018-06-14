@@ -66,7 +66,7 @@ def load_databases():
 
 def get_weather_data():
     """Load weather data as pandas df."""
-        weather = pd.read_csv(
+    weather = pd.read_csv(
     'data/WA_weather_distances.csv',
     sep='|',
     lineterminator='\n')
