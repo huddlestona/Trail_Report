@@ -2,8 +2,8 @@
 This file, when called in the terminal, will add new features,merge
 in the weather dataframe, and save the final X and Y databases.
 """
-from .merge_weather import get_weather_data, merge_weather_trails, get_closest_station
-from .knn_model import prep_for_knn,prep_neighbors,get_neighbors
+from merge_weather import get_weather_data, merge_weather_trails, get_closest_station
+from knn_model import prep_for_knn,prep_neighbors,get_neighbors
 import pandas as pd
 
 def split_x_y(df):

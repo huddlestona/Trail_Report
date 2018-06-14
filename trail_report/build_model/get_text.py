@@ -64,6 +64,13 @@ def neigh_text(df,indxs):
         n_text[i] = reps
     return reps
 
+# def single_text(df,one_rep):
+#     """ Get text from single index"""
+#         neighbors = df.iloc[idx_neighbors]['Report']
+#         date = df.iloc[idx_neighbors]['Date']
+#         reps[date]= neighbors
+
+
 def get_all_tops(all_reps,condition):
     """Clean all knn_text and get senteces for condition reported."""
     consequitivedots = re.compile(r'\.{3,}')
@@ -72,7 +79,11 @@ def get_all_tops(all_reps,condition):
         no_dots = consequitivedots.sub('', rep)
         all_simple = no_dots.replace("!",".").replace("?",".")
         sentences = all_simple.split('.')
-        top_sentences[date]= get_top_sentences(sentences,condition)
+        tops = get_top_sentences(sentences,condition)
+        if tops is None:
+            continue
+        else:
+            top_sentences[date]= tops
     # if len(top_sentences) < 1:
     #     top_sentences['No relivant reports'] = ''
     return top_sentences
@@ -98,7 +109,7 @@ def get_top_sentences(sentences,condition):
         for word in key_words:
             if word in sentence:
                 important.append(sentence)
-    tops = set(important)
+    tops = important
     if len(tops) == 0:
         tops = None 
     return tops

@@ -183,23 +183,38 @@ class TrailPred(object):
             pred[condition] = model.predict_proba(X_test[self.actual_cols])
         return pred
 
-    def predict_text(self, Text_X_test):
+    def predict_text(self, Text_X_test,df,hike):
         """ Get index of KNN text."""
         self.text_pred = {}
         for condition,model in self.text_models.items():
-            indxs = model.kneighbors(Text_X_test)
-            self.text_pred[condition] = list(indxs[1])
+            indxs = model.kneighbors(Text_X_test)[1][0]
+            hikes = df.iloc[indxs]['Trail']
+            actual_indxs = []
+            for indx,trail in zip(indxs,hikes):
+                if trail == hike:
+                    actual_indxs.append(indx)
+            self.text_pred[condition] = list(actual_indxs)
+        self.get_all_text(df)
 
     def get_all_text(self,df):
         """ Collect and clean KNN text."""
         self.all_text = {}
+        no_reports = 'No relivant Trip Reports from this hike at this time! Let WTA know how the hike was for you, and we will update our database!'
         for condition,indxs in self.text_pred.items():
-            condition_text = []
-            for one_rep in indxs:
-                n_text = neigh_text(df,one_rep)
+            if len(indxs) < 1:
+                self.all_text[condition] = no_reports
+            else:
+                n_text = neigh_text(df,indxs)
                 top = get_all_tops(n_text,condition)
-                condition_text.append(top)
-            self.all_text[condition] = condition_text
+                # condition_text = []
+                # for one_rep in indxs:
+                #     n_text = neigh_text(df,one_rep)
+                #     top = get_all_tops(n_text,condition)
+                #     condition_text.append(top)
+                if len(top) < 1:
+                    self.all_text[condition] = no_reports
+                else:
+                    self.all_text[condition] = top
 
 
 def get_pickle():
@@ -222,15 +237,10 @@ def get_pickle():
 
 def main_dump():
     """Dump models to a pickle."""
-    hike = 'Mount Rose'
-    date = '05/22/18'
     df_init, df_trail, weather, weather_dist = load_databases()
-    X_test, Text_X_test = get_data(hike, date,df_init, df_trail, weather, weather_dist)
     tp = TrailPred()
     tp.fit()
-    # tp.predict_text(Text_X_test)
-    # tp.get_all_text(df_init)
-    # print(tp.all_text)
+    #Save model
     file_path = "tp_sm.pkl"
     n_bytes = 2**31
     max_bytes = 2**31 - 1
@@ -245,12 +255,12 @@ def get_relivant_text(reports):
     returns = ''
     for group in reports:
         for year,parts in group.items():
-            returns += f"On {year} Reports say: \n \n"
+            returns += f"On {year} Reports say: <br /> <br />"
             for sent in parts:
                 returns += u'\u2022 '
                 returns += sent
-                returns += '\n'
-            returns += '\n'
+                returns += "<br />"
+            returns += "<br />"
     return returns
 
 def main_pred():
@@ -262,8 +272,7 @@ def main_pred():
     # with open('tp.pkl','rb') as f:
     #     tp = pickle.load(f)
     tp = get_pickle()
-    tp.predict_text(Text_X_test)
-    tp.get_all_text(df_init)
+    tp.predict_text(Text_X_test,df_init)
     pred = tp.predict(X_test)
     snow_text = get_relivant_text(tp.all_text['condition|snow'])
     trail_text = get_relivant_text(tp.all_text['condition|trail'])
@@ -273,4 +282,4 @@ def main_pred():
 
 
 if __name__ == '__main__':
-    main_pred()
+    main_dump()

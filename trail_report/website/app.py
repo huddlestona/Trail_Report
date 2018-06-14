@@ -8,7 +8,7 @@ import pickle
 
 app = Flask(__name__)
 
-print("Est. loading time: 10 minutes")
+print("Est. loading time: 2 minutes")
 tp = get_pickle()
 print("Almost there.")
 df_init, df_trail, weather, weather_dist = load_databases()
@@ -20,6 +20,7 @@ def index():
 
 @app.route('/solve', methods=['POST'])
 def solve():
+    """Collect data and return in json form"""
     user_data = request.json
     hike, date = user_data['hike'], user_data['hike_date']
     snow_prob, trail_prob, bugs_prob, road_prob,snow_text, trail_text, bugs_text, road_text = _get_prediction(hike, date)
@@ -27,18 +28,22 @@ def solve():
                     'trail_prob': trail_prob,
                     'bugs_prob': bugs_prob,
                     'road_prob': road_prob,
-                    'snow_text': snow_text,
-                    'trail_text': trail_text,
-                    'bugs_text': bugs_text,
-                    'road_text': road_text
+                    'snow_text': str(snow_text),
+                    'trail_text': str(trail_text),
+                    'bugs_text': str(bugs_text),
+                    'road_text': str(road_text)
                     })
 
 
 def _get_prediction(hike, date):
+    """Prep data and get predictions on user input."""
     X_test, Text_X_text = get_data(hike, date, df_init, df_trail, weather, weather_dist)
     pred = tp.predict(X_test)
-    tp.predict_text(Text_X_text)
-    tp.get_all_text(df_init)
+    tp.predict_text(Text_X_text,df_init,hike)
+    # snow_text = tp.all_text['condition|snow']
+    # trail_text = tp.all_text['condition|trail']
+    # bugs_text= tp.all_text['condition|bugs']
+    # road_text = tp.all_text['condition|road']
     snow_text = get_relivant_text(tp.all_text['condition|snow'])
     trail_text = get_relivant_text(tp.all_text['condition|trail'])
     bugs_text= get_relivant_text(tp.all_text['condition|bugs'])
@@ -51,20 +56,20 @@ def _get_prediction(hike, date):
             )
 
 def get_relivant_text(reports):
+    """Clean text from dictionary."""
     returns = ''
-    for group in reports:
-        for year,parts in group.items():
-            returns += f"On {year} Reports say: \n \n"
-            for sent in parts:
-                returns += u'\u2022 '
-                returns += sent
-                returns += '\n'
-            returns += '\n'
+    for year,text in reports.items():
+        returns += f"On {year} Reports say: <br /> <br />"
+        for part in text:
+            returns += u'\u2022 '
+            returns += part
+            returns += '<br />'
+        returns += '<br />'
     return returns
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', threaded=True)
-    # hike = 'Mount Rose'
-    # date = '05/22/18'
-    # snow_prob, trail_prob, bugs_prob, road_prob,snow_text, trail_text, bugs_text, road_text = _get_prediction(hike,date)
-    # print (snow_prob, trail_prob, bugs_prob, road_prob,snow_text, trail_text, bugs_text, road_text)
+    # app.run(host='0.0.0.0', threaded=True)
+    hike = 'Rattlesnake Ledge'
+    date = '05/22/18'
+    snow_prob, trail_prob, bugs_prob, road_prob,snow_text, trail_text, bugs_text, road_text = _get_prediction(hike,date)
+    print (snow_prob, trail_prob, bugs_prob, road_prob,'snow_text', snow_text, 'trail_text', trail_text, 'bugs_text', bugs_text, 'road_text', road_text)
