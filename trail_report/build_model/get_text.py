@@ -33,7 +33,7 @@ import re
 #             X = self.X_all[['date_cos','date_sin','PRCP',f'neighbors_average {condition}']]
 #             indxs = model.kneighbors(X)
 #             self.pred[condition] = list(indxs[1])
-    
+
 #     def get_all_text(self):
 #         self.all_text = {}
 #         for condition,indxs in self.pred.items():
@@ -44,23 +44,25 @@ import re
 #                 condition_text.append(top)
 #             self.all_text[condition] = condition_text
 
-def text_knn(X_train,y_train):
+
+def text_knn(X_train, y_train):
     """ Get neighbors with all X values scaled except trail_id."""
     neigh = KNeighborsClassifier(n_neighbors=5)
-    X_s = scale(X_train.drop('trail_ID',axis=1))
+    X_s = scale(X_train.drop('trail_ID', axis=1))
     X_frame = pd.DataFrame(X_s)
     X_frame['trail_ID'] = X_train[['trail_ID']]
-    neigh.fit(X_frame,y_train)
+    neigh.fit(X_frame, y_train)
     return neigh
 
-def neigh_text(df,indxs):
+
+def neigh_text(df, indxs):
     """ Get all text from KNN indexes."""
     n_text = {}
-    reps= {}
-    for i,idx_neighbors in enumerate(indxs):
+    reps = {}
+    for i, idx_neighbors in enumerate(indxs):
         neighbors = df.iloc[idx_neighbors]['Report']
         date = df.iloc[idx_neighbors]['Date']
-        reps[date]= neighbors
+        reps[date] = neighbors
         n_text[i] = reps
     return reps
 
@@ -71,30 +73,51 @@ def neigh_text(df,indxs):
 #         reps[date]= neighbors
 
 
-def get_all_tops(all_reps,condition):
+def get_all_tops(all_reps, condition):
     """Clean all knn_text and get senteces for condition reported."""
     consequitivedots = re.compile(r'\.{3,}')
     top_sentences = {}
-    for date,rep in all_reps.items():
+    for date, rep in all_reps.items():
         no_dots = consequitivedots.sub('', rep)
-        all_simple = no_dots.replace("!",".").replace("?",".")
+        all_simple = no_dots.replace("!", ".").replace("?", ".")
         sentences = all_simple.split('.')
-        tops = get_top_sentences(sentences,condition)
+        tops = get_top_sentences(sentences, condition)
         if tops is None:
             continue
         else:
-            top_sentences[date]= tops
+            top_sentences[date] = tops
     # if len(top_sentences) < 1:
     #     top_sentences['No relivant reports'] = ''
     return top_sentences
 
-def get_top_sentences(sentences,condition):
+
+def get_top_sentences(sentences, condition):
     """Get sentences with key words in conditions word bucket."""
-    bug_keys = ['bugs','mosquito','mosquitos','bugspray','stung','nets']
-    snow_keys = ['snow','need','bring','safe','danger','crampons','axe','ice','recommend','conditions','post-holing','slippery','slip']
-    road_keys = ['washout','road','closed','potholes','4WD','low clearence','drive']
-    trail_keys = ['mud','washout','help','lost','trail','signs']
-    
+    bug_keys = ['bugs', 'mosquito', 'mosquitos', 'bugspray', 'stung', 'nets']
+    snow_keys = [
+        'snow',
+        'need',
+        'bring',
+        'safe',
+        'danger',
+        'crampons',
+        'axe',
+        'ice',
+        'recommend',
+        'conditions',
+        'post-holing',
+        'slippery',
+        'slip']
+    road_keys = [
+        'washout',
+        'road',
+        'closed',
+        'potholes',
+        '4WD',
+        'low clearence',
+        'drive']
+    trail_keys = ['mud', 'washout', 'help', 'lost', 'trail', 'signs']
+
     if condition == 'condition|snow':
         key_words = snow_keys
     elif condition == 'condition|trail':
@@ -103,7 +126,7 @@ def get_top_sentences(sentences,condition):
         key_words = bug_keys
     else:
         key_words = road_keys
-    
+
     important = []
     for sentence in sentences:
         for word in key_words:
@@ -111,12 +134,13 @@ def get_top_sentences(sentences,condition):
                 important.append(sentence)
     tops = important
     if len(tops) == 0:
-        tops = None 
+        tops = None
     return tops
+
 
 if __name__ == '__main__':
     tt = TrailText()
     tt.fit()
     tt.predict()
     tt.get_all_text()
-    print (tt.all_text)
+    print(tt.all_text)

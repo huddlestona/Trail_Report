@@ -107,7 +107,8 @@ def clean_weather_df(weather_df):
     """
     col = weather_df.columns
     drop_col = list(col[7::2])
-    clean_num = weather_df[weather_df['LATITUDE'].str.contains("LATITUDE") == False]
+    clean_num = weather_df[weather_df['LATITUDE'].str.contains(
+        "LATITUDE") == False]
     num_weather = clean_num.drop(drop_col, axis=1)
     just_num = num_weather.drop(['NAME', 'STATION'], axis=1)
     all_weatherdf = just_num.apply(pd.to_numeric)
@@ -172,5 +173,11 @@ def get_weather_data():
 
 if __name__ == '__main__':
     df_weather, df_weather_dist = get_weather_data()
-    df_weather.to_csv('../../data/WA_weather_yearly.csv', sep = '|',index_label=False)
-    df_weather_dist.to_csv('../../data/WA_weather_distances.csv', sep = '|', index_label=False)
+    df_weather.to_csv(
+        '../../data/WA_weather_yearly.csv',
+        sep='|',
+        index_label=False)
+    df_weather_dist.to_csv(
+        '../../data/WA_weather_distances.csv',
+        sep='|',
+        index_label=False)

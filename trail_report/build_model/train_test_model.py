@@ -42,10 +42,10 @@ def get_knn_inputs(test, train, condition):
     return train_X, train_y, test_X, test_y
 
 
-def merge_weather(test, train,condition):
+def merge_weather(test, train, condition):
     """Get weather, get's new columns, and merges weather in."""
     df_weather, df_weather_dist = get_weather_data()
-    add_cols(test, train, df_weather_dist,condition)
+    add_cols(test, train, df_weather_dist, condition)
     df_test = merge_weather_trails(df_weather, test)
     df_train = merge_weather_trails(df_weather, train)
     return df_test, df_train
@@ -68,12 +68,12 @@ if __name__ == '__main__':
     df_clean = prep_for_knn(df)
     test, train = train_test_split(df_clean, 2016)
     conditions = [
-    'condition|snow',
-    'condition|trail',
-    'condition|bugs',
-    'condition|road']
+        'condition|snow',
+        'condition|trail',
+        'condition|bugs',
+        'condition|road']
     for condition in conditions:
-        df_test, df_train = merge_weather(test, train,condition)
+        df_test, df_train = merge_weather(test, train, condition)
     # merge and save full df
         train_X, train_y, test_X, test_y = get_knn_inputs(df_test, df_train)
         model, pred = make_forest(train_X, train_y, test_X)
