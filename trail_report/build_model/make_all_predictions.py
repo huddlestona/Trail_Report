@@ -16,7 +16,21 @@ import io
 
 
 def get_data(hike, date, df_init, df_trail, weather, weather_dist):
-    """Load,prep, and clean data needed from hikers input."""
+    """
+    Load,prep, and clean data needed from hikers input.
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    hike: String. Hike name,
+    date: String. Date in month/day/yr format.
+    df_init: pandas df of all trail reports.
+    df_trail: pandas df of trail info.
+    weather: pandas df of all weather
+    weather_dist: pandas df of location of weather stations rel. to hikes
+    **Output**
+    ------------------------------------------------------------------------------
+    X_Test: pandas df. Data needed to get trail condition for user inputed hike and date.
+    Text_X_test: pandas df. Data needed to get relivant trail report text for userr inputed hike and date.
+    """
     df = df_init.fillna(0)
     add_trail_id(df_init, df_trail, hike)
     hike_df = df_trail.loc[df_trail['hike_name'] == hike]
@@ -347,6 +361,16 @@ def main_dump():
 
 
 def get_relivant_text(reports):
+    """
+    Clean and return relivant rpeort data.
+    **Input parameters**
+    ------------------------------------------------------------------------------
+    reports: List of dictionaries.
+    **Output**
+    ------------------------------------------------------------------------------
+    returns: String. All reports as string with html line splits.
+    """
+
     returns = ''
     for group in reports:
         for year, parts in group.items():
