@@ -1,7 +1,7 @@
 '''This file, when run in the terminal, will scrape new data and update the model.'''
 from pymongo import MongoClient
 import pandas as pd
-from webscraping.Webscraping_TrailReports import TripReportBuilder
+from webscraping.Webscraping_TrailReports import new_trip_report_builder
 from cleaning.Cleaning_TrailReport import clean_trailreport
 from cleaning.Merge_dataframes import merge_trail_files
 from build_model.make_dataframe import make_split_dataframes
@@ -14,14 +14,14 @@ trail_reports = db['trail_reports']
 raw_html = db['html']
 trail_page_raw_html = db['trail_html']
 
-
-def update_trip_reports():
+last_scrape = 
+def update_trip_reports(last_scrape):
     '''scrape new trip reports and add to Mongo db wta_all '''
     # trail_reports.drop()
     # raw_html.drop()
     # trail_page_raw_html.drop()
     hike_urls = pd.read_csv('../../data/WTA_all_trail_data.csv')
-    TripReportBuilder(hike_urls)
+    new_trip_report_builder(df,last_scrape)
 
 
 def clean_trail_reports():
