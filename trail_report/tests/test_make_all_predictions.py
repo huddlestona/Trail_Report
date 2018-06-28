@@ -1,4 +1,4 @@
-""" Tests for make_all_predictions.py
+""" Tests for build_model.make_all_predictions.py
 """
 
 import unittest as unittest
