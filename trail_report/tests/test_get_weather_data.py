@@ -37,16 +37,16 @@ class Test(unittest.TestCase):
     ]
 
     def test_get_past_weather_data(self):
-    for url in self.urls:
-        self.assertEqual(type(url), str)
-        response = requests.get(url)
-        if response.status_code != 200:
-            print(f"{response.status_code} scraping {url}")
-        else:
-            data = response.content
-            chkcsv.py data 
-            filename = url.split("/")[-1]
-            s3.put_object(Bucket=bucket_name, Body=data, Key=filename)
+        for url in self.urls:
+            self.assertEqual(type(url), str)
+            response = requests.get(url)
+            if response.status_code != 200:
+                print(f"{response.status_code} scraping {url}")
+            else:
+                data = response.content
+                self.assertEqual(type(data),str) 
+                filename = url.split("/")[-1]
+                s3.put_object(Bucket=bucket_name, Body=data, Key=filename)
 
 if __name__ == '__main__':
     unittest.main()
