@@ -8,13 +8,12 @@ from build_model.make_dataframe import make_split_dataframes
 from build_model.make_all_predictions import main_dump
 
 # prep mongo db
-mc = pymongo.MongoClient()
-db = mc['wta_all']
-trail_reports = db['trail_reports']
-raw_html = db['html']
-trail_page_raw_html = db['trail_html']
+mc = MongoClient()
+db = mc['wta_all2']
+trail_reports = db['trail_reports2']
+raw_html = db['html2']
+trail_page_raw_html = db['trail_html2']
 
-last_scrape = 
 def update_trip_reports(last_scrape):
     '''scrape new trip reports and add to Mongo db wta_all '''
     # trail_reports.drop()
@@ -39,7 +38,7 @@ def merge_hikes_trail(clean_reports_df):
         lineterminator='\n')
     merged_df = merge_trail_files(trail_df, clean_reports_df)
     merged_df.to_csv(
-        '../../data/WTA_all_merged.csv',
+        '../../data/WTA_all_merged2.csv',
         sep='|',
         index_label=False)
     return merged_df
@@ -48,8 +47,8 @@ def merge_hikes_trail(clean_reports_df):
 def update_dataframe(merged_df):
     '''Split cleaned dataframs for model fitting.'''
     train_X, train_y = make_split_dataframes(merged_df)
-    train_X.to_csv('../../data/Xall.csv', sep='|', index_label=False)
-    train_y.to_csv('../../data/yall.csv', sep='|', index_label=False)
+    train_X.to_csv('../../data/Xall2.csv', sep='|', index_label=False)
+    train_y.to_csv('../../data/yall2.csv', sep='|', index_label=False)
 
 
 def prep_new_model():
@@ -57,9 +56,9 @@ def prep_new_model():
     main_dump()
 
 
-def update_model():
+def update_model(last_scrape):
     '''Update current model with new scraped data.'''
-    update_trip_reports()
+    update_trip_reports(last_scrape)
     clean_reports_df = clean_trail_reports()
     merged_df = merge_hikes_trail(clean_reports_df)
     update_dataframe(merged_df)
@@ -67,4 +66,5 @@ def update_model():
 
 
 if __name__ == '__main__':
-    main_dump()
+    last_scrape = '05/22/18'
+    update_model(last_scrape)
